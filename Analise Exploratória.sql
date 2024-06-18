@@ -17,10 +17,12 @@ FROM olist_orders_dataset ood;
 -- Verificar quantas categorias existem na coluna order_status e quantos pedidos estão presentes em cada categoria:
 SELECT 
 	distinct order_status,
-	count(*) as contagem_pedidos
+	count(*) as contagem_pedidos,
+	CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_orders_dataset ood) AS DECIMAL) AS perc_total
 FROM olist_orders_dataset ood
 GROUP BY order_status;
 -- Foram encontradas 8 categorias distintas
+-- E aproximadamente 97% dos pedidos foram entregues
 
 
 -- Verificar se todos os dados da coluna de data são do tipo data, ou se existe algum valor nulo ou vazio
@@ -94,13 +96,118 @@ SELECT
 	count(DISTINCT order_id) contagem_destinta_ids,
 	COUNT(*) - count(DISTINCT order_id) as diferenca_linhas
 FROM olist_order_payments_dataset oopd;
--- Aqui já podemos identificar que o order_id não é um identificador único. Algumas compraS apresentam o mesmo ID do pedido.
+-- Aqui já podemos identificar que o order_id não é um identificador único. Algumas compras apresentam o mesmo ID do pedido.
 -- No total identificamos uma diferença de 4.446.
 
 SELECT
 	order_id,
-	COUNT(*)
+	COUNT(*) as registros_duplicados
 FROM olist_order_payments_dataset oopd 
 GROUP BY order_id
 HAVING COUNT(*) > 1
--- E aqui verificamos quais são estes registros.
+ORDER BY registros_duplicados DESC
+-- E aqui verificamos quais são estes registros, ordenando dos que possuem mais repetições para os que possuem menos repetições.
+
+
+SELECT
+	*
+FROM olist_order_payments_dataset oopd
+WHERE order_id = 'c6492b842ac190db807c15aff21a7dd6'
+-- Utilizando um dos registros encontrados anteriormente, verificamos que a coluna 'payment_sequential' registra uma sequência de pagamentos que houveram para um determinado pedido.
+
+-- É possível notar que nestas compras a utilização de voucher foi utilizada em muitos dos registros.
+-- O  ideal seria saber se o voucher é um cupom de desconto aplicado, um presente recebido de outra pessoa (como um gift card), um saldo em carteira derivado de algum cancelamento ou alguma outra modalidade de crédito.
+SELECT
+	order_id,
+	COUNT(*) as registros_duplicados,
+	payment_type
+FROM olist_order_payments_dataset oopd
+WHERE payment_type <> 'voucher'
+GROUP BY order_id
+HAVING COUNT(*) > 1
+ORDER BY registros_duplicados DESC
+
+SELECT
+	order_id,
+	COUNT(*) as registros_duplicados,
+	payment_type
+FROM olist_order_payments_dataset oopd
+WHERE payment_type = 'voucher'
+GROUP BY order_id
+HAVING COUNT(*) > 1
+ORDER BY registros_duplicados DESC
+
+-- Valor pago de acordo com o pedido
+SELECT
+	order_id,
+	SUM(payment_value) valor_total
+FROM olist_order_payments_dataset oopd
+GROUP BY order_id
+ORDER BY valor_total desc
+-- Se agruparmos pelo 'order_id' utilizando a função de agregação 'SUM' para somar todos os valores na coluna de pagamentos, teremos o valor total pago de todos os pedidos.
+-- Sendo o maior valor de compra R$13.664,08, valor este está independente do uso de vouchers.
+
+SELECT
+	order_id,
+	SUM(payment_value) valor_total
+FROM olist_order_payments_dataset oopd
+GROUP BY order_id
+ORDER BY valor_total ASC
+-- Encontramos também alguns registros zerados, vamos identificá-los abaixo
+
+
+SELECT
+	*
+FROM olist_order_payments_dataset oopd
+LEFT JOIN olist_orders_dataset ood
+	ON oopd.order_id = ood.order_id
+WHERE payment_value = 0
+-- Em todos os pagamentos zerados, foi identificado o pagamento por voucher ou por uma categoria não definida.
+
+-- Vamos analisar os parcelamentos, através da coluna payment_installmentes: 
+SELECT
+	DISTINCT payment_installments AS parcelamentos,
+	COUNT(*) AS contagem,
+	CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL) AS perc_total
+FROM olist_order_payments_dataset oopd
+GROUP BY parcelamentos
+ORDER BY contagem DESC
+--Podemos identificar que a forma de pagamento mais utilizada é "à vista", representando 50% dos pagamentos
+
+
+-- Agora vamos analisar a coluna de pagamentos (payment_value):
+SELECT
+	payment_type,
+	count(*) qtd_por_tipo,
+	CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL) AS perc_total,
+	SUM(payment_value) AS total_pagamentos,
+	CAST(SUM(payment_value) * 1.0 / (SELECT SUM(payment_value) FROM olist_order_payments_dataset) AS DECIMAL) AS perc_total_pagamentos
+FROM olist_order_payments_dataset oopd
+GROUP BY payment_type
+ORDER BY qtd_por_tipo DESC
+-- A maioria das compras foi realizada no crédito, representando aproximadamente 73,92% da quantidade total vendida.
+-- Em valores, cartão de crédito também está na primeira colocação, porém com aproximadamente 78,33% dos valores recebidos nesta modalidade de pagamento.
+
+
+-- Calculando o valor máximo, mínimo, amplitude, media, mediana e moda dos pagamentos por tipo:
+SELECT
+	payment_type,
+	MAX(payment_value) AS valor_maximo_pedido,
+	MIN(payment_value) AS valor_minimo_pedido,
+	MAX(payment_value) - MIN(payment_value) AS amplitude_pedido,
+	AVG(payment_value) AS media_pagamentos,
+	MEDIAN(payment_value) AS mediana_pagamentos
+FROM olist_order_payments_dataset oopd
+GROUP BY payment_type
+
+-- Para calcular a moda:
+SELECT
+	payment_type,
+	payment_value,
+	count(*) AS frequencia
+FROM olist_order_payments_dataset oopd
+GROUP BY payment_type, payment_value
+ORDER BY frequencia DESC
+-- Aqui identificamos que os pagamentos que mais aparecem são vouchers no valor de 50, seguidos por vouchers de 20 e 100.
+-- Removendo os Vouchers, o pagamento mais comum é de 77,57 no cartão de crédito.
+
