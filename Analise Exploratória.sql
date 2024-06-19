@@ -56,7 +56,30 @@ SELECT
     SUM(CASE WHEN order_delivered_carrier_date IS NULL THEN 1 ELSE 0 END) AS nulos,
     SUM(CASE WHEN typeof(order_delivered_carrier_date) <> 'text' OR TRIM(order_delivered_carrier_date) = '' THEN 1 ELSE 0 END) AS valores_invalidos
 FROM olist_orders_dataset ood;
+
+SELECT
+	COUNT(*)
+FROM olist_orders_dataset ood
+WHERE order_delivered_carrier_date = ''
 -- Aqui identificamos 1.783 valores faltantes ou diferentes de texto.
+
+-- E identificamos quais são essas linhas
+SELECT
+	DISTINCT order_status,
+	count (*) AS contagem_pedidos
+FROM olist_orders_dataset ood
+WHERE order_delivered_carrier_date = ''
+GROUP BY order_status
+ORDER BY contagem_pedidos DESC
+-- Encontramos 2 pedidos entregues, sem data de entrega à transportadora
+
+SELECT 
+	*
+FROM olist_orders_dataset ood
+WHERE 
+	order_delivered_carrier_date = '' AND
+	order_status IN('delivered')
+-- Aqui encontramos 2 pedidos com status entregues, porém sem data de entrega à transportadora. Pode ser caso de retirada na loja (se existir), uma falha no preenchimento da data, ter sido entregue de forma alternativa ou não ter sido entregue
 
 SELECT
     COUNT(*) AS total_linhas,
@@ -86,7 +109,7 @@ SELECT
 	*
 FROM olist_orders_dataset ood
 WHERE order_purchase_timestamp = (SELECT MAX(order_purchase_timestamp) FROM olist_orders_dataset ood WHERE order_status = 'delivered');
--- A última venda realizada e enttregue foi realizada em 29/08/2018.
+-- A última venda realizada e entregue foi realizada em 29/08/2018.
 
 
 
@@ -96,8 +119,7 @@ SELECT
 	count(DISTINCT order_id) contagem_destinta_ids,
 	COUNT(*) - count(DISTINCT order_id) as diferenca_linhas
 FROM olist_order_payments_dataset oopd;
--- Aqui já podemos identificar que o order_id não é um identificador único. Algumas compras apresentam o mesmo ID do pedido.
--- No total identificamos uma diferença de 4.446.
+-- Conforme a explicação do DataSet, pagamentos que são realizados com mais de uma forma de pagamento criam sequencias, desta forma o order_id se repetirá sempre que houver esta sequência.
 
 SELECT
 	order_id,
@@ -109,13 +131,7 @@ ORDER BY registros_duplicados DESC
 -- E aqui verificamos quais são estes registros, ordenando dos que possuem mais repetições para os que possuem menos repetições.
 
 
-SELECT
-	*
-FROM olist_order_payments_dataset oopd
-WHERE order_id = 'c6492b842ac190db807c15aff21a7dd6'
--- Utilizando um dos registros encontrados anteriormente, verificamos que a coluna 'payment_sequential' registra uma sequência de pagamentos que houveram para um determinado pedido.
 
--- É possível notar que nestas compras a utilização de voucher foi utilizada em muitos dos registros.
 -- O  ideal seria saber se o voucher é um cupom de desconto aplicado, um presente recebido de outra pessoa (como um gift card), um saldo em carteira derivado de algum cancelamento ou alguma outra modalidade de crédito.
 SELECT
 	order_id,
@@ -145,7 +161,7 @@ FROM olist_order_payments_dataset oopd
 GROUP BY order_id
 ORDER BY valor_total desc
 -- Se agruparmos pelo 'order_id' utilizando a função de agregação 'SUM' para somar todos os valores na coluna de pagamentos, teremos o valor total pago de todos os pedidos.
--- Sendo o maior valor de compra R$13.664,08, valor este está independente do uso de vouchers.
+-- Sendo o maior valor de compra R$13.664,08, utilizando todas as formas de pagamento.
 
 SELECT
 	order_id,
@@ -168,11 +184,12 @@ WHERE payment_value = 0
 SELECT
 	DISTINCT payment_installments AS parcelamentos,
 	COUNT(*) AS contagem,
-	CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL) AS perc_total
+	CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL) AS perc_total,
+	SUM(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS freq_acumulada
 FROM olist_order_payments_dataset oopd
 GROUP BY parcelamentos
 ORDER BY contagem DESC
---Podemos identificar que a forma de pagamento mais utilizada é "à vista", representando 50% dos pagamentos
+--Podemos identificar que a forma de pagamento mais utilizada é "à vista" (ou em parcela única), representando aproximadamente 50% dos pagamentos
 
 
 -- Agora vamos analisar a coluna de pagamentos (payment_value):
@@ -189,19 +206,36 @@ ORDER BY qtd_por_tipo DESC
 -- Em valores, cartão de crédito também está na primeira colocação, porém com aproximadamente 78,33% dos valores recebidos nesta modalidade de pagamento.
 
 
--- Calculando o valor máximo, mínimo, amplitude, media, mediana e moda dos pagamentos por tipo:
+-- Calculando o valor máximo, mínimo, amplitude, media, mediana e moda dos pagamentos:
+SELECT
+	MAX(payment_value) AS valor_maximo_pedido,
+	MIN(payment_value) AS valor_minimo_pedido,
+	MAX(payment_value) - MIN(payment_value) AS amplitude_pedido,
+	AVG(payment_value) AS media_pagamentos,
+	MEDIAN(payment_value) AS mediana_pagamentos,
+	STDEV(payment_value) AS desvio_padrao_pagamentos
+FROM olist_order_payments_dataset oopd
+-- A Amplitude dos dados é a mesma do valor máximo devido ao valor do menor pedido ser 0.
+-- A média e a mediana estão relavitamente próximas, e ambas muito próximas ao valor mínimo. Sem criar o gráfico, a hipótese inicial é que seja uma distribuição assimétrica com concentração à esquerda.
+-- Plotando um gráfico BoxPlot, provavelmente encontraremos outliers acima dos limites superiores.
+
+
+-- Agora dos pagamentos separados por forma de pagamento:
 SELECT
 	payment_type,
 	MAX(payment_value) AS valor_maximo_pedido,
 	MIN(payment_value) AS valor_minimo_pedido,
 	MAX(payment_value) - MIN(payment_value) AS amplitude_pedido,
 	AVG(payment_value) AS media_pagamentos,
-	MEDIAN(payment_value) AS mediana_pagamentos
+	MEDIAN(payment_value) AS mediana_pagamentos,
+	STDEV(payment_value) AS desvio_padrao_pagamentos
 FROM olist_order_payments_dataset oopd
 GROUP BY payment_type
+-- Em todos os tipos de pagamento é possível notar a média e mediana muito próximas e uma concentração dos dados muito próximas aos valores mínimos.
+
 
 -- Para calcular a moda:
-SELECT
+SELECT 
 	payment_type,
 	payment_value,
 	count(*) AS frequencia
@@ -210,4 +244,3 @@ GROUP BY payment_type, payment_value
 ORDER BY frequencia DESC
 -- Aqui identificamos que os pagamentos que mais aparecem são vouchers no valor de 50, seguidos por vouchers de 20 e 100.
 -- Removendo os Vouchers, o pagamento mais comum é de 77,57 no cartão de crédito.
-
