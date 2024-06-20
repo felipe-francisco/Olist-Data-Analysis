@@ -45,8 +45,8 @@ FROM olist_orders_dataset ood;
 
 -- Uma outra possibilidade é agrupar pelo mês/ano e caso não haja uma data ou a query não consiga converter utilizando o 'strftime', aprecerá Nulo.
 SELECT 
-	strftime('%Y-%m', order_approved_at) as ano_mes,
-	count(order_approved_at)
+	STRFTIME('%Y-%m', order_approved_at) as ano_mes,
+	COUNT(order_approved_at)
 FROM olist_orders_dataset ood
 GROUP BY ano_mes
 ORDER BY ano_mes ASC;
@@ -54,7 +54,7 @@ ORDER BY ano_mes ASC;
 SELECT
     COUNT(*) AS total_linhas,
     SUM(CASE WHEN order_delivered_carrier_date IS NULL THEN 1 ELSE 0 END) AS nulos,
-    SUM(CASE WHEN typeof(order_delivered_carrier_date) <> 'text' OR TRIM(order_delivered_carrier_date) = '' THEN 1 ELSE 0 END) AS valores_invalidos
+    SUM(CASE WHEN TYPEOF(order_delivered_carrier_date) <> 'text' OR TRIM(order_delivered_carrier_date) = '' THEN 1 ELSE 0 END) AS valores_invalidos
 FROM olist_orders_dataset ood;
 
 SELECT
@@ -66,7 +66,7 @@ WHERE order_delivered_carrier_date = ''
 -- E identificamos quais são essas linhas
 SELECT
 	DISTINCT order_status,
-	count (*) AS contagem_pedidos
+	COUNT(*) AS contagem_pedidos
 FROM olist_orders_dataset ood
 WHERE order_delivered_carrier_date = ''
 GROUP BY order_status
@@ -184,8 +184,8 @@ WHERE payment_value = 0
 SELECT
 	DISTINCT payment_installments AS parcelamentos,
 	COUNT(*) AS contagem,
-	CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL) AS perc_total,
-	SUM(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS freq_acumulada
+	ROUND(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL),4) AS perc_total,
+	ROUND(SUM(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_order_payments_dataset oopd
 GROUP BY parcelamentos
 ORDER BY contagem DESC
@@ -196,9 +196,9 @@ ORDER BY contagem DESC
 SELECT
 	payment_type,
 	count(*) qtd_por_tipo,
-	CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL) AS perc_total,
+	ROUND(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL),2) AS perc_total,
 	SUM(payment_value) AS total_pagamentos,
-	CAST(SUM(payment_value) * 1.0 / (SELECT SUM(payment_value) FROM olist_order_payments_dataset) AS DECIMAL) AS perc_total_pagamentos
+	ROUND(CAST(SUM(payment_value) * 1.0 / (SELECT SUM(payment_value) FROM olist_order_payments_dataset) AS DECIMAL),4) AS perc_total_pagamentos
 FROM olist_order_payments_dataset oopd
 GROUP BY payment_type
 ORDER BY qtd_por_tipo DESC
@@ -211,9 +211,9 @@ SELECT
 	MAX(payment_value) AS valor_maximo_pedido,
 	MIN(payment_value) AS valor_minimo_pedido,
 	MAX(payment_value) - MIN(payment_value) AS amplitude_pedido,
-	AVG(payment_value) AS media_pagamentos,
+	ROUND(AVG(payment_value),2) AS media_pagamentos,
 	MEDIAN(payment_value) AS mediana_pagamentos,
-	STDEV(payment_value) AS desvio_padrao_pagamentos
+	round(STDEV(payment_value),2) AS desvio_padrao_pagamentos
 FROM olist_order_payments_dataset oopd
 -- A Amplitude dos dados é a mesma do valor máximo devido ao valor do menor pedido ser 0.
 -- A média e a mediana estão relavitamente próximas, e ambas muito próximas ao valor mínimo. Sem criar o gráfico, a hipótese inicial é que seja uma distribuição assimétrica com concentração à esquerda.
@@ -226,12 +226,12 @@ SELECT
 	MAX(payment_value) AS valor_maximo_pedido,
 	MIN(payment_value) AS valor_minimo_pedido,
 	MAX(payment_value) - MIN(payment_value) AS amplitude_pedido,
-	AVG(payment_value) AS media_pagamentos,
+	ROUND(AVG(payment_value),2) AS media_pagamentos,
 	MEDIAN(payment_value) AS mediana_pagamentos,
-	STDEV(payment_value) AS desvio_padrao_pagamentos
+	ROUND(STDEV(payment_value),2) AS desvio_padrao_pagamentos
 FROM olist_order_payments_dataset oopd
 GROUP BY payment_type
--- Em todos os tipos de pagamento é possível notar a média e mediana muito próximas e uma concentração dos dados muito próximas aos valores mínimos.
+-- Em todos os tipos de pagamento é possível notar a média e mediana relativamente próximas e uma concentração dos dados muito próximas aos valores mínimos.
 
 
 -- Para calcular a moda:
@@ -244,3 +244,213 @@ GROUP BY payment_type, payment_value
 ORDER BY frequencia DESC
 -- Aqui identificamos que os pagamentos que mais aparecem são vouchers no valor de 50, seguidos por vouchers de 20 e 100.
 -- Removendo os Vouchers, o pagamento mais comum é de 77,57 no cartão de crédito.
+
+-- Continuando a análise da coluna de pagamentos, vamos extrair algumas medidas de tendência central e dispersão:
+SELECT
+	DISTINCT payment_installments AS numero_parcelas,
+	count(*) qtd_pagamentos,
+	ROUND(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL),4) AS perc_total,
+	ROUND(SUM(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset) AS DECIMAL)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada,
+	MIN(payment_value) AS pagamento_minimo,
+	MAX(payment_value) AS pagamento_maximo,
+	ROUND(AVG(payment_value), 2) AS media_de_pagamentos,
+	ROUND(MEDIAN(payment_value),2) AS mediana,
+	ROUND(STDEV(payment_value),2) AS desvio_padrao_pagamentos
+FROM olist_order_payments_dataset oopd
+GROUP BY numero_parcelas
+-- O que podemos extrair desta análise é que aproximadamente 99,67% das transações são em até 10x.
+-- As maiores transações estão também nesta faixa, com exceção dos parcelamentos em 15x e em em 20x que tem transações máximas acima de 2.000.
+
+
+-- Agora vamos explocar a base de categorias dos produtos,
+SELECT
+	COUNT(*),
+	COUNT(DISTINCT product_id),
+	COUNT(DISTINCT product_category_name)
+FROM olist_products_dataset opd
+
+SELECT
+	DISTINCT product_category_name AS categorias,
+	COUNT(product_id) AS contagem,
+	ROUND(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_products_dataset) AS DECIMAL),4) AS perc_total,
+	ROUND(SUM(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_products_dataset) AS DECIMAL)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
+FROM olist_products_dataset opd
+GROUP BY categorias
+ORDER BY contagem DESC
+-- Podemos ver que das 74 categorias, uma não possui nome (que representa 18% do total).
+-- Cama, mesa e banho é a categoria com a maior quantidade de produtos.
+-- Aqui não vamos ver qual o produto mais vendido ou com maior valor, pois o objetivo inicial é explorar a base.
+
+
+-- O objetivo aqui é analisar a tabela de clientes:
+SELECT
+	COUNT(*) AS qtd_linhas,
+	COUNT(DISTINCT customer_id) AS qtd_ids_clientes,
+	COUNT(DISTINCT customer_unique_id) AS qtd_ids_cadastros_unicos,
+	COUNT(*) - COUNT(DISTINCT customer_unique_id) AS dif_total_linhas_x_ids_clientes_unicos
+FROM olist_customers_dataset ocd
+-- Se o registro único for, por exemplo, um CPF, RG ou documento de identificação única, poderíamos ter uma fraude, erro de validação possibilitando cadastros duplicados, etc.
+-- Das 99.441 linhas, existem 3.345 linhas que possuem ID's Unicos repetidos.
+
+SELECT
+	customer_unique_id,
+	COUNT(*) as qtd_registros
+FROM olist_customers_dataset
+GROUP BY customer_unique_id
+HAVING COUNT(*) > 1
+ORDER BY qtd_registros DESC
+-- Podemos então verificar quais são os registros duplicados e a quantidade de duplicatas que cada um tem.
+-- As duplicatas variam de 2 a 17 registros com o mesmo customer unique id.
+
+
+WITH cadastros_duplicados AS (
+	SELECT
+		customer_unique_id,
+		COUNT(*) as registros_duplicados
+	FROM olist_customers_dataset
+	GROUP BY customer_unique_id
+	HAVING COUNT(*) > 1
+)
+SELECT 
+	COUNT(*) AS contagem_duplicados,
+	SUM(registros_duplicados) total_registros
+FROM cadastros_duplicados
+-- Ou seja, temos 2.997 customer unique id distintos com 2 registros ou mais duplicados, totalizando 6.342 linhas.
+
+WITH cadastros_unicos AS (
+	SELECT
+		DISTINCT customer_unique_id AS id_unico,
+		customer_city,
+		customer_state
+	FROM olist_customers_dataset
+)
+SELECT
+	id_unico,
+	COUNT(*)
+FROM cadastros_unicos
+GROUP BY id_unico
+HAVING COUNT(*) > 1
+ORDER BY COUNT(*) DESC
+-- Aqui também podemos identificar quais dos repetidos estão com registros em cidades e até estados diferentes.
+-- Pode ser caso de clientes que se cadastram em diferentes cidades e estados, ou que fazem alguma espécie de cadastro básico para uma compra única, etc.
+-- Em todos os casos, essa tabela precisará de maiores cuidados ao ser manipulada para uma extração de dados qualificada.
+
+
+--Estado com maior quantidade de clientes e as frequências relativas e acumuladas:
+SELECT
+	customer_state,
+	count(*) AS contagem,
+	ROUND(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset) AS DECIMAL),4) AS perc_total,
+	ROUND(SUM(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset) AS DECIMAL)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
+FROM olist_customers_dataset ocd
+GROUP BY customer_state
+ORDER BY contagem DESC
+-- Podemos notar que aproximadamente 42% dos clientes estão presentas no estado de São Paulo e que 68,64% estão presentes na Região Sudeste (SP, RJ, MG e ES).
+-- A região sul (PR, SC e RS) vem logo em seguida, com 14,23%.
+
+-- Para uma melhor visualização das regiões:
+SELECT
+	CASE
+		WHEN customer_state IN ('SP', 'RJ', 'MG', 'ES') THEN 'Sudeste'
+		WHEN customer_state IN ('PR', 'SC', 'RS') THEN 'Sul'
+		WHEN customer_state IN ('MT', 'MS', 'GO') THEN 'Centro-Oeste'
+		WHEN customer_state IN ('MA', 'PI', 'CE', 'BA', 'SE', 'AL', 'PE', 'PB', 'RN') THEN 'Nordeste'
+		ELSE 'Norte'
+	END AS regioes,
+	count(*) AS contagem,
+	ROUND(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset) AS DECIMAL),4) AS perc_total,
+	ROUND(SUM(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset) AS DECIMAL)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
+FROM olist_customers_dataset ocd
+GROUP BY regioes
+ORDER BY contagem DESC
+
+-- Cidade com maior quantidade de clientes e as frequências relativas e acumuladas:
+SELECT
+	customer_city,
+	customer_state,
+	COUNT(*) AS contagem,
+	ROUND(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset) AS DECIMAL),4) AS perc_total,
+	ROUND(SUM(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset) AS DECIMAL)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
+FROM olist_customers_dataset ocd
+GROUP BY customer_city
+ORDER BY contagem DESC
+-- Podemos identificar que aproximadamente 15,6% dos nossos clientes moram na cidade de São Paulo.
+-- É possível identificar também uma concentração dos pedidos nas capitais dos estados.
+
+-- Organizando melhor a visualização por capitais:
+SELECT
+	customer_state,
+	customer_city,
+	CASE
+		WHEN customer_city IN ('belo horizonte', 'salvador', 'fortaleza', 'joao pessoa', 'sao luis', 'maceio', 'aracaju', 'natal', 'recife', 'teresina', 'goiania', 'cuiaba', 'palmas', 'porto alegre', 
+		'curitiba', 'florianopolis', 'sao paulo', 'rio de janeiro', 'vitoria', 'porto velho', 'rio branco', 'manaus', 'boa vista', 'macapa', 'belem', 'sao luis', 'brasilia') THEN 'Capital'
+		ELSE 'Demais Cidades'
+	END AS capitais,
+	COUNT(*) AS contagem,
+	ROUND(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset) AS DECIMAL),4) AS perc_total,
+	ROUND(SUM(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset) AS DECIMAL)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
+FROM olist_customers_dataset ocd
+GROUP BY customer_city
+ORDER BY capitais
+-- De acordo com a frequência acumulada,  77,53% dos clientes se encontram nas capitais.
+
+
+-- Agora vamos analisar a tabela de Reviews:
+SELECT * FROM olist_order_reviews_dataset oord
+
+SELECT
+	COUNT(*),
+	COUNT(DISTINCT review_id),
+	COUNT(DISTINCT order_id) 
+FROM olist_order_reviews_dataset oord
+-- É possível identificar que existe uma diferença entre a quantidade de linhas e a quantidade de reviews distintos e dos order id's distintos
+
+SELECT
+	review_id,
+	COUNT(*) as qtd_registros
+FROM olist_order_reviews_dataset oord
+GROUP BY review_id
+HAVING COUNT(*) > 1
+ORDER BY qtd_registros DESC
+-- Identificamos registros em branco, com falha na coleta e com registros incompletos, além de muitos registos duplicados.
+
+-- Vamos então tentar identificar uma forma de filtrar os registros diferentes do padrão de ID:
+SELECT
+DISTINCT review_id,
+LENGTH(review_id)
+FROM olist_order_reviews_dataset oord
+-- Identificamos que existe um padrão de 32 na quantidade de caracteres do review_id. Vamos então utilizá-lo para tentar identificar os reviews fora de padrão.
+
+SELECT
+	review_id 
+FROM olist_order_reviews_dataset oord
+WHERE LENGTH(review_id) <> 32
+-- Aparentemente o padrão retornou apenas valores diferentes do id padrão 
+
+WITH cadastros_duplicados AS (
+	SELECT
+		review_id,
+		COUNT(*) as registros_duplicados
+	FROM olist_order_reviews_dataset oord
+	GROUP BY review_id
+	HAVING COUNT(*) > 1
+)
+SELECT 
+	COUNT(*) AS contagem_duplicados,
+	SUM(registros_duplicados) AS total_registros 
+FROM cadastros_duplicados
+-- Ao total são 489 registros nestas duplicados, totalizando 1.131 linhas.
+
+WITH cadastros_unicos AS (
+	SELECT
+		review_id,
+		COUNT(review_id)
+	FROM olist_order_reviews_dataset oord
+	WHERE LENGTH(review_id) = 32
+	GROUP BY review_id
+	HAVING count(review_id) = 1
+)
+SELECT
+	COUNT(*) AS registros_unicos
+FROM cadastros_unicos
+-- Das 79.121 linhas, 76.937 possuem registros únicos, não estão vazios ou possuem mais de 32 caracteres sem sua composição.
