@@ -37,8 +37,36 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 
 ## Análise Exploratória dos Dados
 
-## Análise Estatística Básica
+### Análise da Tabela olist_orders_dataset (Pedidos)
+
+
+
+### Análise da Tabela olist_order_payments_dataset (Pagamentos dos Pedidos)
+
+
+
+### Análise da Tabela olist_products_dataset (Produtos)
+
+
+
+### Análise da Tabela olist_customers_dataset (Clientes)
+
+
+
+### Análise da Tabela olist_order_reviews_dataset (Avaliações dos Pedidos)
+
+
+
+### Análise da Tabela olist_order_items_dataset (Itens dos Pedidos)
+
+
+## Análise Estatística
+
+
 
 ## Criação do Dashboard de Acompanhamento da Operação
 
+
+
 ## Relatório de Planos de Ação.
+
