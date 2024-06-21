@@ -10,20 +10,20 @@ A análise será dividida em:
 * Perguntas de Negócio.
 * Planos de Ação.
 
-
 ## Base de Dados Utilizada
-
-A motivação na escolha do DataSet Olist foi devido a sua familiaridade com bases de dados utilizadas no dia a dia da maioria das empresas, com dados a serem tratados, incompatibilidades e um grande potêncial de melhoria a ser explorado. 
 
 O DataSet Olist é uma representação de uma série de E-Commerces brasileiros com dados de 100 mil pedidos entre os anos de 2016-2018 e nele existem tabelas com dados dos clientes, pagamentos, avaliações de compras, produtos e suas categorias, vendedores, entre outras informações.
 
-Foi utilizado o DataSet Olist presente no Kaggle:
+A motivação na escolha do DataSet Olist foi devido a sua familiaridade com bases de dados utilizadas no dia a dia da maioria das empresas, com relacionamento entre tabelas, chaves primarias e secundárias, entre outras similaridades.
+
+DataSet Olist no Kaggle:
 https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
-Arquivos Excel, CSV, SQL(cópias) e Power BI:
+Repoositório de Arquivos Utilizados (Arquivos Excel, CSV, SQL(cópias) e Power BI):
 https://drive.google.com/drive/u/0/folders/1RxUEyY75qlQwejZxF--9Y24GLZ_8tx9N
 
 ## Ferramentas
+
 Sobre as ferramentas, foram utilizadas as seguintes:
 
 * DBeaver - Utilizando SQL para realizar as análises iniciais das tabelas, realizar tratamento nos dados, e extrair alguns insights iniciais.
@@ -43,6 +43,7 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 ## Instruções:
 
 ### Arquivo SQL
+
 No arquivo SQL(.sql), cada Query conterá acima dela uma linha com o propósito e abaixo uma ou mais linhas com um breve resumo do porquê das escolhas na utilização dos comandos e funções.
 
 ### Arquivo Excel
@@ -51,7 +52,8 @@ No arquivo Excel (.xlsx), haverá uma planilha com as cópias das tabelas dinâm
 
 ### Arquivo Power BI
 
-No arquivo Power BI (.pbix), cada medida criada haverá abaixo 
+No arquivo Power BI (.pbix), cada medida e coluna calculada criada conterá no comentário uma breve explicação sobre o porquê das escolhas na utilização dos comandos e funções.
+No Repositório de Arquivos Utilizados, haverá um README com as limpezas realizadas no Power Query do Power BI.
 
 ## Análise Exploratória dos Dados
 
