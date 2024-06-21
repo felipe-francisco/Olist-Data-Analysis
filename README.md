@@ -7,8 +7,9 @@ O objetivo desta análise é extrair informações para melhorar as operações 
 Foi utilizado o DataSet Olist presente no Kaggle:
 https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
-A motivação na escolha do DataSet Olist foi devido a sua familiaridade com bases de dados utilizadas no dia a dia da maioria das empresas, com dados a serem tratados, incompatibilidades e muito potêncial de melhoria a ser explorado. O DataSet Olist é uma representação de uma série de E-Commerces brasileiros com dados de 100 mil pedidos entre os anos de 2016 e 2018.
-clientes, pagamentos, avaliações de compras, produtos e suas categorias, vendedores, entre outras informações.
+A motivação na escolha do DataSet Olist foi devido a sua familiaridade com bases de dados utilizadas no dia a dia da maioria das empresas, com dados a serem tratados, incompatibilidades e muito potêncial de melhoria a ser explorado. 
+
+O DataSet Olist é uma representação de uma série de E-Commerces brasileiros com dados de 100 mil pedidos entre os anos de 2016-2018 e nele existem dados dos clientes, pagamentos, avaliações de compras, produtos e suas categorias, vendedores, entre outras informações.
 
 ## Ferramentas
 Sobre as ferramentas, foram utilizadas as seguintes:
