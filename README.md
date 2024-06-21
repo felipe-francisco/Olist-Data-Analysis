@@ -5,7 +5,7 @@ O objetivo macro desta análise é encontrar soluções para elevar ao máximo a
 
 A análise será dividida em:
 * Análise Exploratória dos Dados.
-* Análise Estatística Básica.
+* Análise Estatística.
 * Criação do Dashboard de Acompanhamento da Operação.
 * Relatório de Planos de Ação.
 
