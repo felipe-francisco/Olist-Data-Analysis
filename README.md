@@ -44,7 +44,7 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 
 ### Arquivo SQL
 
-No arquivo SQL(.sql), cada Query conterá acima dela uma linha com o propósito e abaixo uma ou mais linhas com um breve resumo do porquê das escolhas na utilização dos comandos e funções.
+No arquivo SQL(.sql), cada Query conterá acima dela uma linha com o propósito e abaixo uma ou mais linhas com um breve resumo do porquê das escolhas dos comandos e funções.
 
 ### Arquivo Excel
 
@@ -58,6 +58,18 @@ No Repositório de Arquivos Utilizados, haverá um README com as limpezas realiz
 ## Análise Exploratória dos Dados
 
 ### Análise da Tabela olist_orders_dataset (Pedidos)
+
+* Segundo as analises de integridade realizadas, cada linha da tabela representa um id de identificação único da compra do cliente. Portanto existem 99.441 registros de pedidos e 99.441 clientes.
+
+* Quanto ao status de cada compra, foram encontradas 8 categorias distintas, sendo elas:
+- "delivered" = entregue;
+- "shipped" = enviado;
+- "canceled" = cancelado;
+- "unavailable" = indisponível;
+- "invoiced" = faturado;
+- "processing" = em processamento;
+- "created" = criado;
+- "approved" = aprovado;
 
 
 
