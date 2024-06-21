@@ -48,7 +48,7 @@ No arquivo SQL(.sql), cada Query conterá acima dela uma linha com o propósito 
 
 ### Arquivo Excel
 
-No arquivo Excel (.xlsx), haverá uma planilha com as cópias das tabelas dinâmicas, gráficos, motivações e respostas obtidas.
+No arquivo Excel (.xlsx), haverá uma planilha chamada "Análises" com as cópias das tabelas dinâmicas, gráficos, motivações e respostas obtidas.
 
 ### Arquivo Power BI
 
