@@ -15,11 +15,14 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 
 * DBeaver - Utilizando SQL para realizar as análises iniciais das tabelas, realizar tratamento nos dados, e extrair alguns insights iniciais.
 (Foi utilizado um arquivo compilado em formato SQlite da Base Olist.)
+
     Link para download: https://dbeaver.io/download/
 
 * Excel - Para realozar análises de medidas de tendência e dispersão dos dados, incluindo gráficos e tabelas dinâmicas.
+
     Link para compra: https://www.microsoft.com/pt-br/microsoft-365/excel
 
 * Power BI - Como ferramenta de dataviz, onde foi criada uma visualização, utilizando o Power Query como ferramenta de Limpeza e Tratamento.
 (A etapa de limpeza e tratamento poderia ser realizada no DBeaver ou em outro SGBD(Sistema Gerenciador de Banco de Dados))
+
     Link para download: https://www.microsoft.com/pt-br/power-platform/products/power-bi
