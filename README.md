@@ -62,9 +62,9 @@ No Repositório de Arquivos Utilizados, haverá um README com as limpezas realiz
 * Segundo as analises de integridade realizadas, cada linha da tabela representa um id de identificação único da compra do cliente. Portanto existem 99.441 registros de pedidos e 99.441 clientes.
 
 * Quanto ao status de cada compra, foram encontradas 8 categorias distintas, sendo elas:
- "delivered" = entregue;
- "shipped" = enviado;
- "canceled" = cancelado;
+> "delivered" = entregue;
+> "shipped" = enviado;
+> "canceled" = cancelado;
  "unavailable" = indisponível;
  "invoiced" = faturado;
  "processing" = em processamento;
