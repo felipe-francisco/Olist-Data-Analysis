@@ -8,7 +8,7 @@ A análise será dividida em:
 * Análise Estatística.
 * Criação do Dashboard de Acompanhamento da Operação.
 * Respondendo Perguntas de Negócio.
-* Relatório de Planos de Ação.
+* Planos de Ação.
 
 
 ## Base de Dados Utilizada
@@ -70,5 +70,5 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 ## Respondendo Perguntas de Negócio
 
 
-## Relatório de Planos de Ação
+## Planos de Ação
 
