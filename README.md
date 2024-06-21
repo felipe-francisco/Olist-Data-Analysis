@@ -67,8 +67,8 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 ## Criação do Dashboard de Acompanhamento da Operação
 
 
-## Respondendo Perguntas de Negócio:
+## Respondendo Perguntas de Negócio
 
 
-## Relatório de Planos de Ação.
+## Relatório de Planos de Ação
 
