@@ -242,7 +242,8 @@ SELECT
 FROM olist_order_payments_dataset oopd
 GROUP BY payment_type, payment_value
 ORDER BY frequencia DESC
--- Aqui identificamos que os pagamentos que mais aparecem são vouchers no valor de 50, seguidos por vouchers de 20 e 100.
+-- Aqui identificamos que a variável payment_value é unimodal com uma frequência de 273 para o valor de 50 no voucher.
+-- Os pagamentos que mais aparecem são vouchers no valor de 50, seguidos por vouchers de 20 e 100.
 -- Removendo os Vouchers, o pagamento mais comum é de 77,57 no cartão de crédito.
 
 -- Continuando a análise da coluna de pagamentos, vamos extrair algumas medidas de tendência central e dispersão:
@@ -454,3 +455,170 @@ SELECT
 	COUNT(*) AS registros_unicos
 FROM cadastros_unicos
 -- Das 79.121 linhas, 76.937 possuem registros únicos, não estão vazios ou possuem mais de 32 caracteres sem sua composição.
+
+
+-- Agora vamos analisar a coluna com as notas:
+SELECT 
+	DISTINCT review_score
+FROM olist_order_reviews_dataset oord
+-- É possível identificar diversos registros que não são numéricos.
+
+SELECT 
+	count(DISTINCT review_score)
+FROM olist_order_reviews_dataset oord
+WHERE LENGTH(review_score) = 1
+-- Identificamos 5 registros com 1 caractere.
+
+SELECT
+	DISTINCT(review_score)
+FROM olist_order_reviews_dataset oord
+WHERE LENGTH(review_score) = 1
+-- E como as notas são de 1 a 5, elas tem 1 caractere. Qualquer registro fora deste padrão é algum tipo de erro na coleta.
+
+
+SELECT
+	COUNT(review_score)
+FROM olist_order_reviews_dataset oord
+WHERE LENGTH(review_score) <> 1
+-- Encontramos então 602 registros fora do padrão
+
+SELECT 
+AVG(review_score)
+FROM olist_order_reviews_dataset oord
+WHERE LENGTH(review_score) = 1
+-- Embora ao final a média altere pouco, podemos ter um dado muito mais exato e correto.
+
+SELECT
+	DISTINCT review_score,
+	COUNT(*) AS qtd_notas,
+	ROUND(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_reviews_dataset WHERE LENGTH(review_score) = 1) AS DECIMAL),4) AS perc_total,
+	ROUND(SUM(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_reviews_dataset WHERE LENGTH(review_score) = 1) AS DECIMAL)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
+FROM olist_order_reviews_dataset oord
+WHERE LENGTH(review_score) = 1
+GROUP BY review_score
+-- Podemos verificar que 75,88% das notas estão entre 4 e 5.
+-- Porém 11,38% das notas são de 1(pior nota). O que é um número bem elevado.
+
+SELECT
+	CASE
+		WHEN review_score IN (4, 5) THEN 'Positiva'
+		ELSE 'Negativa'
+	END AS categoria_avaliacoes,
+	count(*),
+	ROUND(CAST(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_reviews_dataset WHERE LENGTH(review_score) = 1) AS DECIMAL),4) AS perc_total
+FROM olist_order_reviews_dataset oord
+WHERE LENGTH(review_score) = 1
+GROUP BY categoria_avaliacoes
+-- A proporção de notas positivas/negativas é relativamente positiva. Através das Análises posteriores será possível encontrar muitas oportunidades de melhoria através dos feedbacks, tanto positivos quanto negativos.
+
+-- Por último vamos analisar a tabela com os itens dos pedidos:
+SELECT 
+	COUNT(*) AS contagem_linhas,
+	COUNT(DISTINCT order_id) AS contagem_id_pedidos,
+	COUNT(DISTINCT seller_id) AS contagem_id_vendedores
+FROM olist_order_items_dataset ooid
+-- Como esperado da tabela com os itens dos produtos, haverá id dos pedidos duplicados.
+-- Podemos verificar também que existem 3095 vendedores.
+
+SELECT
+	order_id,
+	count(*) AS contagem_order_id
+FROM olist_order_items_dataset ooid
+GROUP BY order_id
+ORDER BY contagem_order_id DESC
+-- Podemos identificar que existem pedidos com até 21 itens.
+
+SELECT
+	product_id,
+	count(*) AS contagem_product_id
+FROM olist_order_items_dataset ooid
+GROUP BY product_id
+ORDER BY contagem_product_id DESC
+-- O produto que mais apareceu nos pedidos teve 527 solicitações.
+
+SELECT * FROM olist_order_items_dataset ooid
+
+SELECT
+	product_id,
+	SUM(price) AS total_vendas
+FROM olist_order_items_dataset ooid
+GROUP BY product_id
+ORDER BY total_vendas DESC
+-- O produto mais vendido vendeu R$ 63.885,00 sem considerar o frete (que geralmente é repassado para a transportadora).
+
+SELECT
+	seller_id,
+	SUM(price) AS total_vendas
+FROM olist_order_items_dataset ooid
+GROUP BY seller_id
+ORDER BY total_vendas DESC
+--O vendedor que mais vendeu arrecadou 229.472,63 (sem considerar o frete).
+
+-- Já o vendedor que menos vendeu
+WITH vendedores_baixa_performance AS (
+	SELECT
+		seller_id,
+		SUM(price) AS total_vendas
+	FROM olist_order_items_dataset ooid
+	GROUP BY seller_id
+	HAVING SUM(price) < 1000
+)
+SELECT
+	COUNT(*) AS contagem_vendedores
+FROM vendedores_baixa_performance
+-- Dos 3095 vendedores, 1.667 venderam um total em valores abaixo de 1.000.
+
+-- Vamos analisar agora o preço e frete dos produtos separadamente:
+
+SELECT
+	DISTINCT typeof(price)  AS tipo_variavel
+FROM olist_order_items_dataset ooid
+-- Aqui verificamos o tipo de variável de forma distinta, para verificar se não existe um erro na captação dos dados.
+
+SELECT
+	DISTINCT typeof(freight_value) AS tipo_variavel
+FROM olist_order_items_dataset ooid
+-- Realizamos o mesmo processo para as duas variáveis numéricas.
+
+SELECT
+	COUNT(price) AS qtd_vendida, 
+	MAX(price) AS preco_maximo,
+	MIN(price) AS preco_minimo,
+	(MAX(price) - MIN(price)) AS amplitude,
+	ROUND(AVG(price),2) AS media,
+	MEDIAN(PRICE) AS mediana,
+	ROUND(STDEV(PRICE),2) AS desvio_padrao
+FROM olist_order_items_dataset ooid
+-- Analisamos então a quantidade vendida, valores máximos e mínimos, amplitude, media, mediana e desvio padrão dos preços.
+-- Podemos identificar de forma prévia, que existe uma distribuição assimétrica com concentração à esquerda.
+
+-- Para finalizar, calculamos a moda:
+SELECT 
+	price,
+	count(*) AS frequencia
+FROM olist_order_items_dataset ooid 
+GROUP BY price
+ORDER BY frequencia DESC
+LIMIT 1
+-- Através da moda, identificamos que a variável price é unimodal e seu valor é 59,90.
+
+-- Agora analisando o frete:
+SELECT
+	COUNT(*),
+	MAX(freight_value) AS maximo_frete,
+	MIN(freight_value) AS minimo_frete,
+	(MAX(freight_value) - MIN(freight_value)) AS amplitude, 
+	AVG(freight_value) AS media,
+	MEDIAN(freight_value) AS mediana,
+	STDEV(freight_value) AS desvio_padrao
+FROM olist_order_items_dataset ooid
+
+SELECT
+	freight_value,
+	COUNT(*) AS frequencia
+FROM olist_order_items_dataset ooid
+GROUP BY freight_value
+ORDER BY frequencia DESC
+LIMIT 1
+-- Identificamos que a variável freight é unimodal, e seu valor é 15,10.
+
