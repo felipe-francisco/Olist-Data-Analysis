@@ -1,7 +1,7 @@
 #  Olist Data Analysis
 
-## Objetivos
-O objetivo desta análise é extrair informações para melhorar as operações deste E-commerce
+## Objetivo
+O objetivo macro desta análise é encontrar soluções para elevar ao máximo as operações deste e-commerce, criando planos de ação para cada ponto de melhoria encontrado.
 
 ## Base de Dados Utilizada
 Foi utilizado o DataSet Olist presente no Kaggle:
@@ -27,3 +27,6 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 (A etapa de limpeza e tratamento poderia ser realizada no DBeaver ou em outro SGBD(Sistema Gerenciador de Banco de Dados))
 
     Link para download: https://www.microsoft.com/pt-br/power-platform/products/power-bi
+
+
+##
