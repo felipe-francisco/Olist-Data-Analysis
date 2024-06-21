@@ -3,6 +3,13 @@
 ## Objetivo
 O objetivo macro desta análise é encontrar soluções para elevar ao máximo as operações deste e-commerce, criando planos de ação para cada ponto de melhoria encontrado.
 
+A análise será dividida em:
+* Análise Exploratória dos Dados.
+* Análise Estatística Básica.
+* Criação do Dashboard de Acompanhamento da Operação.
+* Relatório de Planos de Ação.
+
+
 ## Base de Dados Utilizada
 Foi utilizado o DataSet Olist presente no Kaggle:
 https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
@@ -19,14 +26,19 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 
     Link para download: https://dbeaver.io/download/
 
-* Excel - Para realozar análises de medidas de tendência e dispersão dos dados, incluindo gráficos e tabelas dinâmicas.
+* Excel - Para realizar análises de medidas de tendência e dispersão dos dados, identificação de outliers, incluindo gráficos e tabelas dinâmicas.
 
     Link para compra: https://www.microsoft.com/pt-br/microsoft-365/excel
 
-* Power BI - Como ferramenta de dataviz, onde foi criada uma visualização, utilizando o Power Query como ferramenta de Limpeza e Tratamento.
-(A etapa de limpeza e tratamento poderia ser realizada no DBeaver ou em outro SGBD(Sistema Gerenciador de Banco de Dados))
+* Power BI - Como ferramenta de dataviz, onde será criada uma visualização, utilizando o Power Query como ferramenta de Limpeza e Tratamento, e criação do dashboard de acompanhamento da operação.
+(A etapa de limpeza e tratamento poderia e até deveria ser realizada no DBeaver ou em outro SGBD(Sistema Gerenciador de Banco de Dados) devido ao seu melhor processamento, mas neste caso vamos utilizar o Power Query como forma alternativa)
 
     Link para download: https://www.microsoft.com/pt-br/power-platform/products/power-bi
 
+## Análise Exploratória dos Dados
 
-##
+## Análise Estatística Básica
+
+## Criação do Dashboard de Acompanhamento da Operação
+
+## Relatório de Planos de Ação.
