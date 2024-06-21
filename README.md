@@ -7,17 +7,21 @@ A análise será dividida em:
 * Análise Exploratória dos Dados.
 * Análise Estatística.
 * Criação do Dashboard de Acompanhamento da Operação.
-* Respondendo Perguntas de Negócio.
+* Perguntas de Negócio.
 * Planos de Ação.
 
 
 ## Base de Dados Utilizada
-Foi utilizado o DataSet Olist presente no Kaggle:
-https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
 A motivação na escolha do DataSet Olist foi devido a sua familiaridade com bases de dados utilizadas no dia a dia da maioria das empresas, com dados a serem tratados, incompatibilidades e um grande potêncial de melhoria a ser explorado. 
 
 O DataSet Olist é uma representação de uma série de E-Commerces brasileiros com dados de 100 mil pedidos entre os anos de 2016-2018 e nele existem tabelas com dados dos clientes, pagamentos, avaliações de compras, produtos e suas categorias, vendedores, entre outras informações.
+
+Foi utilizado o DataSet Olist presente no Kaggle:
+https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
+
+Arquivos Excel, CSV, SQL(cópias) e Power BI:
+https://drive.google.com/drive/u/0/folders/1RxUEyY75qlQwejZxF--9Y24GLZ_8tx9N
 
 ## Ferramentas
 Sobre as ferramentas, foram utilizadas as seguintes:
@@ -35,6 +39,19 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 (A etapa de limpeza e tratamento poderia e até deveria ser realizada no DBeaver ou em outro SGBD(Sistema Gerenciador de Banco de Dados) devido ao seu melhor processamento, mas neste caso vamos utilizar o Power Query como forma alternativa)
 
     Link para download: https://www.microsoft.com/pt-br/power-platform/products/power-bi
+
+## Instruções:
+
+### Arquivo SQL
+No arquivo SQL(.sql), cada Query conterá acima dela uma linha com o propósito e abaixo uma ou mais linhas com um breve resumo do porquê das escolhas na utilização dos comandos e funções.
+
+### Arquivo Excel
+
+No arquivo Excel (.xlsx), haverá uma planilha com as cópias das tabelas dinâmicas, gráficos, motivações e respostas obtidas.
+
+### Arquivo Power BI
+
+No arquivo Power BI (.pbix), cada medida criada haverá abaixo 
 
 ## Análise Exploratória dos Dados
 
@@ -67,7 +84,7 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 ## Criação do Dashboard de Acompanhamento da Operação
 
 
-## Respondendo Perguntas de Negócio
+## Perguntas de Negócio
 
 
 ## Planos de Ação
