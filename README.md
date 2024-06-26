@@ -12,7 +12,7 @@ A análise será dividida em:
 
 * Análise Exploratória dos Dados.
 
-* Análise Estatística.
+* Análise Estatística Descritiva.
 
 * Criação do Dashboard de Acompanhamento da Operação.
 
@@ -134,11 +134,12 @@ No Repositório de Arquivos Utilizados, haverá um README com as limpezas realiz
       -  "created" = criado;
       -  "approved" = aprovado;
 
-	Os pedidos entregues representam a 		maioria com 97,02%, seguido pelos  		enviados com 1,11%, cancelados com 0,6%, indisponíveis com 0,6%, em processamento com 0,3%, criados com 0,01% e aprovados com 0,001%.
+	Os pedidos entregues representam a maioria com 97,02%, seguido pelos enviados com 1,11%, cancelados com 0,6%, indisponíveis com 0,6%, em processamento com 0,3%, criados com 0,01% e aprovados com 0,001%.
 
-* Com relação ao preenchimento dos dados, a tabela de data de aprovação possui 160 valores vazios e a tabela de data de entrega do pedido na transportadora possui 1.783 valores vazios.
+* Com relação ao preenchimento dos dados, as colunas de data de aprovação, data de entrega do pedido na transportadora e data de entrega ao cliente possuem 160, 1.783 e 2.965 valores vazios.
 
-	Estes valores podem representar problemas
+	Dos 160 valores da tabela, não foram encontradas nenhuma incompatibilidade.
+	
 
 ### Análise da Tabela olist_order_payments_dataset (Pagamentos dos Pedidos)
 
@@ -169,7 +170,7 @@ No Repositório de Arquivos Utilizados, haverá um README com as limpezas realiz
   
   
 
-## Análise Estatística
+## Análise Estatística Descritiva
 
   
   

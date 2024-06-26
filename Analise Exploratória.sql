@@ -19,7 +19,7 @@ FROM olist_orders_dataset ood;
 SELECT 
 	order_status AS categorias,
 	COUNT(*) as contagem_pedidos,
-	ROUND(COUNT(*) * 1.0/ (SELECT COUNT(*) FROM olist_orders_dataset ood),4) AS perc_total
+	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_orders_dataset ood),4) AS perc_total
 FROM olist_orders_dataset ood
 GROUP BY categorias
 ORDER BY contagem_pedidos DESC;
@@ -103,7 +103,7 @@ SELECT
 FROM olist_orders_dataset ood
 WHERE order_approved_at = ''
 GROUP BY order_status
-ORDER BY contagem_pedidos DESC
+ORDER BY contagem_pedidos DESC;
 /*
 -- Foram filtardos os valores vazios, e a contagem agrupada pelo order_status
 */
@@ -125,7 +125,7 @@ SELECT
 FROM olist_orders_dataset ood
 WHERE order_delivered_carrier_date = ''
 GROUP BY categorias
-ORDER BY contagem_pedidos DESC
+ORDER BY contagem_pedidos DESC;
 /*
 -- Agrupando a contagem de pedidos quando a data de entrega na transportadora for vazia pelo order-status para encontrar a categoria de cada valor vazio.
 */
@@ -136,7 +136,7 @@ SELECT
 FROM olist_orders_dataset ood
 WHERE 
 	order_delivered_carrier_date = '' AND
-	order_status IN('delivered')
+	order_status IN('delivered');
 /*
 -- Realizada uma query que retorna todas as linhas quando a data da entrega na transportadora for vazia e o status do pedido for entregue
 */
@@ -195,7 +195,7 @@ SELECT
 FROM olist_order_payments_dataset oopd 
 GROUP BY order_id
 HAVING COUNT(*) > 1
-ORDER BY registros_duplicados DESC
+ORDER BY registros_duplicados DESC;
 /*
 -- A query retorna o order_id e uma contagem de linhas agrupadas pelo order_id, assim todos os pedidos com order_id repetidos seram agrupados e contados. Utilizamos o comando HAVING para filtrar no agrupamento os order_id's maiores que 1.
 -- O order_by ordena a quantidade de registros duplicados do maior para o menor.
@@ -205,7 +205,7 @@ ORDER BY registros_duplicados DESC
 SELECT
 	*
 FROM olist_order_payments_dataset oopd 
-WHERE order_id = '465c2e1bee4561cb39e0db8c5993aafc'
+WHERE order_id = '465c2e1bee4561cb39e0db8c5993aafc';
 /*
 -- A Query retorna todas as linhas quando o order_id for igual a determinado id inserido no filtro.
 */
@@ -216,7 +216,7 @@ SELECT
 	payment_type,
 	COUNT(*) AS contagem
 FROM olist_order_payments_dataset oopd
-GROUP BY payment_type
+GROUP BY payment_type;
 /*
 -- A query retorna os payment_type's, e uma contagem de todas as linhas agrupados pelos payment_types, permitindo saber quantos tipos de pagamentos existem e sua quantidade.
 */ 
@@ -228,7 +228,7 @@ SELECT
 	SUM(payment_value) valor_total
 FROM olist_order_payments_dataset oopd
 GROUP BY order_id
-ORDER BY valor_total desc
+ORDER BY valor_total DESC;
 /*
 -- A query retorna or order_id's agrupados e uma soma do payment_value.
 -- O order_by ordena os pedidos com o valor total do payment_value do maior para o menor.
@@ -240,7 +240,7 @@ SELECT
 	SUM(payment_value) valor_total
 FROM olist_order_payments_dataset oopd
 GROUP BY order_id
-ORDER BY valor_total
+ORDER BY valor_total;
 /*
 -- A query retorna or order_id's agrupados e uma soma do payment_value.
 -- O order_by sem o comando posterior, por padrão orderna do menor para o maior. Os pedidos foram ordenados então do menor para o maior.
@@ -253,7 +253,7 @@ SELECT
 FROM olist_order_payments_dataset oopd
 LEFT JOIN olist_orders_dataset ood
 	ON oopd.order_id = ood.order_id
-WHERE payment_value = 0
+WHERE payment_value = 0;
 /*
 -- A query retorna todas as colunas da tabela olist_order_payments_dataset e da olist_orders_dataset onde na tabela olist_orders_dataset os dados não forem nuloes. Foi utilizada a coluna order_id em comum entre as duas tabelas.
 -- O comando Where filtra os resultados da query retornando apenas os valores iguais a 0.
@@ -267,7 +267,7 @@ SELECT
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_order_payments_dataset oopd
 GROUP BY parcelamentos
-ORDER BY contagem DESC
+ORDER BY contagem DESC;
 /*
 -- Nesta query, realizamos um agrupamento pelo payment_installments (parcelamentos), juntamente com uma contagem do total de linhas.
 -- Em seguida, utilizamos a subquery em 2 contextos:
@@ -289,7 +289,7 @@ SELECT
 	ROUND(SUM(payment_value) * 1.0 / (SELECT SUM(payment_value) FROM olist_order_payments_dataset),4) AS perc_total_pagamentos
 FROM olist_order_payments_dataset oopd
 GROUP BY payment_type
-ORDER BY qtd_por_tipo DESC
+ORDER BY qtd_por_tipo DESC;
 /*
 -- A query retorna um agrupamento pelo payment_type e uma contagem dos valores.
 -- Em seguida a terceira coluna retorna o percentual que cada payment_type (utilizando o mesmo preceito da query anterior).
@@ -298,7 +298,7 @@ ORDER BY qtd_por_tipo DESC
  */
 
 
--- Calculando o valor máximo, mínimo, amplitude, media, mediana e moda do payment_value:
+-- Calculando o valor máximo, mínimo, amplitude, media e mediana do payment_value:
 SELECT
 	MAX(payment_value) AS valor_maximo_pedido,
 	MIN(payment_value) AS valor_minimo_pedido,
@@ -306,7 +306,7 @@ SELECT
 	ROUND(AVG(payment_value),2) AS media_pagamentos,
 	MEDIAN(payment_value) AS mediana_pagamentos,
 	round(STDEV(payment_value),2) AS desvio_padrao_pagamentos
-FROM olist_order_payments_dataset oopd
+FROM olist_order_payments_dataset oopd;
 /*
 -- A query retorna algumas medidas de tendência central e dispersão.
 -- Na primeira coluna, retornará o valor máximo.
@@ -328,22 +328,9 @@ SELECT
 	MEDIAN(payment_value) AS mediana_pagamentos,
 	ROUND(STDEV(payment_value),2) AS desvio_padrao_pagamentos
 FROM olist_order_payments_dataset oopd
-GROUP BY payment_type
+GROUP BY payment_type;
 /*
 -- O mesmo processo da query anterior foi realizado, porém agora agrupando os resultados de acordo com o payment_type.
- */
-
-
--- Para calcular a moda:
-SELECT 
-	payment_type,
-	payment_value,
-	count(*) AS frequencia
-FROM olist_order_payments_dataset oopd
-GROUP BY payment_type, payment_value
-ORDER BY frequencia DESC
-/*
--- A moda é o valor com mais frequência, para isto pegamos cada payment_type, o valor e uma contagem de linhas que vai representar a quantidade de vezes que o valor aparece.
  */
 
 -- Continuando a análise da coluna de pagamentos, vamos extrair algumas medidas de tendência central e dispersão:
@@ -358,7 +345,7 @@ SELECT
 	ROUND(MEDIAN(payment_value),2) AS mediana,
 	ROUND(STDEV(payment_value),2) AS desvio_padrao_pagamentos
 FROM olist_order_payments_dataset oopd
-GROUP BY numero_parcelas
+GROUP BY numero_parcelas;
 /*
 -- Utilizamos conceitos já utilizados anteriormente para extrair o percentual total, a frequência acumulada e medidas de tendência central/dispersão.
 -- Entretanto, desta vez agrupamos cada medida e suas porcentagens pelo payment_installments
@@ -376,7 +363,7 @@ SELECT
 	COUNT(*),
 	COUNT(DISTINCT product_id),
 	COUNT(DISTINCT product_category_name)
-FROM olist_products_dataset opd
+FROM olist_products_dataset opd;
 /*
 -- Realizada uma contagem de linhas simples, uma contagem de product_id distinta e de product_category_name distinta.
  */
@@ -389,7 +376,7 @@ SELECT
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_products_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_products_dataset opd
 GROUP BY categorias
-ORDER BY contagem DESC
+ORDER BY contagem DESC;
 /*
 -- Extraindo a frequência, frequência relativa e frequência acumulada de cada product_category_name
 -- Conceitos já apresentados nas análises das tabelas anteriores.
@@ -401,7 +388,7 @@ SELECT
 	COUNT(*) AS qtd_linhas,
 	COUNT(DISTINCT customer_id) AS qtd_ids_clientes,
 	COUNT(DISTINCT customer_unique_id) AS qtd_ids_cadastros_unicos
-FROM olist_customers_dataset ocd
+FROM olist_customers_dataset ocd;
 /*
 -- Conceitos já apresentados nas análises das tabelas anteriores.
 -- Contagem simples de linhas, contagem de customer_id e customer_unique_id distintas
@@ -414,7 +401,7 @@ SELECT
 FROM olist_customers_dataset
 GROUP BY customer_unique_id
 HAVING COUNT(*) > 1
-ORDER BY qtd_registros DESC
+ORDER BY qtd_registros DESC;
 /*
 -- Conceitos já apresentados nas análises das tabelas anteriores.
 -- Agrupamento por customer_unique_id, contagem de linhas e filtro pós agrupamento trazendo apenas os customer_unique_id's com valores repetidos e a quantidade de repetições.
@@ -429,12 +416,12 @@ WITH cadastros_duplicados AS (
 		COUNT(*) as registros_duplicados
 	FROM olist_customers_dataset
 	GROUP BY customer_unique_id
-	HAVING COUNT(*) > 1
+	HAVING COUNT(*) > 1;
 )
 SELECT 
 	COUNT(*) AS contagem_duplicados,
 	SUM(registros_duplicados) total_registros
-FROM cadastros_duplicados
+FROM cadastros_duplicados;
 /*
 -- Aqui utilizamos uma CTE que irá retornar todos os customer_unique_id's repetidos e a quantidade de repetições (embora essa segunda coluna seja apenas para validação).
 -- A query principal, realiza uma contagem do total de linhas da CTE, retornando a quantidade de customer_unique_id's repetidos e uma soma do total de registros, para identificar o total de linhas com repetições.
@@ -454,7 +441,7 @@ SELECT
 FROM cadastros_unicos
 GROUP BY id_unico
 HAVING COUNT(*) > 1
-ORDER BY COUNT(*) DESC
+ORDER BY COUNT(*) DESC;
 /*
 -- A CTE trás apenas os customer_unique_id distintos, sua cidade e estado.
 -- Com as informações da CTE, realizamos uma contagem do total de repetições que cada customer_unique_id teve, agrupando pelo id_unico (que é o customer_unique_id distinto) e filtrando os que possuirem uma contagem maior que 1
@@ -465,7 +452,7 @@ com o comando Having.
 SELECT
 	*
 FROM olist_customers_dataset ocd
-WHERE customer_unique_id = 'd44ccec15f5f86d14d6a2cfa67da1975'
+WHERE customer_unique_id = 'd44ccec15f5f86d14d6a2cfa67da1975';
 /*
 -- Filtro where básico realizado, que retorna todas as linhas desde que o customer_unique_id for o especificado.
 -- O customer_unique_id utilzado foi encontrado na query anterior.
@@ -479,7 +466,7 @@ SELECT
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_customers_dataset ocd
 GROUP BY customer_state
-ORDER BY contagem DESC
+ORDER BY contagem DESC;
 /*
 -- Utilizando conceitos abordados anteriormente, criamos uma coluna agrupada pelos estados e 3 colunas com frequências.
 -- A segunda coluna é uma contagem simples de linhas, a terceira é um cálculo do percentual do total, dividindo a contagem agrupada pela contagem total retornada pela subquery, a última é a mesma porcentagem anterio, porém somada linha
@@ -501,7 +488,7 @@ SELECT
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_customers_dataset ocd
 GROUP BY regioes
-ORDER BY contagem DESC
+ORDER BY contagem DESC;
 /*
 -- Utilizado o case when para formatar os estados formando as regiões.
 -- A segunda coluna contem os mesmos conceitos abordados anteriormente, uma contagem simples (frequência absoluta), o percentual total (frequência acumulada) e frequência acumulada.
@@ -518,7 +505,7 @@ SELECT
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_customers_dataset ocd
 GROUP BY customer_city
-ORDER BY contagem DESC
+ORDER BY contagem DESC;
 /*
 -- A query irá retornar a cidade, o estado ao qual esta cidade pertence e a frequência absoluta, relativa e acumulada.
  */
@@ -537,7 +524,7 @@ SELECT
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_customers_dataset ocd
 GROUP BY customer_city
-ORDER BY capitais
+ORDER BY capitais;
 /*
 -- Utilizado o case when para localizar as cidades que são capitais.
 -- Depois, foram utilizados conceitos já aplicados para encontrar a frequência absoluta, frequência relativa e frequência acumulada.
@@ -552,7 +539,7 @@ ORDER BY capitais
 	FROM olist_customers_dataset ocd
 	GROUP BY customer_city
 	HAVING customer_city IN('belo horizonte', 'salvador', 'fortaleza', 'joao pessoa', 'sao luis', 'maceio', 'aracaju', 'natal', 'recife', 'teresina', 'goiania', 'cuiaba', 'palmas', 'porto alegre', 
-			'curitiba', 'florianopolis', 'sao paulo', 'rio de janeiro', 'vitoria', 'porto velho', 'rio branco', 'manaus', 'boa vista', 'macapa', 'belem', 'sao luis', 'brasilia')
+			'curitiba', 'florianopolis', 'sao paulo', 'rio de janeiro', 'vitoria', 'porto velho', 'rio branco', 'manaus', 'boa vista', 'macapa', 'belem', 'sao luis', 'brasilia');
 			
 -- Para analisar as cidades que não são capitais:
 	  	SELECT
@@ -564,7 +551,7 @@ ORDER BY capitais
 	FROM olist_customers_dataset ocd
 	GROUP BY customer_city
 	HAVING customer_city NOT IN('belo horizonte', 'salvador', 'fortaleza', 'joao pessoa', 'sao luis', 'maceio', 'aracaju', 'natal', 'recife', 'teresina', 'goiania', 'cuiaba', 'palmas', 'porto alegre', 
-			'curitiba', 'florianopolis', 'sao paulo', 'rio de janeiro', 'vitoria', 'porto velho', 'rio branco', 'manaus', 'boa vista', 'macapa', 'belem', 'sao luis', 'brasilia')
+			'curitiba', 'florianopolis', 'sao paulo', 'rio de janeiro', 'vitoria', 'porto velho', 'rio branco', 'manaus', 'boa vista', 'macapa', 'belem', 'sao luis', 'brasilia');
 */
 
 
@@ -579,7 +566,7 @@ SELECT
 	COUNT(*),
 	COUNT(DISTINCT review_id) AS contagem_review_id,
 	COUNT(DISTINCT order_id) AS contagem_order_id 
-FROM olist_order_reviews_dataset oord
+FROM olist_order_reviews_dataset oord;
 /*
 -- A query retorna uma contagem simples, e uma contagem distinta do review_id e order_id
  */
@@ -591,7 +578,7 @@ SELECT
 FROM olist_order_reviews_dataset oord
 GROUP BY review_id
 HAVING COUNT(*) > 1
-ORDER BY qtd_registros DESC
+ORDER BY qtd_registros DESC;
 /*
 -- A query retorna um agrupamento o review_id e a contagem de quantas vezes este review_id aparece.
 -- O order by organiza os resultados do maior para o menor.
@@ -602,7 +589,7 @@ SELECT
 	DISTINCT review_id,
 	LENGTH(review_id) qtd_caracteres
 FROM olist_order_reviews_dataset oord
-ORDER BY qtd_caracteres
+ORDER BY qtd_caracteres;
 /*
 -- A query retorna os reviews_id's distintos e a quantidade de caracteres que cada review_id possui.
 -- Ao final a query foi ordenada do menor para a maior quantidade de caracteres pelo order by.
@@ -613,7 +600,7 @@ ORDER BY qtd_caracteres
 SELECT
 	review_id 
 FROM olist_order_reviews_dataset oord
-WHERE LENGTH(review_id) <> 32
+WHERE LENGTH(review_id) <> 32;
 /*
 -- A query retorna todos os review_id's quando a quantidade de caracteres for diferente de 32.
  */
@@ -622,7 +609,7 @@ WHERE LENGTH(review_id) <> 32
 SELECT
 	review_id 
 FROM olist_order_reviews_dataset oord
-WHERE LENGTH(review_id) = 32
+WHERE LENGTH(review_id) = 32;
 /*
 -- A query retorna todos os review_id's quando a quantidade de caracteres for igual a 32.
  */
@@ -640,7 +627,7 @@ WITH cadastros_duplicados AS (
 SELECT 
 	COUNT(*) AS contagem_duplicados,
 	SUM(qtd_registros) AS total_registros 
-FROM cadastros_duplicados
+FROM cadastros_duplicados;
 /*
 -- A CTE chamada cadastros_duplicados retorna todos os review_id's com 32 caracteres, quando a contagem da aparição deles for maior que 1.
 -- A query principal faz a contagem de quantos review_id's são duplicados e soma estas quantidades.
@@ -658,7 +645,7 @@ WITH cadastros_unicos AS (
 )
 SELECT
 	COUNT(*) AS registros_unicos
-FROM cadastros_unicos
+FROM cadastros_unicos;
 /*
 -- A CTE chamada cadastros_unicos retorna todos os review_id's com 32 caracteres, quando a contagem da aparição deles for maior igual a 1, ou seja, review_id's que apareceram apenas 1 vez.
 -- A query principal faz a contagem de quantos review_id's são únicos.
@@ -668,7 +655,7 @@ FROM cadastros_unicos
 -- Análise das notas:
 SELECT 
 	DISTINCT review_score
-FROM olist_order_reviews_dataset oord
+FROM olist_order_reviews_dataset oord;
 /*
 -- Query simples que retorna os review_score's distintos.
  */
@@ -677,7 +664,7 @@ FROM olist_order_reviews_dataset oord
 SELECT 
 	count(DISTINCT review_score)
 FROM olist_order_reviews_dataset oord
-WHERE LENGTH(review_score) = 1
+WHERE LENGTH(review_score) = 1;
 /*
 -- A query retornará uma contagem dos review_score's distintos quando a quantidade de caracters for igual a 1.
  */
@@ -686,7 +673,7 @@ WHERE LENGTH(review_score) = 1
 SELECT
 	DISTINCT(review_score)
 FROM olist_order_reviews_dataset oord
-WHERE LENGTH(review_score) = 1
+WHERE LENGTH(review_score) = 1;
 /*
 -- A query retorna os distintos review_score's quando a contagem de caracteres for igual a 1.
  */
@@ -695,7 +682,7 @@ WHERE LENGTH(review_score) = 1
 SELECT
 	COUNT(review_score)
 FROM olist_order_reviews_dataset oord
-WHERE LENGTH(review_score) <> 1
+WHERE LENGTH(review_score) <> 1;
 /*
 -- A query retorna uma contagem dos review_score's quando a quantidade de caracteres for maior que 1.
  */
@@ -704,7 +691,7 @@ WHERE LENGTH(review_score) <> 1
 SELECT 
 	AVG(review_score) media_avaliacoes
 FROM olist_order_reviews_dataset oord
-WHERE LENGTH(review_score) = 1
+WHERE LENGTH(review_score) = 1;
 /*
 -- A query retorna a media do review_score quando a quantidade de caracteres dele for igual a 1, ou seja, notas de 1 a 5.
  */
@@ -712,7 +699,7 @@ WHERE LENGTH(review_score) = 1
 -- Média de avaliações sem filtragem:
 SELECT 
 	AVG(review_score) media_avaliacoes
-FROM olist_order_reviews_dataset oord
+FROM olist_order_reviews_dataset oord;
 
 /*
 -- A query retorna a media do review_score sem filtros.
@@ -726,7 +713,7 @@ SELECT
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_reviews_dataset WHERE LENGTH(review_score) = 1)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS frequencia_acumulada
 FROM olist_order_reviews_dataset oord
 WHERE LENGTH(review_score) = 1
-GROUP BY review_score
+GROUP BY review_score;
 /*
 -- A query retorna um agrupamento do review_score, uma contagem da frequencia em que aparecem, sua frequência relativa (utilizando uma subquery para retornar a frequência total) e a frequência acumulada que é a soma das % até o 100%(1),
 filtrando apenas os review_score's com o número de caracteres igual a 1.
@@ -743,7 +730,7 @@ SELECT
 FROM olist_order_reviews_dataset oord
 WHERE LENGTH(review_score) = 1
 GROUP BY categoria_avaliacoes
-ORDER BY contagem DESC 
+ORDER BY contagem DESC;
 /*
 -- A query retorna a quantidade e frequência relativa das notas.
 -- As linhas que serão utilizadas nesta query são as linhas do review_score que apresentam uma contagem de caracteres = 1, para limpar os registros que não são numéricos.
@@ -758,7 +745,7 @@ SELECT
 		ELSE 0
 	END)) * 1.0 / (SELECT COUNT(*) FROM olist_order_reviews_dataset WHERE LENGTH(review_score) = 1)),4) * 100 AS csat
 FROM olist_order_reviews_dataset oord
-WHERE LENGTH(review_score) = 1
+WHERE LENGTH(review_score) = 1;
 /*
 -- Utilizamos aqui o Case When novamente, utilizando um booleano para diferenciar as notas positivas e negativas, sendo positivas 1 e negativas 0. Somamos então todos os valores, retornando apenas a quantidade de notas positivas.
 (multiplicamos por 1.0 para se tornar decimal)
@@ -779,7 +766,7 @@ SELECT
 	COUNT(*) AS contagem_linhas,
 	COUNT(DISTINCT order_id) AS contagem_id_pedidos,
 	COUNT(DISTINCT seller_id) AS contagem_id_vendedores
-FROM olist_order_items_dataset ooid
+FROM olist_order_items_dataset ooid;
 /*
 -- A query retorna uma contagem do total de linhas e uma contagem dos order_id's e seller_id's distintos
  */
@@ -790,7 +777,7 @@ SELECT
 	count(*) AS contagem_order_id
 FROM olist_order_items_dataset ooid
 GROUP BY order_id
-ORDER BY contagem_order_id DESC
+ORDER BY contagem_order_id DESC;
 /*
 -- A query agrupa os order_id's e realiza uma contagem da quantidade de linhas, retornando os order_id's que aparecem mais vezes, ordenados do com mais aparições para o menor. 
  */
@@ -801,7 +788,7 @@ SELECT
 	count(*) AS contagem_product_id
 FROM olist_order_items_dataset ooid
 GROUP BY product_id
-ORDER BY contagem_product_id DESC
+ORDER BY contagem_product_id DESC;
 /*
 -- A query agrupa os product_id's e realiza uma contagem da quantidade de linhas, retornando os product's_ids que aparecem mais vezes, ordenados do com mais aparições para o menor. 
  */
@@ -812,7 +799,7 @@ SELECT
 	SUM(price) AS total_faturamento
 FROM olist_order_items_dataset ooid
 GROUP BY product_id
-ORDER BY total_faturamento DESC
+ORDER BY total_faturamento DESC;
 /*
 -- A query retorna um agrupamento dos product_id's e uma soma dos price's de cada um, ordenados dos com maiores faturamentos para os com menores.
  */
@@ -823,7 +810,7 @@ SELECT
 	SUM(price) AS total_faturamento
 FROM olist_order_items_dataset ooid
 GROUP BY seller_id
-ORDER BY total_faturamento DESC
+ORDER BY total_faturamento DESC;
 /*
 -- Utilizamos o mesmo conceito da query anterior, porém agrupando pelo seller_id.
  */
@@ -839,7 +826,7 @@ WITH vendedores_baixa_performance AS (
 )
 SELECT
 	COUNT(*) AS contagem_vendedores
-FROM vendedores_baixa_performance
+FROM vendedores_baixa_performance;
 /*
 -- A CTE criada retorna um agrupamento dos vendedores e o total faturado por cada um deles, ao final filtramos o agrupamento com o having retornando apenas os vendedores com vendas menores do que 1 mil.
 -- A query principal faz a contagem destes vendedores
@@ -848,7 +835,7 @@ FROM vendedores_baixa_performance
 -- Analise do tipo de variável da coluna price:
 SELECT
 	DISTINCT typeof(price)  AS tipo_variavel
-FROM olist_order_items_dataset ooid
+FROM olist_order_items_dataset ooid;
 /*
 -- Utilizamos a função typeof que retorna o tipo de dado presente na coluna, procurando por valores diferentes de numéricos.
  */
@@ -856,7 +843,7 @@ FROM olist_order_items_dataset ooid
 -- Analise do tipo de variável da coluna freight_value:
 SELECT
 	DISTINCT typeof(freight_value) AS tipo_variavel
-FROM olist_order_items_dataset ooid
+FROM olist_order_items_dataset ooid;
 /*
 -- Assim como na query anterior, utilizamos a função typeof que retorna o tipo de dado presente na coluna, procurando por valores diferentes de numéricos.
  */
@@ -870,7 +857,7 @@ SELECT
 	ROUND(AVG(price),2) AS media,
 	MEDIAN(PRICE) AS mediana,
 	ROUND(STDEV(PRICE),2) AS desvio_padrao
-FROM olist_order_items_dataset ooid
+FROM olist_order_items_dataset ooid;
 /*
 -- A query retorna algumas medidas de tendência central e dispersão.
 -- Na primeira coluna, retornará uma contagem.
@@ -880,20 +867,6 @@ FROM olist_order_items_dataset ooid
 -- Na quinta couluna, extraimos a média com a função AVG, arredondando o resultado con a função ROUND para 2 casas decimais depois da virgula.
 -- Na sexta coluna, a mediana com a função MEDIAN.
 -- Na última coluna,o desvio padrão representado pela função STDVE, arredondado pela função ROUND para 2 casas decimais depois da virgula.
- */
-
--- Análise da moda:
-SELECT 
-	price,
-	count(*) AS frequencia
-FROM olist_order_items_dataset ooid 
-GROUP BY price
-ORDER BY frequencia DESC
-LIMIT 1
-/*
--- A moda é o valor com mais frequência dentre uma série de variáveis. Para extraí-la, agrupamos os price's e contamos a quantidade de vezes com que aparecem.
--- Ordenamos a frequência da maior para a menor. 
--- O comando limit retorna apenas o primeiro valor. 
  */
 
 -- Análise de medidas de tendência central e dispersão da coluna freight_value:
@@ -905,7 +878,7 @@ SELECT
 	AVG(freight_value) AS media,
 	MEDIAN(freight_value) AS mediana,
 	STDEV(freight_value) AS desvio_padrao
-FROM olist_order_items_dataset ooid
+FROM olist_order_items_dataset ooid;
 /*
 -- A query retorna algumas medidas de tendência central e dispersão.
 -- Na primeira coluna, retornará uma contagem.
@@ -915,17 +888,4 @@ FROM olist_order_items_dataset ooid
 -- Na quinta couluna, extraimos a média com a função AVG, arredondando o resultado con a função ROUND para 2 casas decimais depois da virgula.
 -- Na sexta coluna, a mediana com a função MEDIAN.
 -- Na última coluna,o desvio padrão representado pela função STDVE, arredondado pela função ROUND para 2 casas decimais depois da virgula.
- */
-
-SELECT
-	freight_value,
-	COUNT(*) AS frequencia
-FROM olist_order_items_dataset ooid
-GROUP BY freight_value
-ORDER BY frequencia DESC
-LIMIT 1
-/*
--- A moda é o valor com mais frequência dentre uma série de variáveis. Para extraí-la, agrupamos os freight_value's e contamos a quantidade de vezes com que aparecem.
--- Ordenamos a frequência da maior para a menor. 
--- O comando limit retorna apenas o primeiro valor. 
  */
