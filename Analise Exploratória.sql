@@ -96,7 +96,7 @@ FROM olist_orders_dataset ood;
 	WHERE order_approved_at = ''
 */
 
--- Identificando qual o status dos valores da tabela quando o approved_at está vazio:
+--Análise das categorias quando a data de aprovação do pedido está vazia:
 SELECT
 	order_status,
 	COUNT(*) AS contagem_pedidos
@@ -105,20 +105,25 @@ WHERE order_approved_at = ''
 GROUP BY order_status
 ORDER BY contagem_pedidos DESC;
 /*
--- Foram filtardos os valores vazios, e a contagem agrupada pelo order_status
+-- Foram filtrados os valores vazios, e a contagem agrupada pelo order_status
+-- Ao final, são ordenados pela contagem dos pedidos, da maior para a menor quantidade.
 */
 
-
--- Com relação à coluna com a data da entrega do pedido à transportadora:
+--Análise dos 19 valores quando a data de aprovação está vazia e o status do pedido entregue ou criado: 
 SELECT
-	COUNT(*)
+	*
 FROM olist_orders_dataset ood
-WHERE order_delivered_carrier_date = ''
+WHERE 
+	order_approved_at = '' AND
+	order_status IN ('delivered', 'created')
+ORDER BY order_purchase_timestamp
 /*
--- Realizada uma contagem de linhas da coluna order_delivered_carrier_date para descobrir a quantidade de valores vazios.
+-- A quuery retorna todas as linhas quando a data de aprovação está vazia, e o status do pedido está como entregue ou criado.
+-- Ao final, são ordenados pela data da compra da mais antiga para a mais nova.
  */
 
--- Aqui identificamos quais são essas linhas vazias:
+
+--Análise das categorias quando a data de entrega à transportadora está vazia:
 SELECT
 	order_status AS categorias,
 	COUNT(*) AS contagem_pedidos
@@ -128,18 +133,45 @@ GROUP BY categorias
 ORDER BY contagem_pedidos DESC;
 /*
 -- Agrupando a contagem de pedidos quando a data de entrega na transportadora for vazia pelo order-status para encontrar a categoria de cada valor vazio.
+-- Ao final, são ordenados pela contagem dos pedidos, da maior para a menor quantidade.
 */
 
--- Identificar quais são os 2 valores com data de entrega na transportadora vazia e com status do pedido entregue:
+-- Análise dos 9 valores com data de entrega na transportadora vazia, com status do pedido entregue, aprovado e criado:
 SELECT 
 	*
 FROM olist_orders_dataset ood
 WHERE 
 	order_delivered_carrier_date = '' AND
-	order_status IN('delivered');
+	order_status IN('delivered', 'approved', 'created')
+ORDER BY order_purchase_timestamp;
 /*
 -- Realizada uma query que retorna todas as linhas quando a data da entrega na transportadora for vazia e o status do pedido for entregue
 */
+
+--Análise das categorias quando a data de entrega ao cliente está vazia:
+SELECT
+	order_status AS categorias,
+	COUNT(*) AS contagem_pedidos
+FROM olist_orders_dataset ood
+WHERE order_delivered_customer_date = ''
+GROUP BY categorias
+ORDER BY contagem_pedidos DESC;
+/*
+-- Agrupando a contagem de pedidos quando a data de entrega ao cliente for vazia pelo order-status para encontrar a categoria de cada valor vazio.
+*/
+
+-- Análise dos 8 pedidos quando a data de entrega está vazia e o status do pedido for entregue:
+SELECT
+	*
+FROM olist_orders_dataset ood
+WHERE 
+	order_delivered_customer_date = '' AND
+	order_status = 'delivered'
+ORDER BY order_purchase_timestamp 
+/*
+-- A query retorna todas as linhas dos pedidos quando a data da entrega está vazia e o status do pedido é entregue.
+-- Ao final, são ordenados pela data da compra da mais antiga para a mais nova.
+ */
 
 -- Data da primeira e última venda realizada:
 SELECT
@@ -416,7 +448,7 @@ WITH cadastros_duplicados AS (
 		COUNT(*) as registros_duplicados
 	FROM olist_customers_dataset
 	GROUP BY customer_unique_id
-	HAVING COUNT(*) > 1;
+	HAVING COUNT(*) > 1
 )
 SELECT 
 	COUNT(*) AS contagem_duplicados,
