@@ -4,10 +4,19 @@ Análise da Tabela orders_dataset:
 *********************************
 */
 
+-- Análise Primária da Tabela Pedidos:
+SELECT
+	*
+FROM olist_orders_dataset ood
+LIMIT 100
+/*
+-- Realizada uma query com todas as linhas e colunas, limitando o resultado a mostrar apenas os 100 primeiros registros.
+ */
+
 --Verificar se os id's dos pedidos e clientes são únicos:
 SELECT
 	COUNT(*) as contagem_linhas,
-	COUNT(DISTINCT order_id) contagem_destinta_ids,
+	COUNT(DISTINCT order_id) contagem_destinta_pedidos,
 	COUNT(DISTINCT customer_id) contagem_destinta_clientes
 FROM olist_orders_dataset ood;
 /*
@@ -142,7 +151,7 @@ SELECT
 FROM olist_orders_dataset ood
 WHERE 
 	order_delivered_carrier_date = '' AND
-	order_status IN('delivered', 'approved', 'created')
+	order_status IN('delivered')
 ORDER BY order_purchase_timestamp;
 /*
 -- Realizada uma query que retorna todas as linhas quando a data da entrega na transportadora for vazia e o status do pedido for entregue
@@ -209,10 +218,19 @@ Análise da Tabela olist_order_payments_dataset:
 ***********************************************
 */
 
+-- Análise Primária da Tabela Pagamentos:
+SELECT
+	*
+FROM olist_order_payments_dataset oopd 
+LIMIT 100
+/*
+-- Realizada uma query com todas as linhas e colunas, limitando o resultado a mostrar apenas os 100 primeiros registros.
+ */
+
 -- Verificar se cada order_id é único:
 SELECT
 	count(*) as contagem_linhas,
-	count(DISTINCT order_id) contagem_destinta_ids,
+	count(DISTINCT order_id) contagem_distinta_ids,
 	COUNT(*) - count(DISTINCT order_id) as diferenca_linhas
 FROM olist_order_payments_dataset oopd;
 /*
@@ -246,13 +264,31 @@ WHERE order_id = '465c2e1bee4561cb39e0db8c5993aafc';
 -- Verificar a quantidade de tipos de pagamentos distintos foram realizadas:
 SELECT 
 	payment_type,
-	COUNT(*) AS contagem
+	COUNT(*) AS contagem,
+	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset),4) AS perc_total,
+	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_order_payments_dataset oopd
 GROUP BY payment_type;
 /*
 -- A query retorna os payment_type's, e uma contagem de todas as linhas agrupados pelos payment_types, permitindo saber quantos tipos de pagamentos existem e sua quantidade.
 */ 
 
+-- Analisar a quantidade de pagamentos por payment_type:
+SELECT
+	payment_type,
+	count(*) qtd_por_tipo,
+	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset),2) AS perc_total,
+	SUM(payment_value) AS total_pagamentos,
+	ROUND(SUM(payment_value) * 1.0 / (SELECT SUM(payment_value) FROM olist_order_payments_dataset),4) AS perc_total_pagamentos
+FROM olist_order_payments_dataset oopd
+GROUP BY payment_type
+ORDER BY qtd_por_tipo DESC;
+/*
+-- A query retorna um agrupamento pelo payment_type e uma contagem dos valores.
+-- Em seguida a terceira coluna retorna o percentual que cada payment_type (utilizando o mesmo preceito da query anterior).
+-- É realizada uma soma do total de payment_value's e por último o percentual que cada soma do payment_value por payment_type representa do total.
+-- Ao final ordenamos pelo payment_type do que possui maior frequência para o com menor frequência.
+ */
 
 -- Valor pago de acordo com o pedido (maior para o menor valor):
 SELECT
@@ -310,24 +346,6 @@ ORDER BY contagem DESC;
 	tornando o valor mais visível.
 -- O order by irá ordernar a contagem dos parcelamentos do maior para o menor em relação a quantidade.
 */
-
-
--- Analisar a quantidade de pagamentos por payment_type:
-SELECT
-	payment_type,
-	count(*) qtd_por_tipo,
-	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset),2) AS perc_total,
-	SUM(payment_value) AS total_pagamentos,
-	ROUND(SUM(payment_value) * 1.0 / (SELECT SUM(payment_value) FROM olist_order_payments_dataset),4) AS perc_total_pagamentos
-FROM olist_order_payments_dataset oopd
-GROUP BY payment_type
-ORDER BY qtd_por_tipo DESC;
-/*
--- A query retorna um agrupamento pelo payment_type e uma contagem dos valores.
--- Em seguida a terceira coluna retorna o percentual que cada payment_type (utilizando o mesmo preceito da query anterior).
--- É realizada uma soma do total de payment_value's e por último o percentual que cada soma do payment_value por payment_type representa do total.
--- Ao final ordenamos pelo payment_type do que possui maior frequência para o com menor frequência.
- */
 
 
 -- Calculando o valor máximo, mínimo, amplitude, media e mediana do payment_value:
@@ -390,6 +408,16 @@ Análise da Tabela product_category_name:
 ****************************************
 */
 
+-- Análise Primária da Tabela Produtos:
+SELECT
+	*
+FROM olist_products_dataset opd
+LIMIT 100
+/*
+-- Realizada uma query com todas as linhas e colunas, limitando o resultado a mostrar apenas os 100 primeiros registros.
+ */
+
+
 -- Verificar se cada linha representa um único product_id e a quantidade de produtos distintos presentes:
 SELECT
 	COUNT(*),
@@ -400,7 +428,7 @@ FROM olist_products_dataset opd;
 -- Realizada uma contagem de linhas simples, uma contagem de product_id distinta e de product_category_name distinta.
  */
 
---
+-- Analisar as categorias dos produtos:
 SELECT
 	product_category_name AS categorias,
 	COUNT(product_id) AS contagem,
@@ -414,6 +442,127 @@ ORDER BY contagem DESC;
 -- Conceitos já apresentados nas análises das tabelas anteriores.
  */
 
+-- Análise das tabelas com valores vazios
+SELECT 
+	* 
+FROM olist_products_dataset opd 
+WHERE product_category_name = ''
+
+SELECT 
+	* 
+FROM olist_products_dataset opd 
+WHERE product_name_lenght = ''
+
+SELECT 
+	* 
+FROM olist_products_dataset opd 
+WHERE product_description_lenght = ''
+
+SELECT 
+	* 
+FROM olist_products_dataset opd 
+WHERE product_weight_g = ''
+
+SELECT 
+	* 
+FROM olist_products_dataset opd 
+WHERE product_length_cm = ''
+
+SELECT 
+	* 
+FROM olist_products_dataset opd 
+WHERE product_height_cm = ''
+
+SELECT * FROM olist_products_dataset opd 
+WHERE product_width_cm = ''
+/*
+-- As análises retornam todas as linhas da tabela quando determinadas colunas estão vazias.
+-- Na primeira o nome da categoria do produto, na segunda o comprimento do nome, na terceira o comprimento da descrição, na quarta o peso, na quinta o comprimento, na sexta a altura e na sétima a largura.
+ */
+
+-- Analisar produto com maior peso:
+SELECT
+	*
+FROM olist_products_dataset opd
+WHERE product_weight_g = (
+	SELECT
+		max(product_weight_g) peso_maximo
+	FROM olist_products_dataset opd
+	WHERE 
+		product_category_name <> '' AND
+		product_weight_g <> ''
+	)
+/*
+-- A query retorna todas as linhas da tabela quando o peso do produto for igual ao peso máximo dos produtos da tabela.
+-- Na subquery no where, filtramos para que as categorias e pesos sem valores não fossem incluídos.
+ */
+	
+-- Analisar os produtos com maior comprimento:
+SELECT
+	*
+FROM olist_products_dataset opd
+WHERE product_length_cm = (
+	SELECT
+		max(product_length_cm) peso_maximo
+	FROM olist_products_dataset opd
+	WHERE 
+		product_category_name <> '' AND
+		product_length_cm <> ''
+	)
+/*
+-- A query retorna todas as linhas da tabela quando o comprimento do produto for igual ao comprimento máximo dos produtos da tabela.
+-- Na subquery no where, filtramos para que as categorias e comprimentos sem valores não fossem incluídos.
+ */
+	
+-- Analisar produto com maior altura:
+SELECT
+	*
+FROM olist_products_dataset opd
+WHERE product_height_cm  = (
+	SELECT
+		max(product_height_cm ) peso_maximo
+	FROM olist_products_dataset opd
+	WHERE 
+		product_category_name <> '' AND
+		product_height_cm  <> ''
+	)
+/*
+-- A query retorna todas as linhas da tabela quando a altura do produto for igual à altura máxima dos produtos da tabela.
+-- Na subquery no where, filtramos para que as categorias e alturas sem valores não fossem incluídas.
+ */
+
+-- Analisar produto com maior largura:
+SELECT
+	*
+FROM olist_products_dataset opd
+WHERE product_width_cm   = (
+	SELECT
+		max(product_width_cm ) peso_maximo
+	FROM olist_products_dataset opd
+	WHERE 
+		product_category_name <> '' AND
+		product_width_cm   <> ''
+	)
+/*
+-- A query retorna todas as linhas da tabela quando a largura do produto for igual à largura máxima dos produtos da tabela.
+-- Na subquery no where, filtramos para que as categorias e larguras sem valores não fossem incluídas.
+*/
+
+
+/*
+**********************************************
+Análise da Tabela olist_customers_dataset:
+**********************************************
+*/
+
+-- Análise Primária da Tabela clientes:
+SELECT
+	*
+FROM olist_customers_dataset ocd
+LIMIT 100
+/*
+-- Realizada uma query com todas as linhas e colunas, limitando o resultado a mostrar apenas os 100 primeiros registros.
+ */
 
 -- Analisar se existem customer_id e customer_unique_id duplicados:
 SELECT
@@ -426,7 +575,7 @@ FROM olist_customers_dataset ocd;
 -- Contagem simples de linhas, contagem de customer_id e customer_unique_id distintas
  */
 
--- Analisar quais sãoo os customer_unique_id's repetidos e a quantidade de repetições:
+-- Analisar quais são os customer_unique_id's repetidos e a quantidade de repetições:
 SELECT
 	customer_unique_id,
 	COUNT(*) as qtd_registros
@@ -490,7 +639,7 @@ WHERE customer_unique_id = 'd44ccec15f5f86d14d6a2cfa67da1975';
 -- O customer_unique_id utilzado foi encontrado na query anterior.
  */
 
---Analisar a frequência, frequência relativa e frequência acumulada:
+--Analisar a frequência, frequência relativa e frequência acumulada por estado:
 SELECT
 	customer_state,
 	count(*) AS contagem,
@@ -593,6 +742,15 @@ Análise da Tabela olist_order_reviews_dataset:
 **********************************************
 */
 
+-- Análise Primária da Tabela Avaliações:
+SELECT
+	*
+FROM olist_order_reviews_dataset oord
+LIMIT 100
+/*
+-- Realizada uma query com todas as linhas e colunas, limitando o resultado a mostrar apenas os 100 primeiros registros.
+ */
+
 -- Analise da quantidade de linhas distintas de review_id e order_id:
 SELECT
 	COUNT(*),
@@ -616,7 +774,7 @@ ORDER BY qtd_registros DESC;
 -- O order by organiza os resultados do maior para o menor.
  */
 
--- Analise dos review_i's fora do padrão:
+-- Analise dos review_id's fora do padrão:
 SELECT
 	DISTINCT review_id,
 	LENGTH(review_id) qtd_caracteres
@@ -683,6 +841,85 @@ FROM cadastros_unicos;
 -- A query principal faz a contagem de quantos review_id's são únicos.
  */
 
+-- Analise dos order_id's duplicados:
+SELECT
+	order_id,
+	COUNT(*) as qtd_registros
+FROM olist_order_reviews_dataset oord
+GROUP BY order_id
+HAVING COUNT(*) > 1
+ORDER BY qtd_registros DESC;
+/*
+-- A query retorna um agrupamento o order_id e a contagem de quantas vezes este review_id aparece.
+-- O order by organiza os resultados do maior para o menor.
+ */
+
+-- Analise dos order_id's fora do padrão:
+SELECT
+	DISTINCT order_id,
+	LENGTH(order_id) qtd_caracteres
+FROM olist_order_reviews_dataset oord
+ORDER BY qtd_caracteres;
+/*
+-- A query retorna os order_id's distintos e a quantidade de caracteres que cada review_id possui.
+-- Ao final a query foi ordenada do menor para a maior quantidade de caracteres pelo order by.
+-- 
+ */
+
+-- Analise dos order_id's quando o numero de caracteres é diferente de 32:
+SELECT
+	order_id 
+FROM olist_order_reviews_dataset oord
+WHERE LENGTH(order_id) <> 32;
+/*
+-- A query retorna todos os order_id's quando a quantidade de caracteres for diferente de 32.
+ */
+
+-- Analise dos order_id's quando o numero de caracteres é igual a 32:
+SELECT
+	order_id 
+FROM olist_order_reviews_dataset oord
+WHERE LENGTH(order_id) = 32;
+/*
+-- A query retorna todos os order_id's quando a quantidade de caracteres for igual a 32.
+ */
+
+-- Análise dos order_id's duplicados:
+WITH cadastros_duplicados AS (
+	SELECT
+		order_id,
+		COUNT(*) as qtd_registros
+	FROM olist_order_reviews_dataset oord
+	WHERE LENGTH(order_id) = 32
+	GROUP BY order_id
+	HAVING COUNT(*) > 1
+)
+SELECT 
+	COUNT(*) AS contagem_duplicados,
+	SUM(qtd_registros) AS total_registros 
+FROM cadastros_duplicados;
+/*
+-- A CTE chamada cadastros_duplicados retorna todos os order_id's com 32 caracteres, quando a contagem da aparição deles for maior que 1.
+-- A query principal faz a contagem de quantos order_id's são duplicados e soma estas quantidades.
+ */
+
+-- Analise dos order_id's com registros únicos:
+WITH cadastros_unicos AS (
+	SELECT
+		order_id,
+		COUNT(order_id)
+	FROM olist_order_reviews_dataset oord
+	WHERE LENGTH(order_id) = 32
+	GROUP BY order_id
+	HAVING count(order_id) = 1
+)
+SELECT
+	COUNT(*) AS registros_unicos
+FROM cadastros_unicos;
+/*
+-- A CTE chamada cadastros_unicos retorna todos os order_id's com 32 caracteres, quando a contagem da aparição deles for maior igual a 1, ou seja, review_id's que apareceram apenas 1 vez.
+-- A query principal faz a contagem de quantos order_id's são únicos.
+ */
 
 -- Análise das notas:
 SELECT 
@@ -786,12 +1023,51 @@ Ao final, todo este valor é multiplicado por 100 para se tornar uma porcentagem
 -- 
  */
 
+-- Análise dos pedidos com review_creation_date's vazios:
+SELECT
+	*
+FROM olist_order_reviews_dataset oord
+WHERE review_creation_date = ''
+/*
+-- A query retorna as linhas da tabela quando o review_creation_date for vazio.
+ */
+
+-- Análise dos pedidos com review_answer_timestamp's vazios:
+SELECT
+	*
+FROM olist_order_reviews_dataset oord
+WHERE review_answer_timestamp = ''
+/*
+-- A query retorna as linhas da tabela quando o review_answer_timestamp for vazio.
+ */
+
+-- Análise dos 6 pedidos com review_answer_timestamp ou review_creation_date vazios:
+SELECT
+	*
+FROM olist_order_reviews_dataset oord
+WHERE 
+	review_answer_timestamp = '' OR 
+	review_creation_date = ''
+/*
+-- A query retorna as linhas da tabela quando o review_answer_timestamp ou o  review_creation_date forem vazios.
+ */
+	
+
 
 /*
 **********************************************
-Análise da Tabela olist_order_reviews_dataset:
+Análise da Tabela olist_order_items_dataset:
 **********************************************
 */
+-- Análise primária da tabela olist_order_items_dataset:
+SELECT
+	*
+FROM olist_order_items_dataset ooid
+LIMIT 100
+/*
+-- Realizada uma query com todas as linhas e colunas, limitando o resultado a mostrar apenas os 100 primeiros registros.
+ */
+
 
 -- Análise da quantidade de registro, order_id's e seller_id's distintos:
 SELECT 
@@ -813,6 +1089,33 @@ ORDER BY contagem_order_id DESC;
 /*
 -- A query agrupa os order_id's e realiza uma contagem da quantidade de linhas, retornando os order_id's que aparecem mais vezes, ordenados do com mais aparições para o menor. 
  */
+
+--Analisar a quantidade de order_id's duplicados:
+WITH registros_duplicados AS (
+	SELECT
+		order_id,
+		count(*) AS contagem_order_id
+	FROM olist_order_items_dataset ooid
+	GROUP BY order_id
+	HAVING contagem_order_id > 1
+	ORDER BY contagem_order_id DESC
+)
+SELECT 
+	count(*) AS quantidade_duplicados
+FROM registros_duplicados
+/*
+-- A CTE agrupa os order_id's e realiza uma contagem, filtrando os resultados que tiverem mais do que 1 contagem.
+-- A query principal, conta a quantidade de registros nesta situação e retorna a quantidade de registros.
+ */
+
+-- Análise da quantidade distinta de produtos:
+SELECT
+	count(DISTINCT product_id) produtos_distintos_vendidos
+FROM olist_products_dataset opd
+/*
+-- A query realiza uma contagem da quantidade distinta de produtos existentes.
+ */
+
 
 -- Análise do produto mais pedido:
 SELECT
