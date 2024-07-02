@@ -408,7 +408,7 @@ A tabela de itens dos pedidos possui 7 colunas:
 
   A tabela possui 112.650 linhas, sendo que a coluna de identificadores do pedido possui 98.666 valores distintos, ou seja, existem valores duplicados na coluna dos identificadores do pedido. A tabela de vendedores possui 3.095 valores distintos, representando então a quantidade de vendedores que já realizaram alguma venda.
 
-Analisando os identificadores dos pedidos duplicados, foram identificados 9.803 registros com mais do que 1 registro.
+Analisando os identificadores dos pedidos duplicados, foram encontrados 9.803 registros com mais do que 1 registro.
 
 A analise da tabela de produtos retornou que foram vendidos 32.951 produtos diferentes ao longo do tempo.
 O produto mais vendido teve um total de 527 unidades.
