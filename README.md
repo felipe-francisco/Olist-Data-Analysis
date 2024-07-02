@@ -391,6 +391,10 @@ As avaliações com maior frequência da maior para a menor são: Nota 5 com 44.
 
 O CSAT é de 77,05%, ou seja, existe uma grande porcentagem dos clientes que avaliaram os produtos e a entrega com notas 4 ou 5.
 
+Existem 3 linhas de registro da tabela com a data e hora da criação da avaliação vazias.
+
+Também existem 3 linhas de registro da tabela com a data e hora da resposta à avaliação vazias.
+
 ### Análise da Tabela olist_order_items_dataset (Itens dos Pedidos)
 
 A tabela de itens dos pedidos possui 7 colunas:
