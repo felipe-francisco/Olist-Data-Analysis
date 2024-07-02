@@ -362,11 +362,13 @@ Analisando os clientes de acordo com o local onde moram:
 
 - As 5 cidades com mais clientes são: São Paulo com 15.540 (15,63%), Rio de Janeiro com 6.882 (6,82%), Belo Horizonte com 2.773 (2,79%), Brasília com 2.131 (2,14%) e Curitiba com 1.521 (1,53%).
 
-- Verificamos que os 3 estados com a maior quantidade de clientes são: São Paulo com 41.746 (41,98%), Rio de Janeiro com 12.852 (12,92%) e Rio Grande do Sul com 5.466 (5,5%).
+- Foi identificado que os 3 estados com a maior quantidade de clientes são: São Paulo com 41.746 (41,98%), Rio de Janeiro com 12.852 (12,92%) e Rio Grande do Sul com 5.466 (5,5%).
 
 - A análise por regiões, trás a região Sudeste em primeiro lugar com 68.266 (68,65%), o Sul com 14,148 (14,23%), o Nordeste com 9.394 (9,45%), o Norte com 3.991 (4,01%) e o Centro-Oeste com 3.642 (3,66%).
 
+
 ### Análise da Tabela olist_order_reviews_dataset (Avaliações dos Pedidos)
+
 
   A tabela de avaliações tem 7 colunas:
   - review_id = identificador da avaliação;
@@ -385,15 +387,34 @@ A coluna de identificadores do pedido também possui valores fora do padrão, se
 
 A coluna de avaliação possui valores diferentes das notas de 1 a 5 padrões, totalizando 607 registros nestas condições.
 
+As avaliações com maior frequência da maior para a menor são: Nota 5 com 44.954 (57,69%) votos, Nota 4 com 15.080 (19,35%) votos, Nota 1 com 9.001 (11,55%) votos, Nota 3 com 6.413 (8,23%) e Nota 2 com 2.469 (3,17%) votos.
 
-
-
+O CSAT é de 77,05%, ou seja, existe uma grande porcentagem dos clientes que avaliaram os produtos e a entrega com notas 4 ou 5.
 
 ### Análise da Tabela olist_order_items_dataset (Itens dos Pedidos)
 
-  
+A tabela de itens dos pedidos possui 7 colunas:
+- order_id = identificador do pedido;
+- order_item_id =
+- product_id = identificador do produto;
+- seller_id = identificador do vendedor;
+- shipping_limit_date = data limite de envio;
+- price = preço
+- freight_value = preço do frete;  
 
-  
+  A tabela possui 112.650 linhas, sendo que a coluna de identificadores do pedido possui 98.666 valores distintos, ou seja, existem valores duplicados na coluna dos identificadores do pedido. A tabela de vendedores possui 3.095 valores distintos, representando então a quantidade de vendedores que já realizaram alguma venda.
+
+Analisando os identificadores dos pedidos duplicados, foram identificados 9.803 registros com mais do que 1 registro.
+
+A analise da tabela de produtos retornou que foram vendidos 32.951 produtos diferentes ao longo do tempo.
+O produto mais vendido teve um total de 527 unidades.
+O produto com mais faturamento obteve um total de R$63.885,00.
+
+Já com relação ao vendedor, o vendedor que mais faturou obteve um total de R$ 229.472,63.  Entretanto, 1.667 vendedores tiveram um faturamento inferior a R$1.000,00
+
+Na coluna de produtos, o maior preço foi de R$6.735,00 e o menor foi de R$0,85.
+
+Na coluna de fretes, o maior frete foi de R$408,68 e o menor frete foi R$0,00.
 
 ## Análise Estatística Descritiva
 
