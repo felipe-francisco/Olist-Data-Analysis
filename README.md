@@ -2,22 +2,40 @@
 
   
 
+  
+
 ## Objetivo
+
+  
 
 O objetivo macro desta análise é encontrar soluções para elevar ao máximo as operações deste e-commerce, respondendo perguntas de negócio e criando planos de ação para cada ponto de melhoria encontrado.
 
+  
+  
 
 A análise será dividida em:
 
+  
+
 * Análise Exploratória dos Dados.
+
+  
 
 * Análise Estatística Descritiva.
 
+  
+
 * Criação do Dashboard de Acompanhamento da Operação.
+
+  
 
 * Perguntas de Negócio.
 
+  
+
 * Planos de Ação.
+
+  
 
   
 
@@ -25,7 +43,11 @@ A análise será dividida em:
 
   
 
+  
+
 O DataSet Olist é uma representação de uma série de E-Commerces brasileiros com dados de 100 mil pedidos entre os anos de 2016-2018 e nele existem tabelas com dados dos clientes, pagamentos, avaliações de compras, produtos e suas categorias, vendedores, entre outras informações.
+
+  
 
   
 
@@ -33,15 +55,25 @@ A motivação na escolha do DataSet Olist foi devido a sua familiaridade com bas
 
   
 
+  
+
 DataSet Olist no Kaggle:
+
+  
 
 https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
   
 
+  
+
 Repoositório de Arquivos Utilizados (Arquivos Excel, CSV, SQL(cópias) e Power BI):
 
+  
+
 https://drive.google.com/drive/u/0/folders/1RxUEyY75qlQwejZxF--9Y24GLZ_8tx9N
+
+  
 
   
 
@@ -49,13 +81,21 @@ https://drive.google.com/drive/u/0/folders/1RxUEyY75qlQwejZxF--9Y24GLZ_8tx9N
 
   
 
+  
+
 Sobre as ferramentas, foram utilizadas as seguintes:
+
+  
 
   
 
 * DBeaver - Utilizando SQL para realizar as análises iniciais das tabelas, realizar tratamento nos dados, e extrair alguns insights iniciais.
 
+  
+
 (Foi utilizado um arquivo compilado em formato SQlite da Base Olist.)
+
+  
 
   
 
@@ -63,7 +103,11 @@ Link para download: https://dbeaver.io/download/
 
   
 
+  
+
 * Excel - Para realizar análises de medidas de tendência e dispersão dos dados, identificação de outliers, incluindo gráficos e tabelas dinâmicas.
+
+  
 
   
 
@@ -71,9 +115,15 @@ Link para compra: https://www.microsoft.com/pt-br/microsoft-365/excel
 
   
 
+  
+
 * Power BI - Como ferramenta de dataviz, onde será criada uma visualização, utilizando o Power Query como ferramenta de Limpeza e Tratamento, e criação do dashboard de acompanhamento da operação.
 
+  
+
 (A etapa de limpeza e tratamento poderia e até deveria ser realizada no DBeaver ou em outro SGBD(Sistema Gerenciador de Banco de Dados) devido ao seu melhor processamento, mas neste caso vamos utilizar o Power Query como forma alternativa)
+
+  
 
   
 
@@ -81,7 +131,11 @@ Link para download: https://www.microsoft.com/pt-br/power-platform/products/powe
 
   
 
+  
+
 ## Instruções:
+
+  
 
   
 
@@ -89,7 +143,11 @@ Link para download: https://www.microsoft.com/pt-br/power-platform/products/powe
 
   
 
+  
+
 No arquivo SQL(.sql), cada Query conterá acima dela uma linha com o propósito e abaixo uma ou mais linhas com um breve resumo do porquê das escolhas dos comandos e funções.
+
+  
 
   
 
@@ -97,7 +155,11 @@ No arquivo SQL(.sql), cada Query conterá acima dela uma linha com o propósito 
 
   
 
+  
+
 No arquivo Excel (.xlsx), haverá uma planilha chamada "Análises" com as cópias das tabelas dinâmicas, gráficos, motivações e respostas obtidas.
+
+  
 
   
 
@@ -105,9 +167,15 @@ No arquivo Excel (.xlsx), haverá uma planilha chamada "Análises" com as cópia
 
   
 
+  
+
 No arquivo Power BI (.pbix), cada medida e coluna calculada criada conterá no comentário uma breve explicação sobre o porquê das escolhas na utilização dos comandos e funções.
 
+  
+
 No Repositório de Arquivos Utilizados, haverá um README com as limpezas realizadas no Power Query do Power BI.
+
+  
 
   
 
@@ -115,140 +183,234 @@ No Repositório de Arquivos Utilizados, haverá um README com as limpezas realiz
 
   
 
+  
+
 ### Análise da Tabela olist_orders_dataset (Pedidos)
 
-* A tabela de pedidos possui 8 colunas:
-      - order_id = identificador do pedido;
-      - customer_id = identificador do cliente;
-      - order_status = status da compra;
-      - order_purchase_timestamp = data e hora da compra;
-      - order_approved_at = data e hora da aprovação da compra;
-      - order_delivered_carrier_date = data e hora da entrega do pedido na transportadora;
-      - order_delivered_customer_date = data e hora da entrega do pedido ao cliente;
-      - order_estimated_delivered_date = data estimada da entrega di pedido ao cliente.
+  
+A tabela de pedidos possui 8 colunas:
+
+- order_id = identificador do pedido;
+
+- customer_id = identificador do cliente;
+
+- order_status = status da compra;
+
+- order_purchase_timestamp = data e hora da compra;
+
+- order_approved_at = data e hora da aprovação da compra;
+
+- order_delivered_carrier_date = data e hora da entrega do pedido na transportadora;
+
+- order_delivered_customer_date = data e hora da entrega do pedido ao cliente;
+
+- order_estimated_delivered_date = data estimada da entrega di pedido ao cliente.
+
+  
 
 * Segundo as analises de integridade realizadas, cada linha da tabela representa um id de identificação único da compra do cliente. Portanto existem 99.441 registros de pedidos e 99.441 clientes.
 
- * Quanto ao status de cada compra, foram encontradas 8 categorias distintas, sendo elas:
-	- "delivered" = entregue;
-      -  "shipped" = enviado;
-      -  "canceled" = cancelado;
-      -  "unavailable" = indisponível;
-      -  "invoiced" = faturado;
-      -  "processing" = em processamento;
-      -  "created" = criado;
-      -  "approved" = aprovado;
+  
 
-	Os pedidos entregues representam a maioria com 97,02%, seguido pelos enviados com 1,11%, cancelados com 0,6%, indisponíveis com 0,6%, em processamento com 0,3%, criados com 0,01% e aprovados com 0,001%.
+Quanto ao status de cada compra, foram encontradas 8 categorias distintas, sendo elas:
 
-* Com relação ao preenchimento dos dados, as colunas de data de aprovação, data de entrega do pedido na transportadora e data de entrega ao cliente possuem 160, 1.783 e 2.965 valores vazios respectivamente.
+- "delivered" = entregue;
 
-	Dos 160 pedidos com a data de aprovação vazia, 141 foram cancelados, 14 foram entregues e 5 foram apenas criados. Os pedidos cancelados não deveriam ter a data de aprovação apenas caso o cancelamento fosse cancelado antes da aprovação e os pedidos entregues deveriam ter a data de aprovação, pois faz parte do processo completo da venda.
+- "shipped" = enviado;
 
-      Dos 1.783 pedidos com a data de entrega do pedido na transportadora vazias, 609 estão com status indisponíveis, 550 estão cancelados, 314 estão faturados, 301 estão em processamento, 5 estão criados, 2 foram entregue e 2 foram aprovados. Apenas os pedidos criados, aprovados, faturados, em processamento e cancelados antes do envio poderiam ter a data de entrega na transportadora vazia. 
+- "canceled" = cancelado;
 
-      Dos 2.965 pedidos com a data de entrega ao cliente vazias, 1107 estão com status enviado, 619 cancelados, 609 indisponíveis, 314 faturados, 301 em processamento, 8 entregues, 5 criados e 2 aprovados. Como a data de entrega é um dos últimos estágios do processo de venda, apenas pedidos com o estágio anterior a entregue poderiam ter essa data vazia.
+- "unavailable" = indisponível;
 
-* Sobre as datas das priemiras e últimas vendas entregues realizadas:
+- "invoiced" = faturado;
 
-      A primeira venda efetivamente entregue foi realizada em 15-09-2016 e a última venda foi realizada em 29-08-2018.
-	
+- "processing" = em processamento;
+
+- "created" = criado;
+
+- "approved" = aprovado;
+
+  
+
+Os pedidos entregues representam a maioria com 97,02%, seguido pelos enviados com 1,11%, cancelados com 0,6%, indisponíveis com 0,6%, em processamento com 0,3%, criados com 0,01% e aprovados com 0,001%.
+
+  
+
+Com relação ao preenchimento dos dados, as colunas de data de aprovação, data de entrega do pedido na transportadora e data de entrega ao cliente possuem 160, 1.783 e 2.965 valores vazios respectivamente.
+
+  
+
+Dos 160 pedidos com a data de aprovação vazia, 141 foram cancelados, 14 foram entregues e 5 foram apenas criados. Os pedidos cancelados não deveriam ter a data de aprovação apenas caso o cancelamento fosse cancelado antes da aprovação e os pedidos entregues deveriam ter a data de aprovação, pois faz parte do processo completo da venda.
+
+  
+
+Dos 1.783 pedidos com a data de entrega do pedido na transportadora vazias, 609 estão com status indisponíveis, 550 estão cancelados, 314 estão faturados, 301 estão em processamento, 5 estão criados, 2 foram entregue e 2 foram aprovados. Apenas os pedidos criados, aprovados, faturados, em processamento e cancelados antes do envio poderiam ter a data de entrega na transportadora vazia.
+
+  
+
+Dos 2.965 pedidos com a data de entrega ao cliente vazias, 1107 estão com status enviado, 619 cancelados, 609 indisponíveis, 314 faturados, 301 em processamento, 8 entregues, 5 criados e 2 aprovados. Como a data de entrega é um dos últimos estágios do processo de venda, apenas pedidos com o estágio anterior a entregue poderiam ter essa data vazia.
+
+  
+
+Sobre as datas das priemiras e últimas vendas entregues realizadas:
+
+  
+
+* A primeira venda efetivamente entregue foi realizada em 15-09-2016 e a última venda foi realizada em 29-08-2018.
+
+  
 
 ### Análise da Tabela olist_order_payments_dataset (Pagamentos dos Pedidos)
 
-* A tabela de pagamentos possui 5 colunas:
-      - order_id = identificador do pedido;
-      - payment_sequential = sequência de pagamentos;
-      - payment_type = forma de pagamento;
-      - payment_installmentes = parcelamento;
-      - payment_value = valor dos pagamentos.
   
-* A tabela de pagamentos possui 103.886 linhas de registro com 99.440 identificadores dos pedidos únicos, ou seja, existem linhas com o mesmo identificador do pedido. A partir desta análise, foram encontrados os pedidos repetições, onde alguns pedidos possuiam 29 linhas com o mesmo identificador do pedido. Alguns possuíam a mesma forma de pagamento, outros formas diferentes.
 
-* Entre as formas de pagamento, foram encontradas 8 categorias, sendo elas:
-      - credit_card = cartão de crédito;
-      - boleto = boleto;
-      - voucher = voucher;
-      - debit_card = cartão de débito;
-      - not_defined = não definido.
+A tabela de pagamentos possui 5 colunas:
 
-      A forma de pagamento via cartão de crédito é a mais utilizada, representando 76.795 (73,92%) compras, seguido por boleto com 19.784 (19,04%), voucher com 5.775 (5,56%) e cartão de débito com 1.529 (1,47%). A forma de pagamento não definida teve apenas 3 registros.
+- order_id = identificador do pedido;
 
-* Analisando os parcelamentos, a quantidade de parcelamento mais utilizada é 1x, com 52.546 (50,58%) pedidos realizados, seguido por 2x com 12.413 (11,95%), 3x com 10.461 (10,07%) e 10x com 5.328 (5,13%).
+- payment_sequential = sequência de pagamentos;
 
-* Sobre o faturamento dos pedidos, o pedido com o maior valor teve um faturamento de R$13.664,08 e os menores foram 3 pedidos com faturamento R$0. As compras com faturamento R$0 tem as formas de pagamento como vouchers ou não definidas. A média de pagamentos geral é de R$154,10, com mediana de R$100 e desvio padrão de R$217,49.
+- payment_type = forma de pagamento;
 
-* Já sobre o faturamento por forma de pagamento, cartão de crédito está na primeira posição com R$12.542.084,19 (78,34%), seguido por boleto com R$2.869.361,27 (17,92%), voucher com R$379.436,87 (2,37%) e cartão de débito com R$217.989,79 (1,36%). A forma de pagamento não definida não teve faturamento. 
+- payment_installmentes = parcelamento;
 
-* Dados estatísticos de acordo com a forma de pagamento:
-      - Boleto:
-            Valor máximo: R$7.274,88
-            Valor mínimo: R$11,62
-            Amplitude: R$7.263,26
-            Média: R$145,03
-            Mediana: R$93,89
-            Desvio Padrão: R$213,58
-      
-      - Cartão de Crédito:
-            Valor máximo: R$13.664,08
-            Valor mínimo: R$0,01
-            Amplitude: R$13.664,07
-            Média: R$163,32
-            Mediana: R$106,87
-            Desvio Padrão: R$222,12
+- payment_value = valor dos pagamentos.
 
-      - Cartão de Débito:
-            Valor máximo: R$4.445,50
-            Valor mínimo: R$13,38
-            Amplitude: R$4.432,12
-            Média: R$142,57
-            Mediana: R$89,30
-            Desvio Padrão: R$245,79
+A tabela de pagamentos possui 103.886 linhas de registro com 99.440 identificadores dos pedidos únicos, ou seja, existem linhas com o mesmo identificador do pedido. A partir desta análise, foram encontrados os pedidos repetições, onde alguns pedidos possuiam 29 linhas com o mesmo identificador do pedido. Alguns possuíam a mesma forma de pagamento, outros formas diferentes.
 
-      - Voucher:
-            Valor máximo: R$3.184,34
-            Valor mínimo: R$0
-            Amplitude: R$3.184,34
-            Média: R$65,70
-            Mediana: R$39,28
-            Desvio Padrão: R$115,52
+  
+
+Entre as formas de pagamento, foram encontradas 8 categorias, sendo elas:
+
+- credit_card = cartão de crédito;
+
+- boleto = boleto;
+
+- voucher = voucher;
+
+- debit_card = cartão de débito;
+
+- not_defined = não definido.
+
+  
+
+A forma de pagamento via cartão de crédito é a mais utilizada, representando 76.795 compras (73,92%), seguido por boleto com 19.784 (19,04%), voucher com 5.775 (5,56%) e cartão de débito com 1.529 (1,47%). A forma de pagamento não definida teve apenas 3 registros.
+
+  
+
+Analisando os parcelamentos, a quantidade de parcelamento mais utilizada é 1x, com 52.546 (50,58%) pedidos realizados, seguido por 2x com 12.413 (11,95%), 3x com 10.461 (10,07%) e 10x com 5.328 (5,13%).
+
+  
+
+Sobre o faturamento dos pedidos, o pedido com o maior valor teve um faturamento de R$13.664,08 e os menores foram 3 pedidos com faturamento R$0. As compras com faturamento R$0 tem as formas de pagamento como vouchers ou não definidas.
+
+  
+
+Já sobre o faturamento por forma de pagamento, cartão de crédito está na primeira posição com R$12.542.084,19 (78,34%), seguido por boleto com R$2.869.361,27 (17,92%), voucher com R$379.436,87 (2,37%) e cartão de débito com R$217.989,79 (1,36%). A forma de pagamento não definida não teve faturamento.
+
+  
 
 ### Análise da Tabela olist_products_dataset (Produtos)
 
-  
+A tabela de produtos possui 9 colunas:
+- product_id = identificador do produto;
+- product_category_name = nome da categoria do produto;
+- product_name_lenght = comprimento do nome do produto;
+- product_description_lenght =  comprimento da descrição do produto;
+- product_weight_g = peso do produto em gramas;
+- product_lenght_cm = comprimento do produto em centímetros;
+- product_height_cm = altura do produto em centímetros;
+- product_width_cm = largura do produto em centímetros.
 
-  
+A tabela possui 32.951 linhas, sendo 32951 identificadores dos pedidos, ou seja, cada linha representa um único produto. Já sobre as categorias, existem 74 categorias distintas.
 
+Cama, mesa e banho é a categoria com a maior quantidade de produtos, sendo o top 10 formados por:
+- cama mesa e banho = 3.029;
+- esportes e lazer = 2.867;
+- moveis e decoração = 2.657;
+- saúde e beleza = 2.444
+- utilidades domésticas = 2.335;
+- automotivo = 1.900;
+- informática e acessórios = 1.639;
+- brinquedos = 1.411;
+- relógios e presentes = 1.329;
+- telefonia = 1.134.
+
+Existem 610 produtos com categoria em branco, sendo 1 dele sem nenhuma informação cadastrada (exceto pelo product_id).
+Há um cadastro da categoria bebes, que não possui peso, comprimento, altura ou largura.
+
+O produto mais pesado é da categoria cama, mesa e banho com 40.425g (40 kg).
+Existem 149 produtos com o maior comprimento, sendo 105 cm.
+Existem 24 produtos com o maior altura, sendo 105 cm.
+O produto com maior largura é da categoria cama, mesa e banho com 118cm.
+ 
 ### Análise da Tabela olist_customers_dataset (Clientes)
 
-  
-  
-  
+ A tabela clientes possui 5 tabelas:
+ - customer_id = identificador do cliente;
+ - customer_unique_id = identificador único do cliente;
+ - customer_zip_code_prefix = prefixo do CEP (endereço postal) do cliente;
+ - customer_city = cidade do cliente;
+ - customer_state = estado do cliente.
+
+A tabela de clientes possui 99.441 linhas, sendo que os registros do identificador do cliente possuem a mesma quantidade distinta. 
+
+Já o identificador único do cliente possui 96.096 registros únicos, ou seja, existem identificadores únicos do cliente repetidos.
+Analisando os registros repetidos, alguns identificadores únicos possuem até 17 repetições, algumas com cadastro em outra cidade e/ou estado.
+
+Analisando os clientes de acordo com o local onde moram:
+
+- As 5 cidades com mais clientes são: São Paulo com 15.540 (15,63%), Rio de Janeiro com 6.882 (6,82%), Belo Horizonte com 2.773 (2,79%), Brasília com 2.131 (2,14%) e Curitiba com 1.521 (1,53%).
+
+- Verificamos que os 3 estados com a maior quantidade de clientes são: São Paulo com 41.746 (41,98%), Rio de Janeiro com 12.852 (12,92%) e Rio Grande do Sul com 5.466 (5,5%).
+
+- A análise por regiões, trás a região Sudeste em primeiro lugar com 68.266 (68,65%), o Sul com 14,148 (14,23%), o Nordeste com 9.394 (9,45%), o Norte com 3.991 (4,01%) e o Centro-Oeste com 3.642 (3,66%).
 
 ### Análise da Tabela olist_order_reviews_dataset (Avaliações dos Pedidos)
 
-  
-  
-  
+  A tabela de avaliações tem 7 colunas:
+  - review_id = identificador da avaliação;
+  - order_id = identificador do pedido;
+  - review_score = avaliação;
+  - review_comment_title = título do comentário;
+  - review_comment_message = comentário;
+  - review_creation_date = data e hora da criação da avaliação;
+  - review_answer_timestamp = data e hora da resposta à avaliação.
+
+A tabela possui 79.121 linhas, sendo que a coluna de identificadores da avaliação possui 78.479 registros distintos e a coluna de identificadores do pedido possui 78.325 registros distintos.
+
+A coluna de identificadores da avaliação possui 138 valores vazios e outros caracteres diferentes do padrão.
+
+A coluna de identificadores do pedido também possui valores fora do padrão, sendo 12 vazios e 437 nulos.
+
+A coluna de avaliação possui valores diferentes das notas de 1 a 5 padrões, totalizando 607 registros nestas condições.
+
+
+
+
 
 ### Análise da Tabela olist_order_items_dataset (Itens dos Pedidos)
 
   
+
   
 
 ## Análise Estatística Descritiva
 
   
+
   
 
 ## Criação do Dashboard de Acompanhamento da Operação
 
   
+
   
 
 ## Perguntas de Negócio
 
   
+
   
 
 ## Planos de Ação
