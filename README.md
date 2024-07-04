@@ -45,13 +45,13 @@ A análise será dividida em:
 
   
 
-O DataSet Olist é uma representação de uma série de E-Commerces brasileiros com dados de 100 mil pedidos entre os anos de 2016-2018 e nele existem tabelas com dados dos clientes, pagamentos, avaliações de compras, produtos e suas categorias, vendedores, entre outras informações.
+O DataSet Olist é uma representação de um E-Commerce com dados de 100 mil pedidos entre os anos de 2016-2018 fornecidos pela OLIST e nele existem tabelas com dados dos clientes, pagamentos, avaliações de compras, produtos e suas categorias, vendedores, entre outras informações.
 
   
 
   
 
-A motivação na escolha do DataSet Olist foi devido a sua familiaridade com bases de dados utilizadas no dia a dia da maioria das empresas, com relacionamento entre tabelas, chaves primarias e secundárias, entre outras similaridades.
+A motivação na escolha do DataSet foi devido a sua familiaridade com bases de dados utilizadas no dia a dia de empresas, com relacionamento entre tabelas, chaves primarias e secundárias, entre outras similaridades.
 
   
 
