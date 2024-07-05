@@ -21,10 +21,6 @@ A análise será dividida em:
 
   
 
-* Análise Estatística Descritiva.
-
-  
-
 * Criação do Dashboard de Acompanhamento da Operação.
 
   
@@ -419,10 +415,6 @@ Já com relação ao vendedor, o vendedor que mais faturou obteve um total de R$
 Na coluna de produtos, o maior preço foi de R$6.735,00 e o menor foi de R$0,85.
 
 Na coluna de fretes, o maior frete foi de R$408,68 e o menor frete foi R$0,00.
-
-## Análise Estatística Descritiva
-
-  
 
   
 
