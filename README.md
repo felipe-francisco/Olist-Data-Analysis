@@ -153,7 +153,7 @@ No arquivo SQL(.sql), cada Query conterá acima dela uma linha com o propósito 
 
   
 
-No arquivo Excel (.xlsx), haverá uma planilha chamada "Análises" com as cópias das tabelas dinâmicas, gráficos, motivações e respostas obtidas.
+No arquivo Excel (.xlsx), haverá todas as tabelas do dataset, haverá uma planilha chamada "Análises" com analises realizadas nas tabelas dinâmicas, e uma planilha chamada "Gráficos" com os gráficos criados através do DataSet ou das tabelas dinâmicas.
 
   
 
@@ -304,7 +304,16 @@ Sobre o faturamento dos pedidos, o pedido com o maior valor teve um faturamento 
 
 Já sobre o faturamento por forma de pagamento, cartão de crédito está na primeira posição com R$12.542.084,19 (78,34%), seguido por boleto com R$2.869.361,27 (17,92%), voucher com R$379.436,87 (2,37%) e cartão de débito com R$217.989,79 (1,36%). A forma de pagamento não definida não teve faturamento.
 
-  
+As medidas de dispersão e de tendência central da coluna com os pagamentos (payment_values) apresentaram os seguintes valores:
+- Contagem Pagamentos: 103.886
+- Valor Máximo: R$13.663,08
+- Valor Mínimo: R$ 0
+- Amplitude: R$ 13.664,08
+- Média: R$154,10
+- Mediana: R$ 100,00
+- Desvio-Padrão: R$217,49
+
+
 
 ### Análise da Tabela olist_products_dataset (Produtos)
 
@@ -390,6 +399,29 @@ O CSAT é de 77,05%, ou seja, existe uma grande porcentagem dos clientes que ava
 Existem 3 linhas de registro da tabela com a data e hora da criação da avaliação vazias.
 
 Também existem 3 linhas de registro da tabela com a data e hora da resposta à avaliação vazias.
+
+As medidas de dispersão e de tendência central da coluna com o preço dos itens dos pedidos (price) apresentaram os seguintes valores:
+- Contagem: 112.650 transações
+- Valor Máximo: R$6.735,00
+- Valor Mínimo: R$0,85
+- Amplitude: R$6.734,15
+- Média: R$120,65
+- Mediana: R$74,99
+- Desvio-Padrão: R$183,63
+
+As medidas de dispersão e de tendência central da coluna com o valor do frete (freight_value) apresentaram os seguintes valores:
+- Contagem: 112.650 transações
+- Valor Máximo: R$409,68
+- Valor Mínimo: R$0
+- Amplitude: R$409,68
+- Média: R$19,99
+- Mediana: R$16,26
+- Desvio-Padrão: R$15,81
+
+Utilizando a fórmula de Sturges, chegamos aos 18 bins. Com esta informação, nosso histograma tem a seguinte distribuição:
+
+O BoxPlot abaixo mostra que valores acima de R$344,34 são considerados outliers.
+
 
 ### Análise da Tabela olist_order_items_dataset (Itens dos Pedidos)
 
