@@ -344,7 +344,7 @@ O produto com maior largura é da categoria cama, mesa e banho com 118cm.
 
  A tabela clientes possui 5 tabelas:
  - customer_id = identificador do cliente;
- - customer_unique_id = identificador único do cliente;
+ - customer_unique_id = identificador único do cliente (CPF ou CNPJ);
  - customer_zip_code_prefix = prefixo do CEP (endereço postal) do cliente;
  - customer_city = cidade do cliente;
  - customer_state = estado do cliente.
@@ -352,7 +352,7 @@ O produto com maior largura é da categoria cama, mesa e banho com 118cm.
 A tabela de clientes possui 99.441 linhas, sendo que os registros do identificador do cliente possuem a mesma quantidade distinta. 
 
 Já o identificador único do cliente possui 96.096 registros únicos, ou seja, existem identificadores únicos do cliente repetidos.
-Analisando os registros repetidos, alguns identificadores únicos possuem até 17 repetições, algumas com cadastro em outra cidade e/ou estado.
+Analisando os registros repetidos, alguns identificadores únicos possuem até 17 repetições, algumas com cadastro em outra cidade e/ou estado. Será considerado que as repetições ser filiais de empresas ou pessoas que compraram em diferentes estados.
 
 Analisando os clientes de acordo com o local onde moram:
 
