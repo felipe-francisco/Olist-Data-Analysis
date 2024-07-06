@@ -230,7 +230,7 @@ Quanto ao status de cada compra, foram encontradas 8 categorias distintas, sendo
 
 Os pedidos entregues representam a maioria com 97,02%, seguido pelos enviados com 1,11%, cancelados com 0,6%, indisponíveis com 0,6%, em processamento com 0,3%, criados com 0,01% e aprovados com 0,001%.
 
-https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/order_status.PNG
+![Gráfico da Frequência Relativa](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/order_status.PNG)
 
 Com relação ao preenchimento dos dados, as colunas de data de aprovação, data de entrega do pedido na transportadora e data de entrega ao cliente possuem 160, 1.783 e 2.965 valores vazios respectivamente.
 
