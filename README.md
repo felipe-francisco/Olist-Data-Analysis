@@ -268,7 +268,7 @@ A tabela de pagamentos possui 5 colunas:
 
 - payment_type = forma de pagamento;
 
-- payment_installmentes = parcelamento;
+- payment_installments = parcelamento;
 
 - payment_value = valor dos pagamentos.
 
