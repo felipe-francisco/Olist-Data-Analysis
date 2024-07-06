@@ -350,6 +350,7 @@ ORDER BY contagem DESC;
 
 -- Calculando o valor máximo, mínimo, amplitude, media e mediana do payment_value:
 SELECT
+	count(payment_value) AS Contagem,
 	MAX(payment_value) AS valor_maximo_pedido,
 	MIN(payment_value) AS valor_minimo_pedido,
 	MAX(payment_value) - MIN(payment_value) AS amplitude_pedido,
@@ -400,7 +401,6 @@ GROUP BY numero_parcelas;
 -- Utilizamos conceitos já utilizados anteriormente para extrair o percentual total, a frequência acumulada e medidas de tendência central/dispersão.
 -- Entretanto, desta vez agrupamos cada medida e suas porcentagens pelo payment_installments
  */
-
 
 /*
 ****************************************
@@ -554,7 +554,7 @@ WHERE product_width_cm   = (
 Análise da Tabela olist_customers_dataset:
 **********************************************
 */
-
+	
 -- Análise Primária da Tabela clientes:
 SELECT
 	*
@@ -1210,9 +1210,9 @@ SELECT
 	MAX(freight_value) AS maximo,
 	MIN(freight_value) AS minimo,
 	(MAX(freight_value) - MIN(freight_value)) AS amplitude, 
-	AVG(freight_value) AS media,
-	MEDIAN(freight_value) AS mediana,
-	STDEV(freight_value) AS desvio_padrao
+	ROUND(AVG(freight_value),2) AS media,
+	ROUND(MEDIAN(freight_value),2) AS mediana,
+	ROUND(STDEV(freight_value),2) AS desvio_padrao
 FROM olist_order_items_dataset ooid;
 /*
 -- A query retorna algumas medidas de tendência central e dispersão.
@@ -1221,6 +1221,6 @@ FROM olist_order_items_dataset ooid;
 -- Na terceira coluna, retornará o valor mínimo.
 -- Na quarta coluna a Amplitude, representada pelo valor máximo diminuindo o valor mínimo.
 -- Na quinta couluna, extraimos a média com a função AVG, arredondando o resultado con a função ROUND para 2 casas decimais depois da virgula.
--- Na sexta coluna, a mediana com a função MEDIAN.
+-- Na sexta coluna, a mediana com a função MEDIAN, arredondando o resultado con a função ROUND para 2 casas decimais depois da virgula.
 -- Na última coluna,o desvio padrão representado pela função STDVE, arredondado pela função ROUND para 2 casas decimais depois da virgula.
  */
