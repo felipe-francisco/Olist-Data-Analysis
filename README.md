@@ -63,7 +63,7 @@ https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
   
 
-Repoositório de Arquivos Utilizados (Arquivos Excel, CSV, SQL(cópias) e Power BI):
+Repoositório de Arquivos Utilizados (Arquivos Excel, SQL e Power BI):
 
   
 
