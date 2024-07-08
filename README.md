@@ -253,7 +253,7 @@ Sobre as datas das primeiras e últimas vendas entregues realizadas:
 * A primeira venda efetivamente entregue foi realizada em 15-09-2016 e a última venda foi realizada em 29-08-2018.
 
 
-Contando que a última venda entregue realizada foi no final de agosto de 2018, qualquer produto com data de entrega prevista para junho ou data anterior está com um tempo de atraso extremamente alto.
+Considerando que a última venda entregue realizada foi no final de agosto de 2018, qualquer produto com data de entrega prevista para junho ou data anterior está com um tempo de atraso extremamente alto.
 Analisando estão os pedidos com o status "enviado" e com data de entrega prevista entre 1 de janeiro de 2016 e 30 de junho de 2018, foram encontrados 962 pedidos não entregues.
 
 
