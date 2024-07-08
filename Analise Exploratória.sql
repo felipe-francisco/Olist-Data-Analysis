@@ -144,7 +144,7 @@ ORDER BY contagem_pedidos DESC;
 -- Ao final, são ordenados pela contagem dos pedidos, da maior para a menor quantidade.
 */
 
--- Análise dos 9 valores com data de entrega na transportadora vazia, com status do pedido entregue, aprovado e criado:
+-- Análise dos 2 valores com data de entrega na transportadora vazia, com status do pedido entregue:
 SELECT 
 	*
 FROM olist_orders_dataset ood
@@ -181,20 +181,33 @@ ORDER BY order_purchase_timestamp
 -- Ao final, são ordenados pela data da compra da mais antiga para a mais nova.
  */
 
--- Análise dos pedidos enviados:
+-- Análise dos pedidos enviados e não entregues entre 2016 e 2018:
 SELECT
 	*
 FROM olist_orders_dataset ood
 WHERE
 	order_status = 'shipped' AND
-	STRFTIME('%Y-%m', order_approved_at) BETWEEN '2016-01' AND '2017-12' AND
-	STRFTIME('%Y-%m',order_estimated_delivery_date) < '2018-01'
+	STRFTIME('%Y-%m', order_approved_at) BETWEEN '2016-01' AND '2018-07' AND
+	STRFTIME('%Y-%m',order_estimated_delivery_date) < '2018-07'
 ORDER BY order_purchase_timestamp ASC
 /*
--- A query retorna todos oe pedidos quando o seu status for igual a enviado, a data da aprovação esteja entre o primeiro mês de 2016 e o último mês de 2017 e a data estimada da entrega antes do primeiro mês de 2018.
+-- A query retorna todos oe pedidos quando o seu status for igual a enviado, a data da aprovação esteja entre o primeiro mês de 2016 e o mês de julho de 2018 e a data estimada da entrega antes do mês de juho de 2018.
 -- Para filtrar pelo mês e ano, foi utilizada a função STRFTIME para extrair mês e ano da coluna de data da aprovação e da coluna  com a data estimada da entrega.
  */
 
+-- Analisar a quantidade de pedidos enviados e não entregues entre 2016 e 2018.
+SELECT
+	count(*)
+FROM olist_orders_dataset ood
+WHERE
+	order_status = 'shipped' AND
+	STRFTIME('%Y-%m', order_approved_at) BETWEEN '2016-01' AND '2018-07' AND
+	STRFTIME('%Y-%m',order_estimated_delivery_date) < '2018-07'
+ORDER BY order_purchase_timestamp ASC
+/*
+-- A query retorna uma contagem de todos oe pedidos quando o seu status for igual a enviado, a data da aprovação esteja entre o primeiro mês de 2016 e o mês de julho de 2018 e a data estimada da entrega antes do mês de juho de 2018.
+-- Para filtrar pelo mês e ano, foi utilizada a função STRFTIME para extrair mês e ano da coluna de data da aprovação e da coluna com a data estimada da entrega.
+ */
 
 -- Data da primeira e última venda realizada:
 SELECT
@@ -323,6 +336,19 @@ WHERE order_id = '465c2e1bee4561cb39e0db8c5993aafc';
 -- A Query retorna todas as linhas quando o order_id for igual a determinado id inserido no filtro.
 */
 
+-- Analisar a quantidade de pedidos por método de pagamento:
+SELECT
+	payment_sequential,
+	count(*) contagem,
+	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset),4) AS perc_total,
+	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
+FROM olist_order_payments_dataset oopd
+GROUP BY payment_sequential
+ORDER BY contagem DESC
+/*
+-- A query retorna uma contagem agrupada pela quantidade de métodos de pagamento utilizadas.
+-- Ao final, o order by organiza da maior para a menor quantidade das contagens.
+ */
 
 -- Verificar a quantidade de tipos de pagamentos distintos foram realizadas:
 SELECT 
