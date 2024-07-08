@@ -21,7 +21,7 @@ A análise será dividida em:
 
   
 
-* Criação do Dashboard de Acompanhamento da Operação.
+* Dashboard de Acompanhamento da Operação.
 
   
 
@@ -453,7 +453,7 @@ Na coluna de fretes, o maior frete foi de R$408,68 e o menor frete foi R$0,00.
 
   
 
-## Criação do Dashboard de Acompanhamento da Operação
+## Dashboard de Acompanhamento da Operação
 
   
 
