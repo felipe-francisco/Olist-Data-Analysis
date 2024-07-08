@@ -250,12 +250,12 @@ Dos 2.965 pedidos com a data de entrega ao cliente vazias, 1107 estão com statu
 Sobre as datas das primeiras e últimas vendas entregues realizadas:
 
   
-
 * A primeira venda efetivamente entregue foi realizada em 15-09-2016 e a última venda foi realizada em 29-08-2018.
 
 
 Contando que a última venda entregue realizada foi no final de agosto de 2018, qualquer produto com data de entrega prevista para junho ou data anterior está com um tempo de atraso extremamente alto.
 Analisando estão os pedidos com o status "enviado" e com data de entrega prevista entre 1 de janeiro de 2016 e 30 de junho de 2018, foram encontrados 962 pedidos não entregues.
+
 
   
 
@@ -430,7 +430,7 @@ O BoxPlot abaixo mostra que valores acima de R$344,34 são considerados outliers
 
 A tabela de itens dos pedidos possui 7 colunas:
 - order_id = identificador do pedido;
-- order_item_id =
+- order_item_id = numero de itens incluidos no mesmo pedido.
 - product_id = identificador do produto;
 - seller_id = identificador do vendedor;
 - shipping_limit_date = data limite de envio;
