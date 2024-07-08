@@ -245,14 +245,17 @@ Dos 1.783 pedidos com a data de entrega do pedido na transportadora vazias, 609 
   
 
 Dos 2.965 pedidos com a data de entrega ao cliente vazias, 1107 estão com status enviado, 619 cancelados, 609 indisponíveis, 314 faturados, 301 em processamento, 8 entregues, 5 criados e 2 aprovados. Como a data de entrega é um dos últimos estágios do processo de venda, apenas pedidos com o estágio anterior a entregue poderiam ter essa data vazia.
-
   
 
-Sobre as datas das priemiras e últimas vendas entregues realizadas:
+Sobre as datas das primeiras e últimas vendas entregues realizadas:
 
   
 
 * A primeira venda efetivamente entregue foi realizada em 15-09-2016 e a última venda foi realizada em 29-08-2018.
+
+
+Contando que a última venda entregue realizada foi no final de agosto de 2018, qualquer produto com data de entrega prevista para junho ou data anterior está com um tempo de atraso extremamente alto.
+Analisando estão os pedidos com o status "enviado" e com data de entrega prevista entre 1 de janeiro de 2016 e 30 de junho de 2018, foram encontrados 962 pedidos não entregues.
 
   
 
