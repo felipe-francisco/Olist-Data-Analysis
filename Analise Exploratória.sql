@@ -209,6 +209,23 @@ ORDER BY order_purchase_timestamp ASC
 -- Para filtrar pelo mês e ano, foi utilizada a função STRFTIME para extrair mês e ano da coluna de data da aprovação e da coluna com a data estimada da entrega.
  */
 
+-- Quantidade de pedidos entregues por ano:
+SELECT
+	STRFTIME('%Y-%m', order_delivered_customer_date) ano_mes,
+	COUNT(*) entregas_realizadas
+FROM olist_orders_dataset ood
+WHERE 
+	order_status = 'delivered'
+GROUP BY STRFTIME('%Y-%m', order_delivered_customer_date)
+HAVING ano_mes IS NOT NULL
+ORDER BY ano_mes ASC
+/*
+-- A quiery retorna um agrupamento pelo ano e mês da data de entrega do pedido ao cliente, e uma contagem do total de linhas.
+-- O filtro no where retorna apenas os pedidos com o status igual a entregue.
+-- O filtro no having retorna apenas os pedidos com o ano_mes que não sejam nulos.
+-- Ao final, foi ordenado do menor para o maior ano_mês.
+ */
+
 -- Data da primeira e última venda realizada:
 SELECT
 	*
