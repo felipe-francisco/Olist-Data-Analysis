@@ -267,7 +267,7 @@ A tabela de pagamentos possui 5 colunas:
 
 - order_id = identificador do pedido;
 
-- payment_sequential = sequência de pagamentos;
+- payment_sequential = métodos de pagamentos;
 
 - payment_type = forma de pagamento;
 
@@ -277,7 +277,7 @@ A tabela de pagamentos possui 5 colunas:
 
 A tabela de pagamentos possui 103.886 linhas de registro com 99.440 identificadores dos pedidos únicos, ou seja, existem linhas com o mesmo identificador do pedido. A partir desta análise, foram encontrados os pedidos repetições, onde alguns pedidos possuiam 29 linhas com o mesmo identificador do pedido. Alguns possuíam a mesma forma de pagamento, outros formas diferentes.
 
-  
+A coluna métodos de pagamentos retorna a quantidade de formas de pagamentos utilizadas para o pagamento de um pedido. 95,64% (99.360) pedidos foram realizados utilizando apenas uma forma de pagamento.
 
 Entre as formas de pagamento, foram encontradas 8 categorias, sendo elas:
 
