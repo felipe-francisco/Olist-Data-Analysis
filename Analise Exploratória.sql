@@ -124,13 +124,12 @@ SELECT
 FROM olist_orders_dataset ood
 WHERE 
 	order_approved_at = '' AND
-	order_status IN ('delivered', 'created')
+	order_status IN ('delivered')
 ORDER BY order_purchase_timestamp
 /*
--- A quuery retorna todas as linhas quando a data de aprovação está vazia, e o status do pedido está como entregue ou criado.
+-- A quuery retorna todas as linhas quando a data de aprovação está vazia, e o status do pedido está como entregue.
 -- Ao final, são ordenados pela data da compra da mais antiga para a mais nova.
  */
-
 
 --Análise das categorias quando a data de entrega à transportadora está vazia:
 SELECT
@@ -182,6 +181,21 @@ ORDER BY order_purchase_timestamp
 -- Ao final, são ordenados pela data da compra da mais antiga para a mais nova.
  */
 
+-- Análise dos pedidos enviados:
+SELECT
+	*
+FROM olist_orders_dataset ood
+WHERE
+	order_status = 'shipped' AND
+	STRFTIME('%Y-%m', order_approved_at) BETWEEN '2016-01' AND '2017-12' AND
+	STRFTIME('%Y-%m',order_estimated_delivery_date) < '2018-01'
+ORDER BY order_purchase_timestamp ASC
+/*
+-- A query retorna todos oe pedidos quando o seu status for igual a enviado, a data da aprovação esteja entre o primeiro mês de 2016 e o último mês de 2017 e a data estimada da entrega antes do primeiro mês de 2018.
+-- Para filtrar pelo mês e ano, foi utilizada a função STRFTIME para extrair mês e ano da coluna de data da aprovação e da coluna  com a data estimada da entrega.
+ */
+
+
 -- Data da primeira e última venda realizada:
 SELECT
 	*
@@ -210,6 +224,55 @@ WHERE order_purchase_timestamp = (
 -- Foi criada uma subquery no WHERE com um filtro para pegar apenas a última venda realizada que foi entregue.
 -- Se a base for atualizada e uma data posterior de venda entregue for inserida, a query retornará o valor correto pois está automatizada.
 */
+
+
+-- Query para exportar ao Excel:
+WITH compras_sem_aprovacao AS (
+	SELECT
+	*
+	FROM olist_orders_dataset ood
+	WHERE NOT
+		order_approved_at <> '' AND
+		order_status = 'delivered'
+),
+compras_com_aprovacao AS (
+	SELECT 
+		ood.* 
+	FROM olist_orders_dataset ood
+	LEFT JOIN compras_sem_aprovacao csa
+		ON ood.order_id = csa. order_id
+	WHERE csa.order_id IS NULL
+),
+compras_entregues_sem_data_entrega AS (
+	SELECT 
+		* 
+	FROM compras_com_aprovacao
+	WHERE
+		order_delivered_customer_date = '' AND
+		order_status = 'delivered'
+),
+pedidos_filtrados AS (
+	SELECT 
+		ood.* 
+	FROM olist_orders_dataset ood
+	LEFT JOIN compras_entregues_sem_data_entrega cesde
+		ON ood.order_id = cesde. order_id
+	WHERE cesde.order_id IS NULL
+)
+SELECT * FROM pedidos_filtrados
+ORDER BY order_purchase_timestamp
+/*
+-- As CTE's realizam filtros na tabela principal dos pedidos (olist_orders_dataset).
+	-- Na CTE compras_sem_aprovacao retornam todos os pedidos com data de aprovação (order_approved_at) sem data e com status do pedido (order_status) entregue (delivered).
+	-- Na CTE compras_com_aprovacao realizamos um filtro que retorna todos os pedidos onde os order_id's da tabela olist_orders_dataset forem diferentes dos order_id's da CTE compras_sem_aprovacao (order_id = entregue e
+	order_approved_at = vazio).
+	-- Na CTE compras_entregues_sem_data_entrega realizamos o mesmo procedimento da CTE compras_sem_aprovacao, porém agora filtrando todos os pedidos em que o status do pedido for entregue e a data de entrega ao cliente
+	estiver vazia.
+	-- Na CTE pedidos_filtrados, retornam todos os pedidos quando os order_id's da tabela olist_orders_dataset forem diferentes dos pedidos com status do pedido entregue e data de entrega ao cliente vazia, filtradas na
+	CTE compras_entregues_sem_data_entrega.
+-- A query principal retorna todos os pedidos já filtrados.
+ */
+
 
 
 /*
@@ -1052,7 +1115,11 @@ WHERE
 -- A query retorna as linhas da tabela quando o review_answer_timestamp ou o  review_creation_date forem vazios.
  */
 	
-
+-- Query para importar ao Excel:
+SELECT
+	*
+FROM olist_order_reviews_dataset oord
+WHERE LENGTH(review_score) = 1
 
 /*
 **********************************************
@@ -1111,11 +1178,10 @@ FROM registros_duplicados
 -- Análise da quantidade distinta de produtos:
 SELECT
 	count(DISTINCT product_id) produtos_distintos_vendidos
-FROM olist_products_dataset opd
+FROM olist_order_items_dataset ooid
 /*
 -- A query realiza uma contagem da quantidade distinta de produtos existentes.
  */
-
 
 -- Análise do produto mais pedido:
 SELECT
