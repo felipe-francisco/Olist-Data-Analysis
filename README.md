@@ -245,7 +245,10 @@ Dos 1.783 pedidos com a data de entrega do pedido na transportadora vazias, 609 
   
 
 Dos 2.965 pedidos com a data de entrega ao cliente vazias, 1107 estão com status enviado, 619 cancelados, 609 indisponíveis, 314 faturados, 301 em processamento, 8 entregues, 5 criados e 2 aprovados. Como a data de entrega é um dos últimos estágios do processo de venda, apenas pedidos com o estágio anterior a entregue poderiam ter essa data vazia.
-  
+
+O mês com o maior número de pedidos entregue foi o mês de agosto de 2018:
+
+
 
 Sobre as datas das primeiras e últimas vendas entregues realizadas:
 
