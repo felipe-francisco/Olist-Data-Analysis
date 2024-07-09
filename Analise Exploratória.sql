@@ -212,15 +212,16 @@ ORDER BY order_purchase_timestamp ASC
 -- Quantidade de pedidos entregues por ano:
 SELECT
 	STRFTIME('%Y-%m', order_delivered_customer_date) ano_mes,
-	COUNT(*) entregas_realizadas
+	COUNT(*) entregas_realizadas,
+	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_orders_dataset WHERE order_status = 'delivered'),4) AS perc_total
 FROM olist_orders_dataset ood
-WHERE 
-	order_status = 'delivered'
+WHERE order_status = 'delivered'
 GROUP BY STRFTIME('%Y-%m', order_delivered_customer_date)
 HAVING ano_mes IS NOT NULL
 ORDER BY ano_mes ASC
 /*
 -- A quiery retorna um agrupamento pelo ano e mês da data de entrega do pedido ao cliente, e uma contagem do total de linhas.
+-- A terceira coluna retorna a divisão do total de cada linha pelo total geral, resultando na porcentagem do total, arredondada para 4 casas decimais.
 -- O filtro no where retorna apenas os pedidos com o status igual a entregue.
 -- O filtro no having retorna apenas os pedidos com o ano_mes que não sejam nulos.
 -- Ao final, foi ordenado do menor para o maior ano_mês.
