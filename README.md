@@ -561,6 +561,8 @@ Cama, mesa e banho é a categoria com a maior quantidade de produtos, sendo o to
 
 - telefonia = 1.134.
 
+O gráfico abaixo demonstra melhor a quantidade de produtos por categoria:
+
 ![Top 10 categorias com mais produtos](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/top%2010%20product_category_name.PNG)
 
 Existem 610 produtos com categoria em branco, sendo 1 dele sem nenhuma informação cadastrada (exceto pelo product_id).
@@ -613,9 +615,10 @@ Analisando os clientes de acordo com o local onde moram:
 
 ![Top 10 cidades com mais clientes](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/customer_city%20distribution.PNG)  
 
-- Foi identificado que os 3 estados com a maior quantidade de clientes são: São Paulo com 41.746 (41,98%), Rio de Janeiro com 12.852 (12,92%) e Rio Grande do Sul com 5.466 (5,5%).
+- Já na análise por estados, 3 estados com a maior presença de clientes são: São Paulo com 41.746 (41,98%), Rio de Janeiro com 12.852 (12,92%) e Rio Grande do Sul com 5.466 (5,5%).
 
-  ![Estados com mais clientes](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/customer_state%20distribution.PNG)
+  
+![Estados com mais clientes](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/customer_state%20distribution.PNG)
 
 - A análise por regiões, trás a região Sudeste em primeiro lugar com 68.266 (68,65%), o Sul com 14,148 (14,23%), o Nordeste com 9.394 (9,45%), o Norte com 3.991 (4,01%) e o Centro-Oeste com 3.642 (3,66%).
 
@@ -674,57 +677,6 @@ Existem 3 linhas de registro da tabela com a data e hora da criação da avalia�
   
 
 Também existem 3 linhas de registro da tabela com a data e hora da resposta à avaliação vazias.
-
-  
-
-As medidas de dispersão e de tendência central da coluna com o preço dos itens dos pedidos (price) apresentaram os seguintes valores:
-
-- Contagem: 112.650 transações
-
-- Valor Máximo: R$6.735,00
-
-- Valor Mínimo: R$0,85
-
-- Amplitude: R$6.734,15
-
-- Média: R$120,65
-
-- Mediana: R$74,99
-
-- Desvio-Padrão: R$183,63
-
-![Histograma do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20price.PNG)
-
-
-
-![Boxplot do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/boxplot%20price.PNG)
-
-As medidas de dispersão e de tendência central da coluna com o valor do frete (freight_value) apresentaram os seguintes valores:
-
-- Contagem: 112.650 transações
-
-- Valor Máximo: R$409,68
-
-- Valor Mínimo: R$0
-
-- Amplitude: R$409,68
-
-- Média: R$19,99
-
-- Mediana: R$16,26
-
-- Desvio-Padrão: R$15,81
-
-  
-
-O histograma tem a seguinte distribuição:
-
- ![Histograma do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20price.PNG) 
-
-
-O BoxPlot abaixo mostra que valores acima de R$344,34 são considerados outliers.
-
-  ![Boxplot do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20freight_value.PNG)
   
 
 ### Análise da Tabela olist_order_items_dataset (Itens dos Pedidos)
@@ -768,16 +720,65 @@ O produto com mais faturamento obteve um total de R$63.885,00.
 Já com relação ao vendedor, o vendedor que mais faturou obteve um total de R$ 229.472,63. Entretanto, 1.667 vendedores tiveram um faturamento inferior a R$1.000,00
 
  ![Top 10 vendedores com mais faturamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/Top%2010%20seller%20sales.PNG) 
+  
 
-Na coluna de produtos, o maior preço foi de R$6.735,00 e o menor foi de R$0,85.
+As medidas de dispersão e de tendência central da coluna com o preço dos itens dos pedidos (price) apresentaram os seguintes valores:
+
+- Contagem: 112.650 transações
+
+- Valor Máximo: R$6.735,00
+
+- Valor Mínimo: R$0,85
+
+- Amplitude: R$6.734,15
+
+- Média: R$120,65
+
+- Mediana: R$74,99
+
+- Desvio-Padrão: R$183,63
+
+O histograma do Preço do produto apresenta a seguinte distribuição dos preços:
+
+
+![Histograma do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20price.PNG)
+
+Assim como os pagamentos analisados anteriormente, o preço dos produtos também possui uma assimetria a direita, ou seja, a grande maioria dos valores está concentrada no lado esquerdo.
+
+Analisando o percentil 95, podemos constatar que 95% dos preços dos itens dos pedidos possuem valores entre R$0,85 e R$349,90.
+
+O Boxplot também tem um comportamento semelhante ao das análises anteriores, porém com valores fora da curva acima de R$277,30 e abaixo de R$0,85.
+
+![Boxplot do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/boxplot%20price.PNG)
+
+As medidas de dispersão e de tendência central da coluna com o valor do frete (freight_value) apresentaram os seguintes valores:
+
+- Contagem: 112.650 transações
+
+- Valor Máximo: R$409,68
+
+- Valor Mínimo: R$0
+
+- Amplitude: R$409,68
+
+- Média: R$19,99
+
+- Mediana: R$16,26
+
+- Desvio-Padrão: R$15,81
 
   
 
-Na coluna de fretes, o maior frete foi de R$408,68 e o menor frete foi R$0,00.
+O histograma tem a seguinte distribuição:
 
-  
+ ![Histograma do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20price.PNG) 
 
+E o Boxplot a seguinte apresentação:
+
+
+  ![Boxplot do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20freight_value.PNG)
   
+Ambos seguem o mesmo padrão das análises anteriores, com concentração dos valores a esquerda o que representa que os valores estão concertados mais próximos do zero, assimetria a direita e outliers identificados principalmente acima dos limites superiores, significando que alguns valores fora do padrão são encontrados muito acima da maioria dos dados.
 
 ## Dashboard de Acompanhamento da Operação
 
