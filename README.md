@@ -907,6 +907,7 @@ Analisando os clientes de acordo com o local onde moram:
 ![Top 10 cidades com mais clientes](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/customer_city%20distribution.PNG)
 
 
+
 - Já na análise por estados, 3 estados com a maior presença de clientes são: São Paulo com 41.746 (41,98%), Rio de Janeiro com 12.852 (12,92%) e Minas Gerais com 5.466 (11,70%).
 
   
