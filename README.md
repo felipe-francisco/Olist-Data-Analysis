@@ -1,4 +1,7 @@
+
 # Olist Data Analysis
+
+  
 
   
 
@@ -12,7 +15,11 @@
 
   
 
+  
+
 O objetivo macro desta análise é encontrar soluções para elevar ao máximo as operações deste e-commerce, respondendo perguntas de negócio e criando planos de ação para cada ponto de melhoria encontrado.
+
+  
 
   
 
@@ -24,7 +31,11 @@ A análise será dividida em:
 
   
 
+  
+
 * Análise Exploratória dos Dados.
+
+  
 
   
 
@@ -36,13 +47,19 @@ A análise será dividida em:
 
   
 
+  
+
 * Perguntas de Negócio.
 
   
 
   
 
+  
+
 * Planos de Ação.
+
+  
 
   
 
@@ -58,7 +75,11 @@ A análise será dividida em:
 
   
 
+  
+
 O DataSet Olist é uma representação de um E-Commerce com dados de 100 mil pedidos entre os anos de 2016-2018 fornecidos pela OLIST e nele existem tabelas com dados dos clientes, pagamentos, avaliações de compras, produtos e suas categorias, vendedores, entre outras informações.
+
+  
 
   
 
@@ -74,7 +95,11 @@ A motivação na escolha do DataSet foi devido a sua familiaridade com bases de 
 
   
 
+  
+
 DataSet Olist no Kaggle:
+
+  
 
   
 
@@ -88,13 +113,19 @@ https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
   
 
+  
+
 Repoositório de Arquivos Utilizados (Arquivos Excel, SQL e Power BI):
 
   
 
   
 
+  
+
 https://drive.google.com/drive/u/0/folders/1RxUEyY75qlQwejZxF--9Y24GLZ_8tx9N
+
+  
 
   
 
@@ -110,7 +141,11 @@ https://drive.google.com/drive/u/0/folders/1RxUEyY75qlQwejZxF--9Y24GLZ_8tx9N
 
   
 
+  
+
 Sobre as ferramentas, foram utilizadas as seguintes:
+
+  
 
   
 
@@ -124,7 +159,11 @@ Sobre as ferramentas, foram utilizadas as seguintes:
 
   
 
+  
+
 (Foi utilizado um arquivo compilado em formato SQlite da Base Olist.)
+
+  
 
   
 
@@ -140,7 +179,11 @@ Link para download: https://dbeaver.io/download/
 
   
 
+  
+
 * Excel - Para realizar análises de medidas de tendência e dispersão dos dados, identificação de outliers, incluindo gráficos e tabelas dinâmicas.
+
+  
 
   
 
@@ -156,13 +199,19 @@ Link para compra: https://www.microsoft.com/pt-br/microsoft-365/excel
 
   
 
+  
+
 * Power BI - Como ferramenta de dataviz, onde será criada uma visualização, utilizando o Power Query como ferramenta de Limpeza e Tratamento, e criação do dashboard de acompanhamento da operação.
 
   
 
   
 
+  
+
 (A etapa de limpeza e tratamento poderia e até deveria ser realizada no DBeaver ou em outro SGBD(Sistema Gerenciador de Banco de Dados) devido ao seu melhor processamento, mas neste caso vamos utilizar o Power Query como forma alternativa)
+
+  
 
   
 
@@ -178,7 +227,11 @@ Link para download: https://www.microsoft.com/pt-br/power-platform/products/powe
 
   
 
+  
+
 ## Instruções:
+
+  
 
   
 
@@ -194,7 +247,11 @@ Link para download: https://www.microsoft.com/pt-br/power-platform/products/powe
 
   
 
+  
+
 No arquivo SQL(.sql), cada Query conterá acima dela uma linha com o propósito e abaixo uma ou mais linhas com um breve resumo do porquê das escolhas dos comandos e funções.
+
+  
 
   
 
@@ -210,7 +267,11 @@ No arquivo SQL(.sql), cada Query conterá acima dela uma linha com o propósito 
 
   
 
+  
+
 No arquivo Excel (.xlsx), haverá todas as tabelas criadas através de queries no SQL. Será possível encontrar também uma planilha chamada Dinâmicas, que será utilizada para criação de tabelas para análise, uma planilha chamada "Análises" com dados extraídos das tabelas dinâmicas, e uma planilha chamada "Gráficos" com os gráficos criados através das análises.
+
+  
 
   
 
@@ -226,13 +287,19 @@ No arquivo Excel (.xlsx), haverá todas as tabelas criadas através de queries n
 
   
 
+  
+
 No arquivo Power BI (.pbix), cada medida e coluna calculada criada conterá no comentário uma breve explicação sobre o porquê das escolhas na utilização dos comandos e funções.
 
   
 
   
 
+  
+
 No Repositório de Arquivos Utilizados, haverá um README com as limpezas realizadas no Power Query do Power BI.
+
+  
 
   
 
@@ -248,7 +315,11 @@ No Repositório de Arquivos Utilizados, haverá um README com as limpezas realiz
 
   
 
+  
+
 ### Análise da Tabela olist_orders_dataset (Pedidos)
+
+  
 
   
 
@@ -256,7 +327,11 @@ A tabela de pedidos possui 8 colunas:
 
   
 
+  
+
 - order_id = identificador do pedido;
+
+  
 
   
 
@@ -264,7 +339,11 @@ A tabela de pedidos possui 8 colunas:
 
   
 
+  
+
 - order_status = status da compra;
+
+  
 
   
 
@@ -272,7 +351,11 @@ A tabela de pedidos possui 8 colunas:
 
   
 
+  
+
 - order_approved_at = data e hora da aprovação da compra;
+
+  
 
   
 
@@ -280,11 +363,17 @@ A tabela de pedidos possui 8 colunas:
 
   
 
+  
+
 - order_delivered_customer_date = data e hora da entrega do pedido ao cliente;
 
   
 
+  
+
 - order_estimated_delivered_date = data estimada da entrega di pedido ao cliente.
+
+  
 
   
 
@@ -296,7 +385,11 @@ A tabela de pedidos possui 8 colunas:
 
   
 
+  
+
 Quanto ao status de cada compra, foram encontradas 8 categorias distintas, sendo elas:
+
+  
 
   
 
@@ -304,7 +397,11 @@ Quanto ao status de cada compra, foram encontradas 8 categorias distintas, sendo
 
   
 
+  
+
 - "shipped" = enviado;
+
+  
 
   
 
@@ -312,7 +409,11 @@ Quanto ao status de cada compra, foram encontradas 8 categorias distintas, sendo
 
   
 
+  
+
 - "unavailable" = indisponível;
+
+  
 
   
 
@@ -320,11 +421,17 @@ Quanto ao status de cada compra, foram encontradas 8 categorias distintas, sendo
 
   
 
+  
+
 - "processing" = em processamento;
 
   
 
+  
+
 - "created" = criado;
+
+  
 
   
 
@@ -334,7 +441,11 @@ Quanto ao status de cada compra, foram encontradas 8 categorias distintas, sendo
 
   
 
+  
+
 Os pedidos entregues representam a maioria com 97,02%, seguido pelos enviados com 1,11%, cancelados com 0,6%, indisponíveis com 0,6%, em processamento com 0,3%, criados com 0,01% e aprovados com 0,001%.
+
+  
 
   
 
@@ -342,7 +453,11 @@ Os pedidos entregues representam a maioria com 97,02%, seguido pelos enviados co
 
   
 
+  
+
 Com relação ao preenchimento dos dados, as colunas de data de aprovação, data de entrega do pedido na transportadora e data de entrega ao cliente possuem 160, 1.783 e 2.965 valores vazios respectivamente.
+
+  
 
   
 
@@ -354,7 +469,11 @@ Dos 160 pedidos com a data de aprovação vazia, 141 foram cancelados, 14 foram 
 
   
 
+  
+
 Dos 1.783 pedidos com a data de entrega do pedido na transportadora vazias, 609 estão com status indisponíveis, 550 estão cancelados, 314 estão faturados, 301 estão em processamento, 5 estão criados, 2 foram entregue e 2 foram aprovados. Apenas os pedidos criados, aprovados, faturados, em processamento e cancelados antes do envio poderiam ter a data de entrega na transportadora vazia.
+
+  
 
   
 
@@ -364,26 +483,36 @@ Dos 2.965 pedidos com a data de entrega ao cliente vazias, 1107 estão com statu
 
   
 
+  
+
 O mês com o maior número de pedidos entregues foi o mês de agosto de 2018:
 
   
+
 ![Pedidos Entregues ao longo do tempo](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/delivered%20orders.PNG)
+
   
 
 Sobre as datas das primeiras e últimas vendas entregues realizadas:
 
   
 
+  
+
 * A primeira venda efetivamente entregue foi realizada em 15-09-2016 e a última venda foi realizada em 29-08-2018.
 
   
+
   
 
 Considerando que a última venda entregue realizada foi no final de agosto de 2018, qualquer produto com data de entrega prevista para junho ou data anterior está com um tempo de atraso extremamente alto.
 
+  
+
 Analisando estão os pedidos com o status "enviado" e com data de entrega prevista entre 1 de janeiro de 2016 e 30 de junho de 2018, foram encontrados 962 pedidos não entregues.
 
   
+
   
 
   
@@ -394,7 +523,11 @@ Analisando estão os pedidos com o status "enviado" e com data de entrega previs
 
   
 
+  
+
 A tabela de pagamentos possui 5 colunas:
+
+  
 
   
 
@@ -402,7 +535,11 @@ A tabela de pagamentos possui 5 colunas:
 
   
 
+  
+
 - payment_sequential = métodos de pagamentos;
+
+  
 
   
 
@@ -410,7 +547,11 @@ A tabela de pagamentos possui 5 colunas:
 
   
 
+  
+
 - payment_installments = parcelamento;
+
+  
 
   
 
@@ -418,7 +559,11 @@ A tabela de pagamentos possui 5 colunas:
 
   
 
+  
+
 A tabela de pagamentos possui 103.886 linhas de registro com 99.440 identificadores dos pedidos únicos, ou seja, existem linhas com o mesmo identificador do pedido. A partir desta análise, foram encontrados os pedidos repetições, onde alguns pedidos possuiam 29 linhas com o mesmo identificador do pedido. Alguns possuíam a mesma forma de pagamento, outros formas diferentes.
+
+  
 
   
 
@@ -426,7 +571,11 @@ A coluna métodos de pagamentos retorna a quantidade de formas de pagamentos uti
 
   
 
+  
+
 Entre as formas de pagamento, foram encontradas 8 categorias, sendo elas:
+
+  
 
   
 
@@ -434,7 +583,11 @@ Entre as formas de pagamento, foram encontradas 8 categorias, sendo elas:
 
   
 
+  
+
 - boleto = boleto;
+
+  
 
   
 
@@ -442,7 +595,11 @@ Entre as formas de pagamento, foram encontradas 8 categorias, sendo elas:
 
   
 
+  
+
 - debit_card = cartão de débito;
+
+  
 
   
 
@@ -452,86 +609,156 @@ Entre as formas de pagamento, foram encontradas 8 categorias, sendo elas:
 
   
 
+  
+
 A forma de pagamento via cartão de crédito é a mais utilizada, representando 76.795 compras (73,92%), seguido por boleto com 19.784 (19,04%), voucher com 5.775 (5,56%) e cartão de débito com 1.529 (1,47%). A forma de pagamento não definida teve apenas 3 registros.
 
   
+
 ![Vendas por Forma de Pagamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/payment_type%20x%20payment_value.PNG)
+
   
 
 Analisando os parcelamentos, a quantidade de parcelamento mais utilizada é 1x, com 52.546 (50,58%) pedidos realizados, seguido por 2x com 12.413 (11,95%), 3x com 10.461 (10,07%) e 10x com 5.328 (5,13%).
 
-![Vendas por Quantidade de Parcelamentos](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/payment_installments.PNG)
   
+
+![Vendas por Quantidade de Parcelamentos](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/payment_installments.PNG)
+
 Isto demonstra 50,58% dos pagamentos são realizados à vista e que 99,97% dos pagamentos são parcelados em até 10 vezes.
+
   
 
 Sobre o faturamento dos pedidos, o pedido com o maior valor teve um faturamento de R$13.664,08 e os menores foram pedidos com faturamento R$0. As compras com faturamento R$0 tem as formas de pagamento como vouchers ou não definidas.
 
   
 
+  
+
 Já sobre o faturamento por forma de pagamento, cartão de crédito está na primeira posição com R$12.542.084,19 (78,34%), seguido por boleto com R$2.869.361,27 (17,92%), voucher com R$379.436,87 (2,37%) e cartão de débito com R$217.989,79 (1,36%). A forma de pagamento não definida não teve faturamento.
 
-  ![Faturamento por Forma de Pagamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/payment_type%20x%20payment_value%20(R%24).PNG)
+  
+
+![Faturamento por Forma de Pagamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/payment_type%20x%20payment_value%20(R%24).PNG)
+
+  
 
 As medidas de dispersão e de tendência central da coluna com os pagamentos (payment_values) apresentaram os seguintes valores:
 
+  
+
 - Contagem Pagamentos: 103.886
+
+  
 
 - Valor Máximo: R$13.663,08
 
+  
+
 - Valor Mínimo: R$ 0
+
+  
 
 - Amplitude: R$ 13.664,08
 
+  
+
 - Média: R$154,10
+
+  
 
 - Mediana: R$ 100,00
 
+  
+
 - Desvio-Padrão: R$217,49
 
-  
-O histograma abaixo mostra que os dados são assimétricos a direita, ou seja, a grande maioria dos pagamentos está concentrada no lado esquerdo, no intervalo entre R$0 e R$759,12.
+ 
+Com estes dados já podemos ter uma noção de como os pagamentos estão distribuídos. A amplitude nos mostra que existe uma grande quantidade de pagamentos de valores diferentes e distantes. O desvio-padrão mostra que existe uma variabilidade grande dos dados com relação a média (R$154,10).  A média é maior que a mediana, pressupondo uma assimetria a direita com pagamentos mais altos e também que a maioria dos pagamentos é menor que a média, mas há alguns pagamentos muito altos que aumentam a média. 
 
-  ![Histograma do Pagamentos](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20payment_value.PNG)
+O histograma abaixo mostra que os dados são assimétricos a direita, e que a maior concentração de pagamentos estão no intervalo entre R$0 e R$759,12.
+
+  
+
+![Histograma do Pagamentos](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20payment_value.PNG)
+
 *A fórmula de Sturges foi utilizada para mensurar a quantidade de bins (intervalos) de todos os Histogramas presentes nesta análise.*
+
+  
 
 O Boxplot demonstra que 75% dos pagamentos tem valor entre R$0 e R$171,84.
 
+  
+
 ![Boxplot do Pagamentos](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/boxplot%20payment_value.PNG)
+
+  
 
 Embora concentrados, existem alguns valores discrepantes (outliers), e pode-se verificar que o limite superior para que um pagamento seja considerado estatisticamente um ponto fora da curva, é de R$344,34.
 
+  
+
 É possível definir com base nos percentis que 90% dos pagamentos tem valores de até R$297,27.
 
-Observando por outras segmentações, chegamos ao seguinte resultado quando separando o BoxPlot pela forma de pagamento: 
+  
+
+Observando por outras segmentações, chegamos ao seguinte resultado quando separando o BoxPlot pela forma de pagamento:
+
+  
 
 ![Boxplot do Pagamentos por Forma ou Tipo de Pagamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/boxplot%20payment_value%20x%20payment_type.PNG)
 
+  
+
 Por mais que o cartão de crédito seja uma forma de pagamento que permita a aquisição de itens com maiores valores devido à possibilidade de parcelamento, é possível visualizar que na forma de pagamento por boleto e cartão de débito também existem valores fora da curva.
 
+  
+
 A média e mediana entretanto entre as 3 formas de pagamento seguem muito próximas, representando que a distribuição é muito semelhante.
+
+  
 
 ### Análise da Tabela olist_products_dataset (Produtos)
 
   
 
+  
+
 A tabela de produtos possui 9 colunas:
+
+  
 
 - product_id = identificador do produto;
 
+  
+
 - product_category_name = nome da categoria do produto;
+
+  
 
 - product_name_lenght = comprimento do nome do produto;
 
+  
+
 - product_description_lenght = comprimento da descrição do produto;
+
+  
 
 - product_weight_g = peso do produto em gramas;
 
+  
+
 - product_lenght_cm = comprimento do produto em centímetros;
+
+  
 
 - product_height_cm = altura do produto em centímetros;
 
+  
+
 - product_width_cm = largura do produto em centímetros.
+
+  
 
   
 
@@ -539,61 +766,115 @@ A tabela possui 32.951 linhas, sendo 32951 identificadores dos pedidos, ou seja,
 
   
 
+  
+
 Cama, mesa e banho é a categoria com a maior quantidade de produtos, sendo o top 10 formados por:
+
+  
 
 - cama mesa e banho = 3.029;
 
+  
+
 - esportes e lazer = 2.867;
+
+  
 
 - moveis e decoração = 2.657;
 
+  
+
 - saúde e beleza = 2.444
+
+  
 
 - utilidades domésticas = 2.335;
 
+  
+
 - automotivo = 1.900;
+
+  
 
 - informática e acessórios = 1.639;
 
+  
+
 - brinquedos = 1.411;
+
+  
 
 - relógios e presentes = 1.329;
 
+  
+
 - telefonia = 1.134.
+
+  
 
 O gráfico abaixo demonstra melhor a quantidade de produtos por categoria:
 
+  
+
 ![Top 10 categorias com mais produtos](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/top%2010%20product_category_name.PNG)
 
+  
+
 Existem 610 produtos com categoria em branco, sendo 1 dele sem nenhuma informação cadastrada (exceto pelo product_id).
+
+  
 
 Há um cadastro da categoria bebes, que não possui peso, comprimento, altura ou largura.
 
   
 
+  
+
 O produto mais pesado é da categoria cama, mesa e banho com 40.425g (40 kg).
+
+  
 
 Existem 149 produtos com o maior comprimento, sendo 105 cm.
 
+  
+
 Existem 24 produtos com o maior altura, sendo 105 cm.
 
+  
+
 O produto com maior largura é da categoria cama, mesa e banho com 118cm.
+
+  
 
 ### Análise da Tabela olist_customers_dataset (Clientes)
 
   
 
+  
+
 A tabela clientes possui 5 tabelas:
+
+  
 
 - customer_id = identificador do cliente;
 
+  
+
 - customer_unique_id = identificador único do cliente (CPF ou CNPJ);
+
+  
 
 - customer_zip_code_prefix = prefixo do CEP (endereço postal) do cliente;
 
+  
+
 - customer_city = cidade do cliente;
 
+  
+
 - customer_state = estado do cliente.
+
+  
 
   
 
@@ -601,9 +882,15 @@ A tabela de clientes possui 99.441 linhas, sendo que os registros do identificad
 
   
 
+  
+
 Já o identificador único do cliente possui 96.096 registros únicos, ou seja, existem identificadores únicos do cliente repetidos.
 
+  
+
 Analisando os registros repetidos, alguns identificadores únicos possuem até 17 repetições, algumas com cadastro em outra cidade e/ou estado. Será considerado que as repetições ser filiais de empresas ou pessoas que compraram em diferentes estados.
+
+  
 
   
 
@@ -611,40 +898,67 @@ Analisando os clientes de acordo com o local onde moram:
 
   
 
+  
+
 - As 5 cidades com mais clientes são: São Paulo com 15.540 (15,63%), Rio de Janeiro com 6.882 (6,82%), Belo Horizonte com 2.773 (2,79%), Brasília com 2.131 (2,14%) e Curitiba com 1.521 (1,53%).
 
-![Top 10 cidades com mais clientes](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/customer_city%20distribution.PNG)  
+  
+
+![Top 10 cidades com mais clientes](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/customer_city%20distribution.PNG)
+
 l
+
 - Já na análise por estados, 3 estados com a maior presença de clientes são: São Paulo com 41.746 (41,98%), Rio de Janeiro com 12.852 (12,92%) e Minas Gerais com 5.466 (11,70%).
 
   
+
 ![Estados com mais clientes](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/customer_state%20distribution.PNG)
+
+  
 
 - A análise por regiões, trás a região Sudeste em primeiro lugar com 68.266 (68,65%), o Sul com 14,148 (14,23%), o Nordeste com 9.394 (9,45%), o Norte com 3.991 (4,01%) e o Centro-Oeste com 3.642 (3,66%).
 
   
+
   
 
 ### Análise da Tabela olist_order_reviews_dataset (Avaliações dos Pedidos)
 
   
+
   
 
 A tabela de avaliações tem 7 colunas:
 
+  
+
 - review_id = identificador da avaliação;
+
+  
 
 - order_id = identificador do pedido;
 
+  
+
 - review_score = avaliação;
+
+  
 
 - review_comment_title = título do comentário;
 
+  
+
 - review_comment_message = comentário;
+
+  
 
 - review_creation_date = data e hora da criação da avaliação;
 
+  
+
 - review_answer_timestamp = data e hora da resposta à avaliação.
+
+  
 
   
 
@@ -652,7 +966,11 @@ A tabela possui 79.121 linhas, sendo que a coluna de identificadores da avaliaç
 
   
 
+  
+
 A coluna de identificadores da avaliação possui 138 valores vazios e outros caracteres diferentes do padrão.
+
+  
 
   
 
@@ -660,15 +978,25 @@ A coluna de identificadores do pedido também possui valores fora do padrão, se
 
   
 
+  
+
 A coluna de avaliação possui valores diferentes das notas de 1 a 5 padrões, totalizando 607 registros nestas condições.
+
+  
 
   
 
 As avaliações com maior frequência da maior para a menor são: Nota 5 com 44.954 (57,69%) votos, Nota 4 com 15.080 (19,35%) votos, Nota 1 com 9.001 (11,55%) votos, Nota 3 com 6.413 (8,23%) e Nota 2 com 2.469 (3,17%) votos.
 
+  
+
 ![Distribuição de Notas das Avaliações](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/review_score%20distribution.PNG)
 
+  
+
 O CSAT é de 77,05%, ou seja, existe uma grande porcentagem dos clientes que avaliaram os pedidos com notas 4 ou 5.
+
+  
 
   
 
@@ -676,28 +1004,49 @@ Existem 3 linhas de registro da tabela com a data e hora da criação da avalia�
 
   
 
+  
+
 Também existem 3 linhas de registro da tabela com a data e hora da resposta à avaliação vazias.
+
   
 
 ### Análise da Tabela olist_order_items_dataset (Itens dos Pedidos)
 
   
 
+  
+
 A tabela de itens dos pedidos possui 7 colunas:
+
+  
 
 - order_id = identificador do pedido;
 
+  
+
 - order_item_id = numero de itens inclusos no mesmo pedido.
+
+  
 
 - product_id = identificador do produto;
 
+  
+
 - seller_id = identificador do vendedor;
+
+  
 
 - shipping_limit_date = data limite de envio;
 
+  
+
 - price = preço
 
+  
+
 - freight_value = preço do frete;
+
+  
 
   
 
@@ -705,81 +1054,147 @@ A tabela possui 112.650 linhas, sendo que a coluna de identificadores do pedido 
 
   
 
+  
+
 Analisando os identificadores dos pedidos duplicados, foram encontrados 9.803 registros com mais do que 1 registro.
+
+  
 
   
 
 A analise da tabela de produtos retornou que foram vendidos 32.951 produtos diferentes ao longo do tempo.
 
+  
+
 O produto mais vendido teve um total de 527 unidades.
+
+  
 
 O produto com mais faturamento obteve um total de R$63.885,00.
 
   
 
+  
+
 Já com relação ao vendedor, o vendedor que mais faturou obteve um total de R$ 229.472,63. Entretanto, 1.667 vendedores tiveram um faturamento inferior a R$1.000,00
 
- ![Top 10 vendedores com mais faturamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/Top%2010%20seller%20sales.PNG) 
+  
+
+![Top 10 vendedores com mais faturamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/Top%2010%20seller%20sales.PNG)
+
   
 
 As medidas de dispersão e de tendência central da coluna com o preço dos itens dos pedidos (price) apresentaram os seguintes valores:
 
+  
+
 - Contagem: 112.650 transações
+
+  
 
 - Valor Máximo: R$6.735,00
 
+  
+
 - Valor Mínimo: R$0,85
+
+  
 
 - Amplitude: R$6.734,15
 
+  
+
 - Média: R$120,65
+
+  
 
 - Mediana: R$74,99
 
+  
+
 - Desvio-Padrão: R$183,63
+
+  
+ 
+Assim como as medidas resumo apresentadas na análise dos pagamentos (payment_value), é possível notar o mesmo padrão: grande variabilidade nos dados, mediana menor que a média e desvio padrão relativamente alto.
 
 O histograma do Preço do produto apresenta a seguinte distribuição dos preços:
 
+  
+  
 
 ![Histograma do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20price.PNG)
 
-O preço dos produtos também possui uma assimetria a direita, ou seja, a grande maioria dos valores está concentrada no lado esquerdo com uma grande quantidade agrupada no primeiro intervalo (entre R$0,85 e R$374,97).
+  
+
+O preço dos produtos também possui uma assimetria a direita, ou seja, a grande maioria dos valores está concentrada no lado esquerdo com uma grande quantidade agrupada no primeiro intervalo (entre R$0,85 e R$374,97), a presença de outliers com valores altos pode ser identificada, mas será melhor visualizada no Boxplot. 
+
+  
 
 Analisando o percentil 95, podemos constatar que 95% dos preços dos itens dos pedidos possuem valores entre R$0,85 e R$349,90.
 
+  
+
 O Boxplot também apresenta valores fora da curva acima de R$277,30 e abaixo de R$0,85:
+
+  
 
 ![Boxplot do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/boxplot%20price.PNG)
 
+  
+
 As medidas de dispersão e de tendência central da coluna com o valor do frete (freight_value) apresentaram os seguintes valores:
+
+  
 
 - Contagem: 112.650 transações
 
+  
+
 - Valor Máximo: R$409,68
+
+  
 
 - Valor Mínimo: R$0
 
+  
+
 - Amplitude: R$409,68
+
+  
 
 - Média: R$19,99
 
+  
+
 - Mediana: R$16,26
+
+  
 
 - Desvio-Padrão: R$15,81
 
   
+Aqui já existe uma suavização 
+  
 
 O histograma tem a seguinte distribuição:
 
- ![Histograma do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20price.PNG) 
+  
+
+![Histograma do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20freight_value.PNG)
+
+  
 
 E o Boxplot a seguinte apresentação:
 
+  
+  
 
-  ![Boxplot do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20freight_value.PNG)
- 
- 
+![Boxplot do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20freight_value.PNG)
+
 Ambos seguem o mesmo padrão das análises anteriores, com concentração dos valores a esquerda o que representa que os valores estão concertados mais próximos do zero, assimetria a direita e outliers identificados principalmente acima dos limites superiores, significando que alguns valores fora do padrão são encontrados muito acima da maioria dos dados.
+
+  
 
 ## Dashboard de Acompanhamento da Operação
 
@@ -789,7 +1204,11 @@ Ambos seguem o mesmo padrão das análises anteriores, com concentração dos va
 
   
 
+  
+
 ## Perguntas de Negócio
+
+  
 
   
 
