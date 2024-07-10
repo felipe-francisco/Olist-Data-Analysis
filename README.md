@@ -698,7 +698,7 @@ Embora concentrados, existem alguns valores discrepantes (outliers), e pode-se v
 
   
 
-É possível definir com base nos percentis que 90% dos pagamentos tem valores de até R$297,27.
+É possível definir com base nos percentis que 95% dos pagamentos tem valores de até R$ 349,90.
 
   
 
@@ -1131,17 +1131,14 @@ O preço dos produtos também possui uma assimetria a direita, ou seja, a grande
 
   
 
-Analisando o percentil 95, podemos constatar que 95% dos preços dos itens dos pedidos possuem valores entre R$0,85 e R$349,90.
-
-  
-
 O Boxplot também apresenta valores fora da curva acima de R$277,30 e abaixo de R$0,85:
 
   
 
 ![Boxplot do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/boxplot%20price.PNG)
 
-  
+Analisando o percentil 95, podemos constatar que 95% dos preços dos itens dos pedidos possuem valores entre R$0,85 e R$349,90. 
+
 
 As medidas de dispersão e de tendência central da coluna com o valor do frete (freight_value) apresentaram os seguintes valores:
 
@@ -1174,7 +1171,7 @@ As medidas de dispersão e de tendência central da coluna com o valor do frete 
 - Desvio-Padrão: R$15,81
 
   
-Aqui já existe uma suavização 
+No valor do frete já existe uma suavização, considerando obviamente que o valor do frete tende a ter um valor mais baixo em relação ao produto. O Variabilidade dos dados ainda é alta, mas a amplitude é mais baixa. A mediana segue abaixo da média, sugerindo que existem valores altos aumentando a média. O desvio padrão baixo representa que a maioria dos dados não estão tão distantes da média, embora exista a presença de outliers.
   
 
 O histograma tem a seguinte distribuição:
@@ -1183,14 +1180,20 @@ O histograma tem a seguinte distribuição:
 
 ![Histograma do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20freight_value.PNG)
 
-  
 
-E o Boxplot a seguinte apresentação:
+A maioria dos dados estão concentrados na primeira faixa entre R$0 e R$22,76, e existe uma assimetria a direita com muitos valores altos em relação a média.
+
+O Boxplot possui a seguinte apresentação:
 
   
   
 
 ![Boxplot do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/boxplot%20freight_value.PNG)
+
+Valores acima de R$33,25 ou abaixo de R$0,85 são considerados outliers.
+
+O percentil 95 nos mostra que 95% dos fretes estão acumulados até R$45,12.
+
 
 Ambos seguem o mesmo padrão das análises anteriores, com concentração dos valores a esquerda o que representa que os valores estão concertados mais próximos do zero, assimetria a direita e outliers identificados principalmente acima dos limites superiores, significando que alguns valores fora do padrão são encontrados muito acima da maioria dos dados.
 
