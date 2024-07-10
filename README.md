@@ -458,7 +458,7 @@ A forma de pagamento via cartão de crédito é a mais utilizada, representando 
 ![Vendas por Forma de Pagamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/payment_type%20x%20payment_value.PNG)
   
 
-Analisando os parcelamentos, a quantidade de parcelamento mais utilizada é 1x, com 52.546 (50,58%) pedidos realizados, seguido por 2x com 12.413 (11,95%), 3x com 10.461 (10,07%) e 4x com 7.098 (6,83%).
+Analisando os parcelamentos, a quantidade de parcelamento mais utilizada é 1x, com 52.546 (50,58%) pedidos realizados, seguido por 2x com 12.413 (11,95%), 3x com 10.461 (10,07%) e 10x com 5.328 (5,13%).
 
 ![Vendas por Quantidade de Parcelamentos](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/payment_installments.PNG)
   
@@ -743,11 +743,11 @@ O histograma do Preço do produto apresenta a seguinte distribuição dos preço
 
 ![Histograma do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20price.PNG)
 
-Assim como os pagamentos analisados anteriormente, o preço dos produtos também possui uma assimetria a direita, ou seja, a grande maioria dos valores está concentrada no lado esquerdo.
+O preço dos produtos também possui uma assimetria a direita, ou seja, a grande maioria dos valores está concentrada no lado esquerdo com uma grande quantidade agrupada no primeiro intervalo (entre R$0,85 e R$374,97).
 
 Analisando o percentil 95, podemos constatar que 95% dos preços dos itens dos pedidos possuem valores entre R$0,85 e R$349,90.
 
-O Boxplot também tem um comportamento semelhante ao das análises anteriores, porém com valores fora da curva acima de R$277,30 e abaixo de R$0,85.
+O Boxplot também apresenta valores fora da curva acima de R$277,30 e abaixo de R$0,85:
 
 ![Boxplot do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/boxplot%20price.PNG)
 
@@ -777,7 +777,8 @@ E o Boxplot a seguinte apresentação:
 
 
   ![Boxplot do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20freight_value.PNG)
-  
+ 
+ 
 Ambos seguem o mesmo padrão das análises anteriores, com concentração dos valores a esquerda o que representa que os valores estão concertados mais próximos do zero, assimetria a direita e outliers identificados principalmente acima dos limites superiores, significando que alguns valores fora do padrão são encontrados muito acima da maioria dos dados.
 
 ## Dashboard de Acompanhamento da Operação
