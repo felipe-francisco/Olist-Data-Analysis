@@ -1211,59 +1211,56 @@ Ambos seguem o mesmo padrão das análises anteriores, com concentração dos va
 
 ## Perguntas de Negócio
 
-
-Quais foram os produtos entregues mais vendidos?
+### Quais foram os produtos entregues mais vendidos?
 
 * O produto entregue mais vendido foi o produto com código aca2eb7d00ea1a7b8ebd4e68314663af, que apresentou um total de 520 unidades.
 
-Qual a receita mensal ao longo do tempo?
-
-
+### Qual a receita mensal ao longo do tempo?
 
 * O mês com maior faturamento foi agosto de 2018, com R$1.323.721,56 faturados.
 
-Quais categorias de produtos geram mais receitas?
+### Quais categorias de produtos geram mais receitas?
 
 * A categoria que mais gera receita é cama, mesa e banho com um faturamento de R$ 1.648.634,43.
 
 
-Qual o valor médio de um pedido por cliente?
+### Qual o valor médio de um pedido por cliente?
 
 * Como cada cliente cadastrado realizou apenas uma compra, as médias de compras são o valor total da única compra realizada, sendo a média máxima R$13.664,08 e mínima R$0,10.
 
-Qual a taxa de recompra dos clientes?
+### Qual a taxa de recompra dos clientes?
   
  * A taxa de recompra é 0, ou seja, cada cliente neste DataSet realizou no máximo uma compra.
  
-Qual é o tempo médio de entrega dos pedidos?
+### Qual é o tempo médio de entrega dos pedidos?
  
 * A diferença média entre a data da aprovação e a entrega efetiva do produto é de 11,64 dias, ou seja, o tempo médio de entrega é de 1 semana e meia.
 
 * A diferença entre a estimativa de entrega e a entrega efetiva é de -11,87 dias, ou seja, em média os pedidos são entregues com aproximadamente 12 dias de antecedência.
  
-Quais são as regiões com maior tempo de entrega?
+### Quais são as regiões com maior tempo de entrega?
  
  * As regiões norte e nordeste possuem o maior prazo de entrega, com 19 e 16 dias respectivamente.
 
  * Em relação às cidades, o top 3 com maior tempo de entrega é representado por: Roraima (28 dias), Amapá (26 dias) e Amazonas (25 dias).
  
-Qual é a taxa de atrasos nas entregas?
+### Qual é a taxa de atrasos nas entregas?
 
 * A taxa de atraso das entregas é de 6,78%.
 
-Quais são os métodos de pagamento mais utilizados?
+### Quais são os métodos de pagamento mais utilizados?
 
 * O método de pagamento mais utilizado é cartão de crédito, com 76.795 compras (73,92%), boleto com 19.784 compras (19,04 %). Juntos eles representam 92,97% de todas as compras realizadas.
 
-Qual a taxa de cancelamento dos produtos de acordo com a forma de pagamento?
+### Qual a taxa de cancelamento dos produtos de acordo com a forma de pagamento?
 
 * Por ter uma maior quantidade de transações, cartão de crédito é a primeira colocada no ranking de cancelamentos, com 66,87% (444) do total. A segunda colocação entretanto é da forma de pagamento voucher, com 17,32% (115) dos cancelamentos.
 
-Qual a média de avaliação dos produtos?
+### Qual a média de avaliação dos produtos?
 
 * A avaliação média dos produtos é de 4,08.
 
-Quantos produtos foram avaliados e a média de avaliação por categoria do produto?
+### Quantos produtos foram avaliados e a média de avaliação por categoria do produto?
 
 * A média de avaliação dos produtos varia de 2,5 a 5. Porém algumas categorias como seguro e serviços (2), pc gamer (8), portáteis de cozinha / preparadores de alimentos (14), la cousine (14), fashion esporte (29), fashion roupa infanto-juvenil (7) e cd's e dvd's musicais (7) possuem um número baixo de amostras para avaliação (menos do que 30).
 
