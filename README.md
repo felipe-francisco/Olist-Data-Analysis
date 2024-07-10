@@ -509,7 +509,7 @@ Observando por outras segmentações, chegamos ao seguinte resultado quando sepa
 
 Por mais que o cartão de crédito seja uma forma de pagamento que permita a aquisição de itens com maiores valores devido à possibilidade de parcelamento, é possível visualizar que na forma de pagamento por boleto e cartão de débito também existem valores fora da curva.
 
-A média e mediana entretanto entre as 3 formas de pagamento seguem muito próximas, representando que a distribuição é muito semelhante.
+A média e mediana entre as 3 formas de pagamento seguem muito próximas, representando que a distribuição é muito semelhante.
 
 ### Análise da Tabela olist_products_dataset (Produtos)
 
