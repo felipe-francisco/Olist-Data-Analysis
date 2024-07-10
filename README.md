@@ -458,7 +458,7 @@ A forma de pagamento via cartão de crédito é a mais utilizada, representando 
 ![Vendas por Forma de Pagamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/payment_type%20x%20payment_value.PNG)
   
 
-Analisando os parcelamentos, a quantidade de parcelamento mais utilizada é 1x, com 52.546 (50,58%) pedidos realizados, seguido por 2x com 12.413 (11,95%), 3x com 10.461 (10,07%) e 10x com 5.328 (5,13%).
+Analisando os parcelamentos, a quantidade de parcelamento mais utilizada é 1x, com 52.546 (50,58%) pedidos realizados, seguido por 2x com 12.413 (11,95%), 3x com 10.461 (10,07%) e 4x com 7.098 (6,83%).
 
 ![Vendas por Quantidade de Parcelamentos](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/payment_installments.PNG)
   
