@@ -1190,7 +1190,7 @@ E o Boxplot a seguinte apresentação:
   
   
 
-![Boxplot do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20freight_value.PNG)
+![Boxplot do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/boxplot%20freight_value.PNG)
 
 Ambos seguem o mesmo padrão das análises anteriores, com concentração dos valores a esquerda o que representa que os valores estão concertados mais próximos do zero, assimetria a direita e outliers identificados principalmente acima dos limites superiores, significando que alguns valores fora do padrão são encontrados muito acima da maioria dos dados.
 
