@@ -469,7 +469,7 @@ Sobre o faturamento dos pedidos, o pedido com o maior valor teve um faturamento 
 
   
 
-O faturamento por forma de pagamento demonstra que cartão de crédito está na primeira posição com R$12.542.084,19 (78,34%), seguido por boleto com R$2.869.361,27 (17,92%), voucher com R$379.436,87 (2,37%) e cartão de débito com R$217.989,79 (1,36%). A forma de pagamento não definida não teve faturamento.
+Já sobre o faturamento por forma de pagamento, cartão de crédito está na primeira posição com R$12.542.084,19 (78,34%), seguido por boleto com R$2.869.361,27 (17,92%), voucher com R$379.436,87 (2,37%) e cartão de débito com R$217.989,79 (1,36%). A forma de pagamento não definida não teve faturamento.
 
   ![Faturamento por Forma de Pagamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/payment_type%20x%20payment_value%20(R%24).PNG)
 
@@ -509,7 +509,7 @@ Observando por outras segmentações, chegamos ao seguinte resultado quando sepa
 
 Por mais que o cartão de crédito seja uma forma de pagamento que permita a aquisição de itens com maiores valores devido à possibilidade de parcelamento, é possível visualizar que na forma de pagamento por boleto e cartão de débito também existem valores fora da curva.
 
-A média e mediana entre as 3 formas de pagamento seguem muito próximas, representando que a distribuição é muito semelhante.
+A média e mediana entretanto entre as 3 formas de pagamento seguem muito próximas, representando que a distribuição é muito semelhante.
 
 ### Análise da Tabela olist_products_dataset (Produtos)
 
@@ -561,7 +561,7 @@ Cama, mesa e banho é a categoria com a maior quantidade de produtos, sendo o to
 
 - telefonia = 1.134.
 
-  
+![Top 10 categorias com mais produtos](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/top%2010%20product_category_name.PNG)
 
 Existem 610 produtos com categoria em branco, sendo 1 dele sem nenhuma informação cadastrada (exceto pelo product_id).
 
@@ -611,11 +611,11 @@ Analisando os clientes de acordo com o local onde moram:
 
 - As 5 cidades com mais clientes são: São Paulo com 15.540 (15,63%), Rio de Janeiro com 6.882 (6,82%), Belo Horizonte com 2.773 (2,79%), Brasília com 2.131 (2,14%) e Curitiba com 1.521 (1,53%).
 
-  
+![Top 10 cidades com mais clientes](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/customer_city%20distribution.PNG)  
 
 - Foi identificado que os 3 estados com a maior quantidade de clientes são: São Paulo com 41.746 (41,98%), Rio de Janeiro com 12.852 (12,92%) e Rio Grande do Sul com 5.466 (5,5%).
 
-  
+  ![Estados com mais clientes](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/customer_state%20distribution.PNG)
 
 - A análise por regiões, trás a região Sudeste em primeiro lugar com 68.266 (68,65%), o Sul com 14,148 (14,23%), o Nordeste com 9.394 (9,45%), o Norte com 3.991 (4,01%) e o Centro-Oeste com 3.642 (3,66%).
 
@@ -663,9 +663,9 @@ A coluna de avaliação possui valores diferentes das notas de 1 a 5 padrões, t
 
 As avaliações com maior frequência da maior para a menor são: Nota 5 com 44.954 (57,69%) votos, Nota 4 com 15.080 (19,35%) votos, Nota 1 com 9.001 (11,55%) votos, Nota 3 com 6.413 (8,23%) e Nota 2 com 2.469 (3,17%) votos.
 
-  
+![Distribuição de Notas das Avaliações](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/review_score%20distribution.PNG)
 
-O CSAT é de 77,05%, ou seja, existe uma grande porcentagem dos clientes que avaliaram os produtos e a entrega com notas 4 ou 5.
+O CSAT é de 77,05%, ou seja, existe uma grande porcentagem dos clientes que avaliaram os pedidos com notas 4 ou 5.
 
   
 
@@ -693,7 +693,11 @@ As medidas de dispersão e de tendência central da coluna com o preço dos iten
 
 - Desvio-Padrão: R$183,63
 
-  
+![Histograma do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20price.PNG)
+
+
+
+![Boxplot do Preço](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/boxplot%20price.PNG)
 
 As medidas de dispersão e de tendência central da coluna com o valor do frete (freight_value) apresentaram os seguintes valores:
 
@@ -713,13 +717,14 @@ As medidas de dispersão e de tendência central da coluna com o valor do frete 
 
   
 
-Utilizando a fórmula de Sturges, chegamos aos 18 bins. Com esta informação, nosso histograma tem a seguinte distribuição:
+O histograma tem a seguinte distribuição:
 
-  
+ ![Histograma do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20price.PNG) 
+
 
 O BoxPlot abaixo mostra que valores acima de R$344,34 são considerados outliers.
 
-  
+  ![Boxplot do Frete](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/histograma%20freight_value.PNG)
   
 
 ### Análise da Tabela olist_order_items_dataset (Itens dos Pedidos)
@@ -730,7 +735,7 @@ A tabela de itens dos pedidos possui 7 colunas:
 
 - order_id = identificador do pedido;
 
-- order_item_id = numero de itens incluidos no mesmo pedido.
+- order_item_id = numero de itens inclusos no mesmo pedido.
 
 - product_id = identificador do produto;
 
@@ -762,7 +767,7 @@ O produto com mais faturamento obteve um total de R$63.885,00.
 
 Já com relação ao vendedor, o vendedor que mais faturou obteve um total de R$ 229.472,63. Entretanto, 1.667 vendedores tiveram um faturamento inferior a R$1.000,00
 
-  
+ ![Top 10 vendedores com mais faturamento](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/Top%2010%20seller%20sales.PNG) 
 
 Na coluna de produtos, o maior preço foi de R$6.735,00 e o menor foi de R$0,85.
 
