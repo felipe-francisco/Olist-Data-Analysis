@@ -323,9 +323,9 @@ LIMIT 100
 
 -- Verificar se cada order_id é único:
 SELECT
-	count(*) as contagem_linhas,
-	count(DISTINCT order_id) contagem_distinta_ids,
-	COUNT(*) - count(DISTINCT order_id) as diferenca_linhas
+	COUNT(*) as contagem_linhas,
+	COUNT(DISTINCT order_id) contagem_distinta_ids,
+	COUNT(*) - COUNT(DISTINCT order_id) as diferenca_linhas
 FROM olist_order_payments_dataset oopd;
 /*
 -- Conforme a explicação do DataSet, pagamentos que são realizados diferentes formas de pagamento criam sequencias, assim o order_id se repetirá sempre que houver esta sequência.
@@ -357,7 +357,7 @@ WHERE order_id = '465c2e1bee4561cb39e0db8c5993aafc';
 -- Analisar a quantidade de pedidos por método de pagamento:
 SELECT
 	payment_sequential,
-	count(*) contagem,
+	COUNT(*) contagem,
 	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset),4) AS perc_total,
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_order_payments_dataset oopd
@@ -383,7 +383,7 @@ GROUP BY payment_type;
 -- Analisar a quantidade de pagamentos por payment_type:
 SELECT
 	payment_type,
-	count(*) qtd_por_tipo,
+	COUNT(*) qtd_por_tipo,
 	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset),2) AS perc_total,
 	SUM(payment_value) AS total_pagamentos,
 	ROUND(SUM(payment_value) * 1.0 / (SELECT SUM(payment_value) FROM olist_order_payments_dataset),4) AS perc_total_pagamentos
@@ -463,7 +463,7 @@ SELECT
 	MAX(payment_value) - MIN(payment_value) AS amplitude_pedido,
 	ROUND(AVG(payment_value),2) AS media_pagamentos,
 	MEDIAN(payment_value) AS mediana_pagamentos,
-	round(STDEV(payment_value),2) AS desvio_padrao_pagamentos
+	ROUND(STDEV(payment_value),2) AS desvio_padrao_pagamentos
 FROM olist_order_payments_dataset oopd;
 /*
 -- A query retorna algumas medidas de tendência central e dispersão.
@@ -494,7 +494,7 @@ GROUP BY payment_type;
 -- Continuando a análise da coluna de pagamentos, vamos extrair algumas medidas de tendência central e dispersão:
 SELECT
 	payment_installments AS numero_parcelas,
-	count(*) qtd_pagamentos,
+	COUNT(*) qtd_pagamentos,
 	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset),4) AS perc_total,
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_payments_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada,
 	MIN(payment_value) AS pagamento_minimo,
@@ -593,7 +593,7 @@ SELECT
 FROM olist_products_dataset opd
 WHERE product_weight_g = (
 	SELECT
-		max(product_weight_g) peso_maximo
+		MAX(product_weight_g) peso_maximo
 	FROM olist_products_dataset opd
 	WHERE 
 		product_category_name <> '' AND
@@ -610,7 +610,7 @@ SELECT
 FROM olist_products_dataset opd
 WHERE product_length_cm = (
 	SELECT
-		max(product_length_cm) peso_maximo
+		MAX(product_length_cm) peso_maximo
 	FROM olist_products_dataset opd
 	WHERE 
 		product_category_name <> '' AND
@@ -627,7 +627,7 @@ SELECT
 FROM olist_products_dataset opd
 WHERE product_height_cm  = (
 	SELECT
-		max(product_height_cm ) peso_maximo
+		MAX(product_height_cm ) peso_maximo
 	FROM olist_products_dataset opd
 	WHERE 
 		product_category_name <> '' AND
@@ -644,7 +644,7 @@ SELECT
 FROM olist_products_dataset opd
 WHERE product_width_cm   = (
 	SELECT
-		max(product_width_cm ) peso_maximo
+		MAX(product_width_cm ) peso_maximo
 	FROM olist_products_dataset opd
 	WHERE 
 		product_category_name <> '' AND
@@ -685,7 +685,7 @@ FROM olist_customers_dataset ocd;
 -- Analisar quais são os customer_unique_id's repetidos e a quantidade de repetições:
 SELECT
 	customer_unique_id,
-	COUNT(*) as qtd_registros
+	COUNT(*) AS qtd_registros
 FROM olist_customers_dataset
 GROUP BY customer_unique_id
 HAVING COUNT(*) > 1
@@ -701,7 +701,7 @@ ORDER BY qtd_registros DESC;
 WITH cadastros_duplicados AS (
 	SELECT
 		customer_unique_id,
-		COUNT(*) as registros_duplicados
+		COUNT(*) AS registros_duplicados
 	FROM olist_customers_dataset
 	GROUP BY customer_unique_id
 	HAVING COUNT(*) > 1
@@ -749,7 +749,7 @@ WHERE customer_unique_id = 'd44ccec15f5f86d14d6a2cfa67da1975';
 --Analisar a frequência, frequência relativa e frequência acumulada por estado:
 SELECT
 	customer_state,
-	count(*) AS contagem,
+	COUNT(*) AS contagem,
 	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset),4) AS perc_total,
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_customers_dataset ocd
@@ -771,7 +771,7 @@ SELECT
 		WHEN customer_state IN ('MA', 'PI', 'CE', 'BA', 'SE', 'AL', 'PE', 'PB', 'RN') THEN 'Nordeste'
 		ELSE 'Norte'
 	END AS regioes,
-	count(*) AS contagem,
+	COUNT(*) AS contagem,
 	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset),4) AS perc_total,
 	ROUND(SUM(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_customers_dataset)) OVER(ORDER BY COUNT(*) DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW),4) AS freq_acumulada
 FROM olist_customers_dataset ocd
@@ -1018,7 +1018,7 @@ WITH cadastros_unicos AS (
 	FROM olist_order_reviews_dataset oord
 	WHERE LENGTH(order_id) = 32
 	GROUP BY order_id
-	HAVING count(order_id) = 1
+	HAVING COUNT(order_id) = 1
 )
 SELECT
 	COUNT(*) AS registros_unicos
@@ -1038,7 +1038,7 @@ FROM olist_order_reviews_dataset oord;
 
 -- Validação de que as reviews_score's possuem apenas 1 caractere:
 SELECT 
-	count(DISTINCT review_score)
+	COUNT(DISTINCT review_score)
 FROM olist_order_reviews_dataset oord
 WHERE LENGTH(review_score) = 1;
 /*
@@ -1101,7 +1101,7 @@ SELECT
 		WHEN review_score IN (4, 5) THEN 'Positiva'
 		ELSE 'Negativa'
 	END AS categoria_avaliacoes,
-	count(*) AS contagem,
+	COUNT(*) AS contagem,
 	ROUND(COUNT(*) * 1.0 / (SELECT COUNT(*) FROM olist_order_reviews_dataset WHERE LENGTH(review_score) = 1),4) AS perc_total
 FROM olist_order_reviews_dataset oord
 WHERE LENGTH(review_score) = 1
@@ -1193,7 +1193,7 @@ FROM olist_order_items_dataset ooid;
 -- Analisar a quantidade de order_id's repetidos:
 SELECT
 	order_id,
-	count(*) AS contagem_order_id
+	COUNT(*) AS contagem_order_id
 FROM olist_order_items_dataset ooid
 GROUP BY order_id
 ORDER BY contagem_order_id DESC;
@@ -1205,14 +1205,14 @@ ORDER BY contagem_order_id DESC;
 WITH registros_duplicados AS (
 	SELECT
 		order_id,
-		count(*) AS contagem_order_id
+		COUNT(*) AS contagem_order_id
 	FROM olist_order_items_dataset ooid
 	GROUP BY order_id
 	HAVING contagem_order_id > 1
 	ORDER BY contagem_order_id DESC
 )
 SELECT 
-	count(*) AS quantidade_duplicados
+	COUNT(*) AS quantidade_duplicados
 FROM registros_duplicados
 /*
 -- A CTE agrupa os order_id's e realiza uma contagem, filtrando os resultados que tiverem mais do que 1 contagem.
@@ -1221,7 +1221,7 @@ FROM registros_duplicados
 
 -- Análise da quantidade distinta de produtos:
 SELECT
-	count(DISTINCT product_id) produtos_distintos_vendidos
+	COUNT(DISTINCT product_id) produtos_distintos_vendidos
 FROM olist_order_items_dataset ooid
 /*
 -- A query realiza uma contagem da quantidade distinta de produtos existentes.
@@ -1230,7 +1230,7 @@ FROM olist_order_items_dataset ooid
 -- Análise do produto mais pedido:
 SELECT
 	product_id,
-	count(*) AS contagem_product_id
+	COUNT(*) AS contagem_product_id
 FROM olist_order_items_dataset ooid
 GROUP BY product_id
 ORDER BY contagem_product_id DESC;
@@ -1279,7 +1279,7 @@ FROM vendedores_baixa_performance;
 
 -- Analise do tipo de variável da coluna price:
 SELECT
-	DISTINCT typeof(price)  AS tipo_variavel
+	DISTINCT TYPEOF(price)  AS tipo_variavel
 FROM olist_order_items_dataset ooid;
 /*
 -- Utilizamos a função typeof que retorna o tipo de dado presente na coluna, procurando por valores diferentes de numéricos.
@@ -1287,7 +1287,7 @@ FROM olist_order_items_dataset ooid;
 
 -- Analise do tipo de variável da coluna freight_value:
 SELECT
-	DISTINCT typeof(freight_value) AS tipo_variavel
+	DISTINCT TYPEOF(freight_value) AS tipo_variavel
 FROM olist_order_items_dataset ooid;
 /*
 -- Assim como na query anterior, utilizamos a função typeof que retorna o tipo de dado presente na coluna, procurando por valores diferentes de numéricos.
