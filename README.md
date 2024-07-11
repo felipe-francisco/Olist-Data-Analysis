@@ -92,7 +92,13 @@ A motivação na escolha do DataSet foi devido a sua familiaridade com bases de 
   
 
   
-
+O DataSet possui os seguintes dados:
+ * Informações sobre os pedidos realizados como status do pedido, data da compra, data da entrega, etc.
+ * Informações sobre os pagamentos como forma de pagamento, parcelamentos, valor total do pedido, etc.
+ * Informações sobre os produtos como categoria, peso, largura, altura, comprimento, etc.
+ * Informações sobre os clientes como identificador do cliente (CPF/CNPJ ou outro documento, porém criptografado), cidade e estado onde moram, etc.
+ * Informações sobre as avaliações, como a nota, títulos e comentários sobre as avaliações, etc.
+ * Informações sobre os itens presentes em cada pedido, como identificador do produto, identificador do vendedor, preço, frete, etc.
   
 
   
