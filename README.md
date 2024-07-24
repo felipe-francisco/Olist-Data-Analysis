@@ -526,9 +526,9 @@ https://app.powerbi.com/view?r=eyJrIjoiZDkxNjE2ZDQtZTViOS00M2Q0LTgzNzctYWIxNGQyZ
 
 ### Dados
 
-#### Problemas:
+#### Problemas, soluções e oportunidades:
 
-* Os pedidos cancelados deveriam ter a data de aprovação preenchida apenas caso o cancelamento fosse efetuado antes da aprovação. 
+* A data de aprovação da compra deveria ser preenchida apenas caso o cancelamento fosse efetuado antes da aprovação. Desta forma poderíamos avaliar compras canceladas antes e depois da aprovação e eventuais motivos (cartão recusado, desistência do cliente, etc).
 
 * Os pedidos entregues deveriam ter a data de aprovação preenchida, pois faz parte do processo completo da venda.
 
@@ -536,24 +536,43 @@ https://app.powerbi.com/view?r=eyJrIjoiZDkxNjE2ZDQtZTViOS00M2Q0LTgzNzctYWIxNGQyZ
 
 * Como a entrega é um dos últimos estágios do processo de venda, apenas pedidos com o estágio anterior a entregue poderiam ter a data de entrega à transportadora vazia.
 
+* As avaliações receberam muitos dados fora do padrão das colunas. Inserir uma validação de dados evitando que o cliente insira informações não padronizadas auxiliaria em uma captura de dados e eventual análise mais assertiva.
 
+### Logística
+
+#### Problemas, soluções e oportunidades:
+
+* Considerando que a última venda entregue realizada foi no final de agosto de 2018, qualquer produto com data de entrega prevista para junho ou data anterior está com um tempo de atraso extremamente alto ou o pedido foi extraviado.
+O ideal seria monitorar entregas que passem de determinados dias de atraso, mantendo uma comunicação constante com as transportadoras. 
+A avaliação do cliente e eventual recompra depende de uma boa experiência desde a entrega, portanto deve ser um dos pontos críticos de análise.
+
+* Os pedidos que não forem entregues em determinados dias podem ser categorizados de forma a identificar que se passou o prazo limite para entrega. Uma equipe deveria então entrar em contato com a transportadora e com o cliente para verificar o que ocorreu, fornecendo opções para resolver a situação com o cliente de forma ativa.
+
+* Identificar e fechar parcerias mais benéficas com transportadoras que entregam no prazo e reavaliar parcerias com transportadoras que possuem histórico negativo também é um caminho interessante.
+
+* Estados do nordeste possuem um tempo de entrega até 2x mais altos do que na região centro-oeste.
+Como tanto as avaliações negativas como positivas levam em consideração a entrega e a qualidade do produto, a menor demanda nestas regiões pode estar relacionado com o tempo elevado de entrega.
+Encontrar formas de diminuir o tempo de entrega nestas regiões, otimizando rotas ou melhorando a logística dos Centros de Distribuição podem ser alternativas interessantes.
 
 ### Faturamento
-#### Problemas:
-* 
 
-#### Soluções:
-* 
-### Logística
-#### Problemas:
-* Considerando que a última venda entregue realizada foi no final de agosto de 2018, qualquer produto com data de entrega prevista para junho ou data anterior está com um tempo de atraso extremamente alto.
-* 
+#### Problemas, soluções e oportunidades:
 
-#### Soluções:
-* 
+* Cartões de Crédito possuem tanto transações (76.795 ou 73,92%) quanto faturamento (R$12.542.084 ou 78,34%) muito superiores em relação às outras formas de pagamento.
+Fechar parcerias com operadoras de cartão que ofereçam taxas menores é uma boa opção.
+
+* 99,97% dos parcelamentos realizados são em até 10x e 79,43% são realizados em até 4x. Significa que os parcelamentos acima de 11x não são comumente utilizados e estas opções poderiam facilmente ser removidas. Como geralmente as taxas aumentam na medida que a quantidade de parcelas aumenta, limitar a 5x diminuiria a cobrança de taxas adicionais. Se este for considerado um corte muito radical, poderia limitar a 10 e diminuir ao longo do tempo para validar os impactos.
+
+* Quanto às opções de pagamento oferecidas, 95,64% (ou 99.360 das 99.440) das compras são realizadas com 1 forma de pagamento e 95% dos pagamentos tem valores de até R$349,90, limitar o pagamento a apenas 1 forma pode ser uma alternativa interessante para diminuir as taxas de transação oriundas de duas ou mais formas de pagamento.
+
+* Fornecer frete grátis para compras acima de um determinado valor pode ser uma alternativa interessante para aumentar o faturamento, considerando que 95% dos fretes são até R$45,12.
+
+
 ### Satisfação do Cliente
-#### Problemas:
-* 
 
-#### Soluções:
-* 
+#### Problemas, soluções e oportunidades:
+
+* Grande maioria das avaliações negativas (notas 1 a 3) e positivas (notas 4 e 5) avaliam os produtos por requisitos muito semelhantes: entrega dos produtos no prazo (ou com antecedência) e qualidade dos produtos.
+Criar uma política que garanta a entrega dentro do prazo (e se possível com antecedência) e com cuidado, comercializar produtos de qualidade e mitigar eventuais problemas de forma proativa levará a uma melhor avaliação, recompra e recomendação.
+
+* Nas avaliações foram identificados itens dos pedidos entregues em datas diferentes, e embora não seja um problema de avaliação, impacta significativamente e negativamente este indicador.
