@@ -1208,10 +1208,15 @@ Ambos seguem o mesmo padrão das análises anteriores, com concentração dos va
 ## Dashboard de Acompanhamento da Operação
 
   
+O dashboard de acompanhamento da operação possui diversas páginas com análises principais que podem nortear uma tomada de decisão.
 
-  
+Este modelo é uma simulação do primeiro dashboard de uma empresa, com conteúdo mais voltado para analisar o estado atual da operação.
 
-  
+Outras análises de comparação entre períodos (meses, anos, dias) poderiam ser realizadas.
+
+link do dashboard publicado:
+
+https://app.powerbi.com/view?r=eyJrIjoiZDkxNjE2ZDQtZTViOS00M2Q0LTgzNzctYWIxNGQyZTMxYmNiIiwidCI6ImVjNDM1NmM3LTFhZTItNDc5Zi05NzgyLWRlZjk1YjI3YzlmOCJ9&pageName=9faedfe3790e81026e30
 
   
 
