@@ -550,9 +550,11 @@ A avaliação do cliente e eventual recompra depende de uma boa experiência des
 
 * Identificar e fechar parcerias mais benéficas com transportadoras que entregam no prazo e reavaliar parcerias com transportadoras que possuem histórico negativo também é um caminho interessante.
 
-* Estados do nordeste possuem um tempo de entrega até 2x mais altos do que na região centro-oeste.
+* Estados do nordeste possuem um tempo de entrega até 2x mais altos do que na região sudeste.
 Como tanto as avaliações negativas como positivas levam em consideração a entrega e a qualidade do produto, a menor demanda nestas regiões pode estar relacionado com o tempo elevado de entrega.
 Encontrar formas de diminuir o tempo de entrega nestas regiões, otimizando rotas ou melhorando a logística dos Centros de Distribuição podem ser alternativas interessantes.
+Da mesma forma, os clientes da região sudeste representam 68,65% dos clientes e para estas regiões incentivos de fretes gratuitos, investimento maior em C.D.'s e fechamento de parcerias se tornariam mais fáceis pela alta proporção de pedidos para esta região.
+
 
 ### Faturamento
 
