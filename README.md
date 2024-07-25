@@ -77,7 +77,7 @@ No arquivo Excel (.xlsx), haverá todas as tabelas criadas através de queries n
 
 No arquivo Power BI (.pbix), cada medida e coluna calculada criada conterá no comentário uma breve explicação sobre o porquê das escolhas na utilização dos comandos e funções.
 
-No Repositório de Arquivos Utilizados, haverá um README com as limpezas realizadas no Power Query do Power BI.
+No Repositório de Arquivos Utilizados, a documentação será armazenada em um arquivo chamado "Documentação Relatório Operacional Olist".
 
 
 ## Análise Exploratória dos Dados
