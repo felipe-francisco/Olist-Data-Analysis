@@ -461,9 +461,13 @@ Este modelo é uma simulação do primeiro dashboard de uma empresa, com conteú
 
 Outras análises de comparação entre períodos (meses, anos, dias) poderiam ser realizadas, assim como análises mais aprofundadas sobre cada um dos tópicos abordados, com criação de indicadores, etc.
 
+A modelagem de dados foi realizada no modelo SnowFlake:
+
+![Snowflake Model](https://github.com/felipe-francisco/Olist-Data-Analysis/blob/main/Gr%C3%A1ficos/Snowflake%20Schema.png)
+
 Link do dashboard publicado:
 
-https://app.powerbi.com/view?r=eyJrIjoiZDkxNjE2ZDQtZTViOS00M2Q0LTgzNzctYWIxNGQyZTMxYmNiIiwidCI6ImVjNDM1NmM3LTFhZTItNDc5Zi05NzgyLWRlZjk1YjI3YzlmOCJ9&pageName=9faedfe3790e81026e30
+[Relatório Operacional](https://app.powerbi.com/view?r=eyJrIjoiZDkxNjE2ZDQtZTViOS00M2Q0LTgzNzctYWIxNGQyZTMxYmNiIiwidCI6ImVjNDM1NmM3LTFhZTItNDc5Zi05NzgyLWRlZjk1YjI3YzlmOCJ9&pageName=9faedfe3790e81026e30)
 
 ## Perguntas de Negócio
 
